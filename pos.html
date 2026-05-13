@@ -3,38 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>buro. | POS Caisse</title>
+    <title>buro. | POS Caisse Avancé</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
         /* =========================================
-           BRAND VARIABLES (buro. Guidelines)
+           BRAND VARIABLES (buro.)
         ========================================= */
         :root {
-            --buro-blue: #0A205B;
-            --buro-yellow: #FFC107;
-            --sky-blue: #CFE7FF;
-            --paper-gray: #F3F5F8;
-            --surface: #FFFFFF;
-            --danger: #EF4444;
-            --success: #10B981;
-            --text-main: #1E293B;
-            --text-muted: #64748B;
-            --border: #E2E8F0;
-            --shadow: 0 4px 12px rgba(0,0,0,0.05);
+            --buro-blue: #0A205B; --buro-yellow: #FFC107; --sky-blue: #CFE7FF; --paper-gray: #F3F5F8;
+            --surface: #FFFFFF; --danger: #EF4444; --success: #10B981; --warning: #F59E0B;
+            --text-main: #1E293B; --text-muted: #64748B; --border: #E2E8F0; --shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: var(--paper-gray); color: var(--text-main); height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
         button { font-family: inherit; cursor: pointer; border: none; outline: none; }
-        input { font-family: inherit; outline: none; }
+        input, select { font-family: inherit; outline: none; }
 
-        /* HEADER */
+        /* HEADER & TOP BAR */
         .pos-header { background: var(--surface); padding: 15px 24px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid var(--border); box-shadow: var(--shadow); z-index: 10; }
-        .logo { font-size: 24px; font-weight: 800; color: var(--buro-blue); letter-spacing: -1px; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--buro-blue); letter-spacing: -1px; width: 120px; }
         .logo span { color: var(--buro-yellow); }
-        .header-info { display: flex; gap: 20px; font-weight: 700; color: var(--text-muted); font-size: 14px; align-items: center; }
-        .clock { background: var(--buro-yellow); color: var(--buro-blue); padding: 6px 12px; border-radius: 8px; font-weight: 800; font-size: 16px; }
+        
+        .client-selector-bar { display: flex; align-items: center; gap: 12px; background: var(--paper-gray); padding: 6px 12px; border-radius: 12px; border: 1px solid var(--border); flex: 1; max-width: 500px; }
+        .client-selector-bar select { flex: 1; background: transparent; border: none; font-size: 15px; font-weight: 700; color: var(--text-main); cursor: pointer; }
+        .btn-icon-small { width: 32px; height: 32px; background: var(--buro-blue); color: white; border-radius: 8px; display: flex; align-items: center; justify-content: center; transition: 0.2s; }
+        .btn-icon-small:active { transform: scale(0.9); }
+
+        .header-controls { display: flex; gap: 16px; align-items: center; }
+        .btn-history { background: var(--sky-blue); color: var(--buro-blue); padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 14px; display: flex; align-items: center; gap: 8px; }
+        .clock { background: var(--buro-yellow); color: var(--buro-blue); padding: 8px 16px; border-radius: 8px; font-weight: 800; font-size: 15px; }
 
         /* SCANNER INPUT BAR */
         .scan-bar-container { background: var(--buro-blue); padding: 16px 24px; display: flex; gap: 16px; align-items: center; }
@@ -43,37 +42,35 @@
         .scan-input-wrapper input:focus { border-color: var(--buro-yellow); box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.2); }
         .scan-icon { position: absolute; left: 16px; top: 18px; width: 24px; color: var(--text-muted); }
         .btn-add-quick { background: rgba(255,255,255,0.1); color: white; padding: 0 24px; border-radius: 8px; font-weight: 700; font-size: 15px; border: 1px solid rgba(255,255,255,0.2); transition: 0.2s; display: flex; align-items: center; gap: 8px; }
-        .btn-add-quick:hover { background: rgba(255,255,255,0.2); }
 
         /* SPREADSHEET TABLE */
         .table-container { flex: 1; overflow-y: auto; background: var(--surface); margin: 16px 24px; border-radius: 12px; border: 1px solid var(--border); box-shadow: var(--shadow); }
         table { width: 100%; border-collapse: collapse; text-align: left; }
         th { position: sticky; top: 0; background: var(--paper-gray); padding: 16px; font-size: 13px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; border-bottom: 2px solid var(--border); z-index: 5; }
-        td { padding: 14px 16px; border-bottom: 1px solid var(--border); font-size: 15px; font-weight: 600; vertical-align: middle; }
+        td { padding: 10px 16px; border-bottom: 1px solid var(--border); font-size: 15px; font-weight: 600; vertical-align: middle; }
         tr:hover td { background: var(--paper-gray); }
         
         .col-code { width: 15%; color: var(--buro-blue); font-family: monospace; font-size: 16px; }
-        .col-article { width: 40%; }
+        .col-article { width: 35%; cursor: pointer; }
+        .col-article:hover { color: var(--buro-blue); text-decoration: underline; }
         .col-stock { width: 10%; text-align: center; }
         .col-qty { width: 10%; }
-        .col-price { width: 10%; text-align: right; }
+        .col-price { width: 15%; text-align: right; }
         .col-total { width: 10%; text-align: right; font-weight: 800; color: var(--buro-blue); }
         .col-action { width: 5%; text-align: center; }
 
-        .qty-input { width: 60px; padding: 8px; border: 2px solid var(--border); border-radius: 6px; text-align: center; font-weight: 800; font-size: 15px; outline: none; }
+        .qty-input { width: 60px; padding: 8px; border: 2px solid var(--border); border-radius: 6px; text-align: center; font-weight: 800; font-size: 15px; }
         .qty-input:focus { border-color: var(--buro-blue); }
-        .price-input { width: 80px; padding: 8px; border: 1px solid transparent; background: transparent; text-align: right; font-weight: 600; font-size: 15px; }
+        .price-input { width: 90px; padding: 8px; border: 1px solid transparent; background: transparent; text-align: right; font-weight: 600; font-size: 15px; }
         .price-input:focus { border-color: var(--border); background: white; border-radius: 4px; }
         
         .stock-pill { padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: 800; }
         .stock-ok { background: #DCFCE7; color: var(--success); }
         .stock-low { background: #FEE2E2; color: var(--danger); }
-
         .btn-delete { background: #FEE2E2; color: var(--danger); width: 32px; height: 32px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; }
 
         /* FOOTER CONTROLS */
-        .pos-footer { background: var(--surface); border-top: 2px solid var(--border); padding: 20px 24px; display: flex; gap: 24px; z-index: 10; box-shadow: 0 -4px 12px rgba(0,0,0,0.02); }
-        
+        .pos-footer { background: var(--surface); border-top: 2px solid var(--border); padding: 20px 24px; display: flex; gap: 24px; z-index: 10; }
         .metrics-panel { flex: 1; display: flex; gap: 24px; }
         .metric-box { background: var(--paper-gray); padding: 12px 20px; border-radius: 12px; border: 1px solid var(--border); min-width: 150px; }
         .metric-label { font-size: 12px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
@@ -86,44 +83,48 @@
         .actions-panel { display: flex; gap: 12px; }
         .btn-action { padding: 0 24px; border-radius: 12px; font-weight: 800; font-size: 15px; display: flex; align-items: center; gap: 8px; transition: 0.2s; }
         .btn-drawer { background: var(--paper-gray); color: var(--text-main); border: 2px solid var(--border); }
-        .btn-print-bl { background: var(--sky-blue); color: var(--buro-blue); }
         .btn-checkout { background: var(--buro-yellow); color: var(--buro-blue); font-size: 18px; padding: 0 32px; box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3); }
-        .btn-checkout:active { transform: scale(0.98); }
-        .btn-checkout:disabled { opacity: 0.5; cursor: not-allowed; }
+        .btn-checkout:disabled { opacity: 0.5; cursor: not-allowed; box-shadow: none; }
 
-        /* QUICK ADD MODAL */
+        /* MODALS (Overlays) */
         .overlay { position: fixed; inset: 0; background: rgba(10, 32, 91, 0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; }
         .overlay.active { display: flex; }
-        .modal { background: var(--surface); width: 100%; max-width: 500px; border-radius: 20px; padding: 30px; box-shadow: var(--shadow); }
+        .modal { background: var(--surface); width: 100%; max-width: 600px; border-radius: 20px; padding: 30px; box-shadow: var(--shadow); max-height: 90vh; overflow-y: auto;}
         .modal-title { font-size: 20px; font-weight: 800; color: var(--buro-blue); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
-        .form-group { margin-bottom: 16px; }
+        
+        .form-row { display: flex; gap: 16px; margin-bottom: 16px; }
+        .form-group { flex: 1; }
         .form-group label { display: block; font-size: 13px; font-weight: 700; color: var(--text-muted); margin-bottom: 8px; }
-        .form-control { width: 100%; padding: 14px; border: 2px solid var(--border); border-radius: 8px; font-size: 15px; font-weight: 600; outline: none; }
+        .form-control { width: 100%; padding: 12px 16px; border: 2px solid var(--border); border-radius: 8px; font-size: 15px; font-weight: 600; }
         .form-control:focus { border-color: var(--buro-blue); }
+        
         .modal-footer { display: flex; gap: 12px; margin-top: 24px; }
-        .btn-modal { flex: 1; padding: 16px; border-radius: 10px; font-weight: 800; font-size: 15px; }
+        .btn-modal { flex: 1; padding: 16px; border-radius: 10px; font-weight: 800; font-size: 15px; display: flex; justify-content: center; gap: 8px; align-items: center;}
         .btn-cancel { background: var(--paper-gray); color: var(--text-main); }
         .btn-save { background: var(--buro-blue); color: white; }
 
-        /* THERMAL PRINTER HIDING */
-        #print-receipt { 
-            display: none; 
-        }
+        /* CHECKOUT PAYMENT MODAL */
+        .pay-option { border: 2px solid var(--border); border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; font-weight: 800; font-size: 18px; color: var(--text-muted); transition: 0.2s; flex: 1; }
+        .pay-option:hover { background: var(--paper-gray); }
+        .pay-option.active { border-color: var(--buro-blue); background: var(--sky-blue); color: var(--buro-blue); }
+        .pay-option.credit.active { border-color: var(--warning); background: #FEF3C7; color: #B45309; }
 
+        /* HISTORY PANEL */
+        .history-panel { background: var(--surface); width: 800px; max-width: 95vw; border-radius: 20px; padding: 24px; display: flex; flex-direction: column; max-height: 85vh; }
+        .hist-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+        .hist-table th { background: var(--paper-gray); padding: 12px; font-size: 12px; }
+        .hist-table td { padding: 12px; border-bottom: 1px solid var(--border); font-size: 14px; font-weight: 600; }
+        .badge { padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
+        .bg-paid { background: #DCFCE7; color: var(--success); }
+        .bg-credit { background: #FEF3C7; color: var(--warning); }
+        .btn-pay-credit { background: var(--success); color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; }
+        .btn-reprint { background: var(--paper-gray); color: var(--buro-blue); padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; border: 1px solid var(--border); }
+
+        /* THERMAL PRINTER HIDING */
+        #print-receipt { display: none; }
         @media print {
             body * { visibility: hidden; }
-            #print-receipt { 
-                display: block; 
-                position: absolute; 
-                left: 0; 
-                top: 0; 
-                width: 80mm; 
-                padding: 5mm; 
-                font-family: monospace; 
-                font-size: 12px; 
-                color: black; 
-                background: white; 
-            }
+            #print-receipt { display: block; position: absolute; left: 0; top: 0; width: 80mm; padding: 5mm; font-family: monospace; font-size: 12px; color: black; background: white; }
             #print-receipt * { visibility: visible; }
             .pr-header { text-align: center; margin-bottom: 10px; border-bottom: 1px dashed black; padding-bottom: 5px; }
             .pr-item { display: flex; justify-content: space-between; margin-bottom: 5px; }
@@ -136,8 +137,21 @@
     <!-- HEADER -->
     <header class="pos-header">
         <div class="logo">buro<span>.</span></div>
-        <div class="header-info">
-            <div>Caisse Principale</div>
+        
+        <div class="client-selector-bar">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px; color:var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <select id="clientSelect">
+                <option value="Client Comptoir">Client Comptoir</option>
+                <!-- Clients from DB injected here -->
+            </select>
+            <button class="btn-icon-small" onclick="openClientModal()" title="Nouveau Client B2B"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        </div>
+
+        <div class="header-controls">
+            <button class="btn-history" onclick="openHistoryModal()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                Historique & Crédits
+            </button>
             <div class="clock" id="liveClock">00:00:00</div>
         </div>
     </header>
@@ -148,9 +162,9 @@
             <svg class="scan-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h3m10 0h3v3M4 17v3h3m10 0h3v-3M7 11h2m2 0h6m-4 4h2m-6 0h2"></path></svg>
             <input type="text" id="mainScanner" placeholder="Scanner un code-barres ou saisir le SKU..." autofocus autocomplete="off">
         </div>
-        <button class="btn-add-quick" onclick="openQuickAdd()">
+        <button class="btn-add-quick" onclick="openProductModal()">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:18px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-            Ajout Rapide
+            Produit (F2)
         </button>
     </div>
 
@@ -160,7 +174,7 @@
             <thead>
                 <tr>
                     <th class="col-code">Code Barre</th>
-                    <th class="col-article">Article</th>
+                    <th class="col-article">Article (Clic pour modifier)</th>
                     <th class="col-stock">En Stock</th>
                     <th class="col-qty">Qté</th>
                     <th class="col-price">Prix PV (DH)</th>
@@ -197,47 +211,96 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
                 Tiroir
             </button>
-            <button class="btn-action btn-print-bl">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
-                BL / Facture
-            </button>
-            <button class="btn-action btn-checkout" id="btnCheckout" disabled>
+            <button class="btn-action btn-checkout" id="btnCheckout" disabled onclick="openCheckoutModal()">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
-                Enregistrer & Imprimer
+                Encaisser (Entrée)
             </button>
         </div>
     </footer>
 
-    <!-- QUICK ADD MODAL -->
-    <div class="overlay" id="modalOverlay">
+    <!-- ================== MODALS ================== -->
+
+    <!-- 1. PRODUCT ADD/EDIT MODAL -->
+    <div class="overlay" id="productModalOverlay">
         <div class="modal">
             <div class="modal-title">
-                Création Rapide d'Article
-                <button onclick="closeModals()" style="background:none; color:var(--text-muted);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+                <span id="pmTitle">Ajouter un produit</span>
+                <button onclick="closeAllModals()" style="background:none; color:var(--text-muted);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
-            
-            <div class="form-group">
-                <label>Code Barre (SKU)</label>
-                <input type="text" id="qaSku" class="form-control" placeholder="Scannez ou tapez le code...">
+            <input type="hidden" id="pmId">
+            <div class="form-row">
+                <div class="form-group"><label>Code Barre (SKU)</label><input type="text" id="pmSku" class="form-control" placeholder="Scanner..."></div>
+                <div class="form-group" style="flex:2;"><label>Nom de l'Article</label><input type="text" id="pmName" class="form-control" placeholder="Nom du produit"></div>
             </div>
-            <div class="form-group">
-                <label>Nom de l'Article</label>
-                <input type="text" id="qaName" class="form-control" placeholder="Ex: Cahier 96p Grand Format">
+            <div class="form-row">
+                <div class="form-group"><label>Catégorie</label><input type="text" id="pmCat" class="form-control" placeholder="Ex: Fournitures"></div>
+                <div class="form-group"><label>Emplacement (Optionnel)</label><input type="text" id="pmLoc" class="form-control" placeholder="Ex: Rayon 3"></div>
             </div>
-            <div style="display: flex; gap: 16px;">
-                <div class="form-group" style="flex:1;">
-                    <label>Prix de Vente (DH)</label>
-                    <input type="number" id="qaPrice" class="form-control" placeholder="0.00">
-                </div>
-                <div class="form-group" style="flex:1;">
-                    <label>Stock Initial</label>
-                    <input type="number" id="qaStock" class="form-control" value="0">
-                </div>
+            <div class="form-row">
+                <div class="form-group"><label>Prix Achat (DH)</label><input type="number" id="pmCost" class="form-control" placeholder="0.00"></div>
+                <div class="form-group"><label>Prix Vente (DH)</label><input type="number" id="pmSell" class="form-control" placeholder="0.00"></div>
             </div>
-            
+            <div class="form-row">
+                <div class="form-group"><label>Stock Actuel</label><input type="number" id="pmStock" class="form-control" value="0"></div>
+                <div class="form-group"><label>Stock Minimum</label><input type="number" id="pmMinStock" class="form-control" value="5"></div>
+            </div>
             <div class="modal-footer">
-                <button class="btn-modal btn-cancel" onclick="closeModals()">Annuler</button>
-                <button class="btn-modal btn-save" id="btnSaveQuick" onclick="saveQuickProduct()">Sauvegarder l'article</button>
+                <button class="btn-modal btn-cancel" onclick="closeAllModals()">Annuler</button>
+                <button class="btn-modal btn-save" id="btnSaveProduct" onclick="saveProduct()">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. ADD CLIENT MODAL -->
+    <div class="overlay" id="clientModalOverlay">
+        <div class="modal" style="max-width:400px;">
+            <div class="modal-title">Nouveau Client B2B</div>
+            <div class="form-group"><label>Nom ou Raison Sociale</label><input type="text" id="cmName" class="form-control" placeholder="Nom du bureau / école"></div>
+            <div class="form-group"><label>ICE (Optionnel pour Facture)</label><input type="text" id="cmIce" class="form-control" placeholder="000000000000000"></div>
+            <div class="form-group"><label>Téléphone</label><input type="text" id="cmPhone" class="form-control" placeholder="06..."></div>
+            <div class="modal-footer">
+                <button class="btn-modal btn-cancel" onclick="closeAllModals()">Annuler</button>
+                <button class="btn-modal btn-save" id="btnSaveClient" onclick="saveClient()">Créer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. CHECKOUT CONFIRMATION MODAL -->
+    <div class="overlay" id="checkoutModalOverlay">
+        <div class="modal" style="max-width:500px; text-align: center;">
+            <div style="font-size: 16px; color: var(--text-muted); font-weight: 700; margin-bottom: 8px;">Total à encaisser</div>
+            <div style="font-size: 40px; font-weight: 800; color: var(--buro-blue); margin-bottom: 24px;" id="chkTotal">0.00 DH</div>
+            
+            <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                <div class="pay-option active" id="payCash" onclick="selectPayment('Espèces')">Espèces</div>
+                <div class="pay-option" id="payCard" onclick="selectPayment('Carte')">TPE / Carte</div>
+                <div class="pay-option credit" id="payCredit" onclick="selectPayment('Crédit')">À Crédit</div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-modal btn-cancel" onclick="closeAllModals()">Retour</button>
+                <button class="btn-modal btn-save" id="btnConfirmSale" onclick="processSale()">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:20px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                    Valider & Imprimer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 4. HISTORY & CREDIT MODAL -->
+    <div class="overlay" id="historyModalOverlay">
+        <div class="history-panel">
+            <div class="modal-title">
+                Historique & Crédits
+                <button onclick="closeAllModals()" style="background:none; color:var(--text-muted);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <div style="overflow-y: auto; flex: 1;">
+                <table class="hist-table">
+                    <thead><tr><th>Date</th><th>Client</th><th>Total</th><th>Statut</th><th>Actions</th></tr></thead>
+                    <tbody id="historyTableBody">
+                        <!-- History injected here -->
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
@@ -248,16 +311,18 @@
             <div style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">buro.</div>
             <div>L'essentiel pour le bureau et l'école.</div>
             <div id="printDate"></div>
+            <div id="printClient" style="font-weight: bold; margin-top: 5px;"></div>
         </div>
         <div id="printItems" style="margin-top: 10px; border-top: 1px dashed black; padding-top: 10px;"></div>
         <div class="pr-total" id="printTotal"></div>
+        <div id="printStatus" style="text-align: center; font-weight: bold; margin-top: 10px; font-size: 14px;"></div>
         <div style="text-align: center; margin-top: 15px; font-size: 10px;">Merci de votre visite !</div>
     </div>
 
     <!-- SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+        import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // FIREBASE CONFIG
         const firebaseConfig = {
@@ -273,109 +338,97 @@
 
         // STATE
         let allProducts = [];
-        let cart = []; // Array of { productObj, qty, customPrice }
+        let cart = []; 
+        let selectedPaymentType = 'Espèces';
+        let allOrders = [];
 
-        // 1. CLOCK
+        // 1. CLOCK & BASIC INIT
         setInterval(() => {
             const now = new Date();
             document.getElementById('liveClock').innerText = now.toLocaleTimeString('fr-FR', { hour12: false });
         }, 1000);
 
-        // 2. FETCH DATA
-        onSnapshot(collection(db, "products"), snap => {
-            allProducts = snap.docs.map(d => ({id: d.id, ...d.data()}));
-            // Update table if stock changed while cart is open
-            renderTable(); 
-        });
-
-        // 3. SCANNER LOGIC
         const scannerInput = document.getElementById('mainScanner');
-        
-        // Always force focus back to scanner when clicking empty areas
         document.body.addEventListener('click', (e) => {
-            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'SELECT' && !e.target.closest('.modal')) {
                 scannerInput.focus();
             }
         });
 
+        // 2. FETCH DATA (Products, Clients, Orders)
+        onSnapshot(collection(db, "products"), snap => {
+            allProducts = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            renderTable(); 
+        });
+
+        onSnapshot(collection(db, "clients"), snap => {
+            const clients = snap.docs.map(d => d.data());
+            const select = document.getElementById('clientSelect');
+            select.innerHTML = `<option value="Client Comptoir">Client Comptoir</option>` + 
+                clients.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+        });
+
+        onSnapshot(query(collection(db, "orders"), orderBy("timestamp", "desc"), limit(50)), snap => {
+            allOrders = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            renderHistory();
+        });
+
+        // 3. SCANNER LOGIC
         scannerInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 const code = scannerInput.value.trim();
-                if (code) {
-                    processScan(code);
-                    scannerInput.value = ''; // clear input
-                }
+                if (code) { processScan(code); scannerInput.value = ''; }
             }
+        });
+        
+        // F2 Shortcut for Add Product
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'F2') { e.preventDefault(); window.openProductModal(); }
         });
 
         function processScan(code) {
-            // Check if it's already in cart to increment
             const existingCartIndex = cart.findIndex(item => item.product.sku === code || item.product.id === code);
             if (existingCartIndex > -1) {
                 cart[existingCartIndex].qty++;
-                renderTable();
-                return;
+                renderTable(); return;
             }
-
-            // Find in database
             const product = allProducts.find(p => (p.sku && p.sku === code) || p.id === code);
             if (product) {
-                cart.unshift({ 
-                    product: product, 
-                    qty: 1, 
-                    customPrice: parseFloat(product.promoPrice || product.sellPrice || 0) 
-                });
+                cart.unshift({ product: product, qty: 1, customPrice: parseFloat(product.promoPrice || product.sellPrice || 0) });
                 renderTable();
             } else {
-                // Not found -> Open Quick Add and pre-fill code
-                openQuickAdd(code);
+                window.openProductModal('', code); // Open create with prefilled code
             }
         }
 
         // 4. TABLE RENDERING
         function renderTable() {
             const tbody = document.getElementById('cartTableBody');
-            let totalTTC = 0;
-            let totalItems = 0;
+            let totalTTC = 0, totalItems = 0;
 
             if (cart.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:40px; color:var(--text-muted);">En attente de scan...</td></tr>`;
                 document.getElementById('btnCheckout').disabled = true;
-                updateMetrics(0, 0, 0);
-                return;
+                updateMetrics(0, 0, 0); return;
             }
 
             tbody.innerHTML = cart.map((item, index) => {
                 const p = item.product;
-                const dbProd = allProducts.find(x => x.id === p.id) || p; // Get fresh stock
+                const dbProd = allProducts.find(x => x.id === p.id) || p;
                 const stock = parseInt(dbProd.stock) || 0;
                 const isLow = stock < item.qty;
                 const lineTotal = item.qty * item.customPrice;
-                
-                totalTTC += lineTotal;
-                totalItems += item.qty;
+                totalTTC += lineTotal; totalItems += item.qty;
 
                 return `
                 <tr>
                     <td class="col-code">${p.sku || p.id.substring(0,8).toUpperCase()}</td>
-                    <td class="col-article">${p.name}</td>
-                    <td class="col-stock">
-                        <span class="stock-pill ${isLow ? 'stock-low' : 'stock-ok'}">${stock}</span>
-                    </td>
-                    <td class="col-qty">
-                        <input type="number" class="qty-input" value="${item.qty}" min="1" 
-                               onchange="updateCartItem(${index}, 'qty', this.value)">
-                    </td>
-                    <td class="col-price">
-                        <input type="number" class="price-input" value="${item.customPrice.toFixed(2)}" step="0.01"
-                               onchange="updateCartItem(${index}, 'price', this.value)">
-                    </td>
+                    <td class="col-article" onclick="openProductModal('${p.id}')">${p.name}</td>
+                    <td class="col-stock"><span class="stock-pill ${isLow ? 'stock-low' : 'stock-ok'}">${stock}</span></td>
+                    <td class="col-qty"><input type="number" class="qty-input" value="${item.qty}" min="1" onchange="updateCartItem(${index}, 'qty', this.value)"></td>
+                    <td class="col-price"><input type="number" class="price-input" value="${item.customPrice.toFixed(2)}" step="0.01" onchange="updateCartItem(${index}, 'price', this.value)"></td>
                     <td class="col-total">${lineTotal.toFixed(2)}</td>
-                    <td class="col-action">
-                        <button class="btn-delete" onclick="removeFromCart(${index})">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" y1="11" x2="10" y2="17"></line><line x1="14" y1="11" x2="14" y2="17"></line></svg>
-                        </button>
-                    </td>
+                    <td class="col-action"><button class="btn-delete" onclick="removeFromCart(${index})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></td>
                 </tr>`;
             }).join('');
 
@@ -384,154 +437,172 @@
         }
 
         window.updateCartItem = (index, field, value) => {
-            const val = parseFloat(value);
-            if (isNaN(val) || val < 0) return renderTable(); // revert if invalid
-            
-            if (field === 'qty') {
-                if (val === 0) return removeFromCart(index);
-                cart[index].qty = val;
-            } else if (field === 'price') {
-                cart[index].customPrice = val;
-            }
-            renderTable();
-            scannerInput.focus();
+            const val = parseFloat(value); if (isNaN(val) || val < 0) return renderTable();
+            if (field === 'qty') { if (val === 0) return removeFromCart(index); cart[index].qty = val; } 
+            else if (field === 'price') { cart[index].customPrice = val; }
+            renderTable(); scannerInput.focus();
         };
 
-        window.removeFromCart = (index) => {
-            cart.splice(index, 1);
-            renderTable();
-            scannerInput.focus();
-        };
-
+        window.removeFromCart = (index) => { cart.splice(index, 1); renderTable(); scannerInput.focus(); };
         function updateMetrics(lines, items, total) {
             document.getElementById('valLines').innerText = lines;
             document.getElementById('valItems').innerText = items;
             document.getElementById('valTotal').innerText = total.toFixed(2) + " DH";
         }
 
-        // 5. CHECKOUT & PRINT
-        document.getElementById('btnCheckout').addEventListener('click', async () => {
-            const btn = document.getElementById('btnCheckout');
-            btn.innerHTML = `Traitement...`;
-            btn.disabled = true;
-
-            const orderData = {
-                customerName: "Client Comptoir",
-                status: "Livrée",
-                timestamp: new Date().toISOString(),
-                totalPrice: cart.reduce((sum, i) => sum + (i.qty * i.customPrice), 0),
-                totalItems: cart.reduce((sum, i) => sum + i.qty, 0),
-                cart: cart.map(i => ({
-                    product: { id: i.product.id, name: i.product.name, sku: i.product.sku },
-                    qty: i.qty,
-                    unitPrice: i.customPrice
-                }))
-            };
-
-            try {
-                // Save Order
-                await addDoc(collection(db, "orders"), orderData);
-                
-                // Deduct Stock
-                for (let item of cart) {
-                    const currentStock = parseInt(item.product.stock) || 0;
-                    await updateDoc(doc(db, "products", item.product.id), {
-                        stock: currentStock - item.qty
-                    });
-                }
-
-                // Print
-                buildReceipt();
-                window.print();
-
-                // Clear
-                cart = [];
-                renderTable();
-
-            } catch (error) {
-                console.error("Checkout Error:", error);
-                alert("Erreur lors de l'encaissement.");
-            } finally {
-                btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:24px;"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg> Enregistrer & Imprimer`;
-                scannerInput.focus();
-            }
-        });
-
-        function buildReceipt() {
-            document.getElementById('printDate').innerText = new Date().toLocaleString('fr-FR');
-            
-            let itemsHtml = "";
-            let total = 0;
-            cart.forEach(i => {
-                const lineTotal = i.qty * i.customPrice;
-                total += lineTotal;
-                itemsHtml += `
-                <div class="pr-item">
-                    <div style="width:60%">${i.qty}x ${i.product.name}</div>
-                    <div style="width:40%; text-align:right;">${lineTotal.toFixed(2)} DH</div>
-                </div>`;
-            });
-            document.getElementById('printItems').innerHTML = itemsHtml;
-            document.getElementById('printTotal').innerText = "TOTAL TTC: " + total.toFixed(2) + " DH";
-        }
-
-        // 6. QUICK ADD MODAL
-        window.openQuickAdd = (prefillCode = '') => {
-            document.getElementById('qaSku').value = prefillCode;
-            document.getElementById('qaName').value = '';
-            document.getElementById('qaPrice').value = '';
-            document.getElementById('qaStock').value = '0';
-            document.getElementById('modalOverlay').classList.add('active');
-            
-            if(prefillCode) document.getElementById('qaName').focus();
-            else document.getElementById('qaSku').focus();
-        };
-
-        window.closeModals = () => {
-            document.getElementById('modalOverlay').classList.remove('active');
+        // 5. MODAL MANAGEMENT
+        window.closeAllModals = () => {
+            document.querySelectorAll('.overlay').forEach(el => el.classList.remove('active'));
             scannerInput.focus();
         };
 
-        window.saveQuickProduct = async () => {
-            const sku = document.getElementById('qaSku').value.trim();
-            const name = document.getElementById('qaName').value.trim();
-            const price = parseFloat(document.getElementById('qaPrice').value) || 0;
-            const stock = parseInt(document.getElementById('qaStock').value) || 0;
+        // --- CLIENT ---
+        window.openClientModal = () => {
+            document.getElementById('cmName').value = ''; document.getElementById('cmIce').value = ''; document.getElementById('cmPhone').value = '';
+            document.getElementById('clientModalOverlay').classList.add('active');
+            document.getElementById('cmName').focus();
+        };
 
-            if (!name) return alert("Le nom est obligatoire.");
+        window.saveClient = async () => {
+            const name = document.getElementById('cmName').value.trim();
+            if(!name) return alert("Nom requis");
+            const btn = document.getElementById('btnSaveClient'); btn.disabled = true; btn.innerText = "...";
+            try {
+                await addDoc(collection(db, "clients"), { name: name, ice: document.getElementById('cmIce').value, phone: document.getElementById('cmPhone').value });
+                closeAllModals(); setTimeout(() => document.getElementById('clientSelect').value = name, 500);
+            } catch(e) { alert("Erreur"); } finally { btn.disabled = false; btn.innerText = "Créer"; }
+        };
 
-            const btn = document.getElementById('btnSaveQuick');
-            btn.innerText = "Sauvegarde...";
-            btn.disabled = true;
+        // --- PRODUCT ADD/EDIT ---
+        window.openProductModal = (id = '', prefillSku = '') => {
+            const modal = document.getElementById('productModalOverlay');
+            if (id) {
+                const p = allProducts.find(x => x.id === id);
+                document.getElementById('pmTitle').innerText = "Modifier l'article";
+                document.getElementById('pmId').value = id;
+                document.getElementById('pmSku').value = p.sku || ''; document.getElementById('pmName').value = p.name || '';
+                document.getElementById('pmCat').value = p.category || ''; document.getElementById('pmLoc').value = p.location || '';
+                document.getElementById('pmCost').value = p.costPrice || ''; document.getElementById('pmSell').value = p.sellPrice || '';
+                document.getElementById('pmStock').value = p.stock || 0; document.getElementById('pmMinStock').value = p.lowStockThreshold || 5;
+            } else {
+                document.getElementById('pmTitle').innerText = "Ajouter un article";
+                document.getElementById('pmId').value = '';
+                document.getElementById('pmSku').value = prefillSku; document.getElementById('pmName').value = '';
+                document.getElementById('pmCat').value = 'Comptoir'; document.getElementById('pmLoc').value = '';
+                document.getElementById('pmCost').value = ''; document.getElementById('pmSell').value = '';
+                document.getElementById('pmStock').value = 0; document.getElementById('pmMinStock').value = 5;
+            }
+            modal.classList.add('active');
+            id ? document.getElementById('pmName').focus() : document.getElementById('pmSku').focus();
+        };
 
-            const productData = {
-                sku: sku,
-                name: name,
-                sellPrice: price,
-                stock: stock,
-                category: "Divers (Comptoir)", // Default category
+        window.saveProduct = async () => {
+            const id = document.getElementById('pmId').value;
+            const data = {
+                sku: document.getElementById('pmSku').value, name: document.getElementById('pmName').value,
+                category: document.getElementById('pmCat').value, location: document.getElementById('pmLoc').value,
+                costPrice: parseFloat(document.getElementById('pmCost').value) || 0, sellPrice: parseFloat(document.getElementById('pmSell').value) || 0,
+                stock: parseInt(document.getElementById('pmStock').value) || 0, lowStockThreshold: parseInt(document.getElementById('pmMinStock').value) || 5,
                 timestamp: new Date().toISOString()
+            };
+            if(!data.name) return alert("Le nom est obligatoire.");
+            
+            const btn = document.getElementById('btnSaveProduct'); btn.disabled = true; btn.innerText = "...";
+            try {
+                if (id) {
+                    await updateDoc(doc(db, "products", id), data);
+                    // Update price in cart if edited
+                    cart.forEach(c => { if(c.product.id === id) { c.product = {...c.product, ...data}; c.customPrice = data.sellPrice; }});
+                } else {
+                    const docRef = await addDoc(collection(db, "products"), data);
+                    cart.unshift({ product: { id: docRef.id, ...data }, qty: 1, customPrice: data.sellPrice });
+                }
+                closeAllModals(); renderTable();
+            } catch(e) { alert("Erreur de sauvegarde"); } finally { btn.disabled = false; btn.innerText = "Sauvegarder"; }
+        };
+
+        // --- CHECKOUT ---
+        window.openCheckoutModal = () => {
+            document.getElementById('chkTotal').innerText = document.getElementById('valTotal').innerText;
+            selectedPaymentType = 'Espèces'; selectPayment('Espèces');
+            document.getElementById('checkoutModalOverlay').classList.add('active');
+        };
+
+        window.selectPayment = (type) => {
+            selectedPaymentType = type;
+            document.getElementById('payCash').classList.remove('active'); document.getElementById('payCard').classList.remove('active'); document.getElementById('payCredit').classList.remove('active');
+            if(type === 'Espèces') document.getElementById('payCash').classList.add('active');
+            if(type === 'Carte') document.getElementById('payCard').classList.add('active');
+            if(type === 'Crédit') document.getElementById('payCredit').classList.add('active');
+        };
+
+        window.processSale = async () => {
+            const btn = document.getElementById('btnConfirmSale'); btn.disabled = true; btn.innerText = "Traitement...";
+            const clientName = document.getElementById('clientSelect').value;
+            const isCredit = selectedPaymentType === 'Crédit';
+            
+            const orderData = {
+                customerName: clientName,
+                status: isCredit ? "Non Payé (Crédit)" : "Livrée",
+                paymentMethod: selectedPaymentType,
+                timestamp: new Date().toISOString(),
+                totalPrice: cart.reduce((sum, i) => sum + (i.qty * i.customPrice), 0),
+                totalItems: cart.reduce((sum, i) => sum + i.qty, 0),
+                cart: cart.map(i => ({ product: { id: i.product.id, name: i.product.name, sku: i.product.sku }, qty: i.qty, unitPrice: i.customPrice }))
             };
 
             try {
-                const docRef = await addDoc(collection(db, "products"), productData);
-                closeModals();
-                
-                // Automatically add the newly created product to the cart
-                cart.unshift({ 
-                    product: { id: docRef.id, ...productData }, 
-                    qty: 1, 
-                    customPrice: price 
-                });
-                renderTable();
+                const docRef = await addDoc(collection(db, "orders"), orderData);
+                // Deduct Stock
+                for (let item of cart) {
+                    const currentStock = parseInt(item.product.stock) || 0;
+                    await updateDoc(doc(db, "products", item.product.id), { stock: currentStock - item.qty });
+                }
+                // Print
+                buildReceipt(orderData, docRef.id); window.print();
+                // Clear
+                cart = []; renderTable(); closeAllModals();
+            } catch (e) { alert("Erreur d'encaissement."); } finally { btn.disabled = false; btn.innerHTML = "Valider & Imprimer"; }
+        };
 
-            } catch (e) {
-                console.error(e);
-                alert("Erreur de création.");
-            } finally {
-                btn.innerText = "Sauvegarder l'article";
-                btn.disabled = false;
-            }
+        function buildReceipt(order, id) {
+            document.getElementById('printDate').innerText = new Date().toLocaleString('fr-FR');
+            document.getElementById('printClient').innerText = "Client: " + order.customerName;
+            
+            let itemsHtml = "";
+            order.cart.forEach(i => { itemsHtml += `<div class="pr-item"><div style="width:60%">${i.qty}x ${i.product.name}</div><div style="width:40%; text-align:right;">${(i.qty * i.unitPrice).toFixed(2)} DH</div></div>`; });
+            document.getElementById('printItems').innerHTML = itemsHtml;
+            document.getElementById('printTotal').innerText = "TOTAL: " + order.totalPrice.toFixed(2) + " DH";
+            
+            const statusDiv = document.getElementById('printStatus');
+            if(order.paymentMethod === 'Crédit') { statusDiv.innerText = "*** NON PAYÉ - À CRÉDIT ***"; statusDiv.style.color = "black"; } 
+            else { statusDiv.innerText = "Payé par: " + order.paymentMethod; statusDiv.style.color = "black"; }
+        }
+
+        // --- HISTORY ---
+        window.openHistoryModal = () => { document.getElementById('historyModalOverlay').classList.add('active'); };
+        
+        function renderHistory() {
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = allOrders.map(o => {
+                const date = new Date(o.timestamp).toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit'});
+                const isCredit = o.status.includes('Crédit');
+                const badge = isCredit ? `<span class="badge bg-credit">CRÉDIT</span>` : `<span class="badge bg-paid">PAYÉ</span>`;
+                
+                let actionBtn = isCredit ? `<button class="btn-pay-credit" onclick="markAsPaid('${o.id}')">Marquer Payé</button>` : '';
+                return `<tr><td>${date}</td><td>${o.customerName}</td><td>${parseFloat(o.totalPrice).toFixed(2)} DH</td><td>${badge}</td>
+                        <td style="display:flex; gap:8px;">${actionBtn}<button class="btn-reprint" onclick="reprintTicket('${o.id}')">Ticket</button></td></tr>`;
+            }).join('');
+        }
+
+        window.markAsPaid = async (id) => {
+            try { await updateDoc(doc(db, "orders", id), { status: "Livrée", paymentMethod: "Espèces (Réglé plus tard)" }); } 
+            catch(e) { alert("Erreur"); }
+        };
+
+        window.reprintTicket = (id) => {
+            const order = allOrders.find(o => o.id === id);
+            if(order) { buildReceipt(order, id); window.print(); }
         };
 
     </script>
