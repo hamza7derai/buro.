@@ -106,10 +106,25 @@
         .btn-save { background: var(--buro-blue); color: white; }
 
         /* THERMAL PRINTER HIDING */
+        #print-receipt { 
+            display: none; 
+        }
+
         @media print {
             body * { visibility: hidden; }
-            #print-receipt, #print-receipt * { visibility: visible; }
-            #print-receipt { position: absolute; left: 0; top: 0; width: 80mm; padding: 5mm; font-family: monospace; font-size: 12px; color: black; background: white; }
+            #print-receipt { 
+                display: block; 
+                position: absolute; 
+                left: 0; 
+                top: 0; 
+                width: 80mm; 
+                padding: 5mm; 
+                font-family: monospace; 
+                font-size: 12px; 
+                color: black; 
+                background: white; 
+            }
+            #print-receipt * { visibility: visible; }
             .pr-header { text-align: center; margin-bottom: 10px; border-bottom: 1px dashed black; padding-bottom: 5px; }
             .pr-item { display: flex; justify-content: space-between; margin-bottom: 5px; }
             .pr-total { border-top: 1px dashed black; margin-top: 5px; padding-top: 5px; font-weight: bold; text-align: right; font-size: 14px; }
