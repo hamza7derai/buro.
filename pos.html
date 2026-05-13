@@ -29,17 +29,8 @@
         button { font-family: inherit; cursor: pointer; outline: none; border: none; }
         input { font-family: inherit; }
 
-        /* AUTH SCREEN */
-        #authScreen { position: fixed; inset: 0; background: var(--paper-gray); display: flex; align-items: center; justify-content: center; z-index: 9999; }
-        .auth-box { background: var(--surface); padding: 40px; border-radius: 20px; box-shadow: var(--shadow-lg); width: 100%; max-width: 400px; text-align: center; }
-        .auth-logo { color: var(--buro-blue); font-size: 40px; font-weight: 800; letter-spacing: -1px; margin-bottom: 8px; }
-        .auth-logo span { color: var(--buro-yellow); }
-        .auth-input { width: 100%; padding: 14px; margin-bottom: 16px; border: 1px solid var(--border); border-radius: 12px; font-size: 15px; }
-        .btn-auth { width: 100%; padding: 14px; background: var(--buro-blue); color: white; border-radius: 12px; font-weight: 700; font-size: 16px; transition: 0.2s; }
-        .btn-auth:hover { opacity: 0.9; }
-
         /* LAYOUT */
-        #posApp { display: none; height: 100vh; width: 100vw; flex-direction: row; }
+        #posApp { display: flex; height: 100vh; width: 100vw; flex-direction: row; }
         .products-section { flex: 1; display: flex; flex-direction: column; background: var(--paper-gray); height: 100%; }
         .cart-section { width: 400px; background: var(--surface); border-left: 1px solid var(--border); display: flex; flex-direction: column; box-shadow: -4px 0 20px rgba(0,0,0,0.02); z-index: 10; }
 
@@ -50,7 +41,6 @@
         .search-bar { flex: 1; position: relative; }
         .search-bar input { width: 100%; padding: 16px 20px 16px 50px; border-radius: 50px; border: 1px solid var(--border); background: var(--paper-gray); font-size: 16px; outline: none; }
         .search-bar svg { position: absolute; left: 20px; top: 16px; color: var(--text-muted); width: 20px; }
-        .btn-logout { padding: 10px 20px; background: #FEE2E2; color: var(--danger); border-radius: 8px; font-weight: 700; }
 
         /* CATEGORY PILLS */
         .cat-scroll { display: flex; gap: 10px; padding: 16px 20px; overflow-x: auto; background: var(--surface); border-bottom: 1px solid var(--border); }
@@ -116,18 +106,6 @@
 </head>
 <body>
 
-    <!-- LOGIN SCREEN -->
-    <div id="authScreen">
-        <div class="auth-box">
-            <div class="auth-logo">buro<span>.</span></div>
-            <p style="color:var(--text-muted); font-weight:600; margin-bottom:24px;">Connexion Caisse (POS)</p>
-            <input type="email" id="email" class="auth-input" placeholder="Email caissier">
-            <input type="password" id="password" class="auth-input" placeholder="Mot de passe">
-            <button class="btn-auth" id="btnLogin">Ouvrir la caisse</button>
-            <p id="authError" style="color:var(--danger); font-size:13px; font-weight:600; margin-top:12px; display:none;">Identifiants incorrects.</p>
-        </div>
-    </div>
-
     <!-- MAIN POS APP -->
     <div id="posApp">
         <!-- LEFT: PRODUCTS -->
@@ -138,7 +116,6 @@
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
                     <input type="text" id="searchInput" placeholder="Rechercher ou scanner un code-barres (SKU)..." autofocus>
                 </div>
-                <button class="btn-logout" id="btnLogout">Déconnexion</button>
             </div>
             
             <div class="cat-scroll" id="catContainer">
@@ -208,7 +185,6 @@
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
         import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
         // FIREBASE CONFIG (Copied from Admin)
@@ -221,7 +197,6 @@
             appId: "1:918363477454:web:ef0a991d24de1ea992879f"
         };
         const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
         const db = getFirestore(app);
 
         // STATE
@@ -230,30 +205,6 @@
         let currentFilter = 'All';
         let cart = [];
         let cartTotalValue = 0;
-
-        // ==========================================
-        // AUTHENTICATION
-        // ==========================================
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                document.getElementById('authScreen').style.display = 'none';
-                document.getElementById('posApp').style.display = 'flex';
-                document.getElementById('searchInput').focus();
-            } else {
-                document.getElementById('authScreen').style.display = 'flex';
-                document.getElementById('posApp').style.display = 'none';
-            }
-        });
-
-        document.getElementById('btnLogin').addEventListener('click', () => {
-            const e = document.getElementById('email').value;
-            const p = document.getElementById('password').value;
-            signInWithEmailAndPassword(auth, e, p).catch(err => {
-                document.getElementById('authError').style.display = 'block';
-            });
-        });
-
-        document.getElementById('btnLogout').addEventListener('click', () => signOut(auth));
 
         // ==========================================
         // DATA FETCHING (Sync with Admin)
@@ -516,4 +467,3 @@
     </script>
 </body>
 </html>
-
