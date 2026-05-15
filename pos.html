@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>buro. | POS / Caisse</title>
+    <title>buro. | Dashboard ERP & POS</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -11,19 +11,11 @@
            VARIABLES & THEME
         ========================================= */
         :root {
-            --buro-blue: #0A1930;
-            --buro-yellow: #FFC107;
-            --bg-light: #F4F7FA;
-            --surface: #FFFFFF;
-            --text-main: #0F172A;
-            --text-muted: #64748B;
-            --border: #E2E8F0;
-            --danger: #EF4444; --danger-bg: #FEE2E2;
-            --success: #10B981; --success-bg: #DCFCE7;
-            --warning: #F59E0B; --warning-bg: #FEF3C7;
-            --primary-blue: #2563EB;
-            --radius-md: 8px;
-            --radius-lg: 12px;
+            --buro-blue: #0A1930; --buro-yellow: #FFC107; --bg-light: #F4F7FA; --surface: #FFFFFF;
+            --text-main: #0F172A; --text-muted: #64748B; --border: #E2E8F0;
+            --danger: #EF4444; --danger-bg: #FEE2E2; --success: #10B981; --success-bg: #DCFCE7;
+            --warning: #F59E0B; --warning-bg: #FEF3C7; --primary-blue: #2563EB;
+            --radius-md: 8px; --radius-lg: 12px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -59,182 +51,115 @@
         .view.active { display: flex; }
 
         /* =========================================
-           VIEW: POS / CAISSE
+           COMMON COMPONENTS (Mockup Styles)
         ========================================= */
-        .top-bar { display: flex; gap: 24px; height: 50px; flex-shrink: 0;}
-        
-        .input-group { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; align-items: center; padding: 4px 4px 4px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-        .input-group label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-right: 12px;}
-        .input-group select, .input-group input { border: none; background: transparent; height: 100%; flex: 1; font-weight: 700; color: var(--text-main); font-size: 14px;}
-        .input-group input::placeholder { color: #94A3B8; font-weight: 500;}
-        .input-group svg.icon { width: 20px; color: var(--text-muted); margin-right: 12px; }
-        
-        .btn-add-blue { background: var(--primary-blue); color: white; width: 40px; height: 40px; border-radius: 6px; display: flex; align-items: center; justify-content: center; transition: 0.2s; flex-shrink: 0;}
-        .btn-add-blue:hover { opacity: 0.9; }
-        .btn-add-blue:active { transform: scale(0.95); }
+        .metrics-row { display: flex; gap: 16px; margin-bottom: 8px; flex-shrink: 0;}
+        .metric-card { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; display: flex; align-items: center; gap: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02);}
+        .metric-icon { width: 48px; height: 48px; border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+        .metric-info h3 { font-size: 24px; font-weight: 800; color: var(--text-main); margin-bottom: 2px; line-height: 1;}
+        .metric-info p { font-size: 12px; color: var(--text-muted); font-weight: 600;}
 
-        .workspace { display: flex; gap: 24px; flex: 1; min-height: 0; /* Important for flex overflow */ }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; gap: 16px; flex-shrink: 0;}
+        .search-box-large { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; align-items: center; padding: 10px 16px; flex: 1; max-width: 400px; box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
+        .search-box-large svg { width: 18px; color: var(--text-muted); margin-right: 12px; }
+        .search-box-large input { border: none; background: transparent; width: 100%; font-weight: 600; font-size: 14px;}
+        
+        .btn-primary { background: var(--primary-blue); color: white; padding: 12px 24px; border-radius: var(--radius-md); font-weight: 700; font-size: 14px; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s;}
+        .btn-primary:hover { opacity: 0.9; }
 
-        /* CART SECTION (Left) */
+        .data-table-container { flex: 1; background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); overflow-y: auto; box-shadow: 0 1px 3px rgba(0,0,0,0.02);}
+        .data-table { width: 100%; border-collapse: collapse; text-align: left; }
+        .data-table th { padding: 16px 24px; font-size: 11px; font-weight: 800; color: var(--text-muted); border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 10; text-transform: uppercase;}
+        .data-table td { padding: 16px 24px; border-bottom: 1px solid var(--bg-light); font-size: 14px; font-weight: 600; vertical-align: middle;}
+        .data-table tr:hover td { background: var(--bg-light); }
+        
+        .status-badge { padding: 4px 10px; border-radius: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; display: inline-block;}
+        .bg-ok { background: var(--success-bg); color: var(--success); }
+        .bg-warn { background: var(--warning-bg); color: #B45309; }
+        .bg-err { background: var(--danger-bg); color: var(--danger); }
+        .bg-neutral { background: #E2E8F0; color: #475569; }
+
+        /* =========================================
+           VIEW 1: POS / CAISSE (Preserved)
+        ========================================= */
+        .pos-top-bar { display: flex; gap: 24px; height: 50px; flex-shrink: 0;}
+        .pos-input-group { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-md); display: flex; align-items: center; padding: 4px 4px 4px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .pos-input-group label { font-size: 11px; font-weight: 800; color: var(--text-muted); text-transform: uppercase; margin-right: 12px;}
+        .pos-input-group select, .pos-input-group input { border: none; background: transparent; height: 100%; flex: 1; font-weight: 700; color: var(--text-main); font-size: 14px;}
+        .pos-input-group svg.icon { width: 20px; color: var(--text-muted); margin-right: 12px; }
+        
+        .pos-workspace { display: flex; gap: 24px; flex: 1; min-height: 0; }
         .cart-section { flex: 1; background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
         .cart-header { padding: 20px 24px; border-bottom: 1px solid var(--border); font-size: 14px; font-weight: 800; color: var(--buro-blue); text-transform: uppercase; }
         
-        .table-wrap { flex: 1; overflow-y: auto; }
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th { padding: 12px 24px; font-size: 11px; font-weight: 800; color: var(--text-muted); border-bottom: 1px solid var(--border); background: var(--surface); position: sticky; top: 0; z-index: 10; text-transform: uppercase;}
-        td { padding: 12px 24px; border-bottom: 1px solid var(--bg-light); font-size: 14px; font-weight: 600; vertical-align: middle;}
-        
-        .col-index { width: 5%; color: var(--text-muted); font-size: 12px;}
-        .col-code { width: 15%; color: var(--text-muted); font-size: 13px; font-family: monospace;}
-        .col-article { display: flex; align-items: center; gap: 12px; }
         .prod-img { width: 36px; height: 36px; object-fit: contain; mix-blend-mode: multiply; border-radius: 4px;}
         .prod-img-placeholder { width: 36px; height: 36px; background: var(--bg-light); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: var(--text-muted); }
         
-        .stock-badge { padding: 4px 10px; border-radius: 20px; font-size: 12px; font-weight: 700; }
-        .stock-ok { background: var(--success-bg); color: var(--success); }
-        .stock-low { background: var(--warning-bg); color: #B45309; }
-
         .qty-controls { display: inline-flex; align-items: center; border: 1px solid var(--border); border-radius: var(--radius-md); overflow: hidden; background: white;}
         .qty-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: var(--text-main); transition: 0.2s;}
         .qty-btn:hover { background: var(--bg-light); }
         .qty-input { width: 40px; height: 32px; text-align: center; border: none; font-weight: 800; font-size: 14px; border-left: 1px solid var(--border); border-right: 1px solid var(--border);}
         
-        .col-total { font-weight: 800; color: var(--primary-blue); }
-        .btn-delete { color: var(--danger); border: 1px solid var(--danger-bg); width: 32px; height: 32px; border-radius: var(--radius-md); display: inline-flex; align-items: center; justify-content: center; background: white; transition: 0.2s;}
-        .btn-delete:hover { background: var(--danger-bg); }
-
         .cart-footer { padding: 16px 24px; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: var(--surface); }
-        .cart-count { font-weight: 800; font-size: 14px;}
-        .btn-clear { color: var(--danger); font-weight: 700; display: flex; align-items: center; gap: 8px; border: 1px solid var(--danger-bg); padding: 8px 16px; border-radius: var(--radius-md); background: white; transition: 0.2s;}
-        .btn-clear:hover { background: var(--danger-bg); }
+        .btn-clear { color: var(--danger); font-weight: 700; display: flex; align-items: center; gap: 8px; border: 1px solid var(--danger-bg); padding: 8px 16px; border-radius: var(--radius-md); background: white;}
 
-        /* RIGHT PANEL (Math & Actions) */
         .right-panel { width: 360px; display: flex; flex-direction: column; gap: 24px; flex-shrink: 0; overflow-y: auto; padding-right: 4px;}
-        
         .card { background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); padding: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);}
         .card h3 { font-size: 14px; font-weight: 800; color: var(--buro-blue); text-transform: uppercase; margin-bottom: 20px; }
-
         .math-row { display: flex; justify-content: space-between; align-items: center; font-size: 14px; font-weight: 600; margin-bottom: 16px; color: var(--text-main);}
         .math-row.muted { color: var(--text-muted); }
         .math-input { width: 100px; text-align: right; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 8px 12px; font-weight: 700; font-size: 14px;}
-        .math-input:focus { border-color: var(--primary-blue); }
         
         .ttc-box { background: var(--buro-blue); color: white; padding: 24px 20px; border-radius: var(--radius-md); text-align: center; margin: 24px 0; }
         .ttc-box span { display: block; font-size: 12px; font-weight: 700; margin-bottom: 8px; opacity: 0.8; text-transform: uppercase;}
         .ttc-box div { color: var(--buro-yellow); font-size: 36px; font-weight: 800; line-height: 1;}
 
-        .highlight-val { font-size: 18px; font-weight: 800; }
-        .val-green { color: var(--success); }
-        .val-blue { color: var(--primary-blue); }
-
         .actions-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;}
-        .btn-outline { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 12px; font-size: 13px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; justify-content: center; gap: 8px; background: white; transition: 0.2s;}
-        .btn-outline:hover { background: var(--bg-light); border-color: #CBD5E1; }
-        .btn-outline svg { width: 18px; color: var(--text-muted); }
-
+        .btn-outline { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 14px 12px; font-size: 13px; font-weight: 700; color: var(--text-main); display: flex; align-items: center; justify-content: center; gap: 8px; background: white;}
         .btn-master { background: var(--buro-yellow); color: var(--buro-blue); font-size: 18px; font-weight: 800; border-radius: var(--radius-md); padding: 20px; width: 100%; display: flex; justify-content: center; align-items: center; gap: 12px; box-shadow: 0 4px 15px rgba(255,193,7,0.3); transition: 0.2s; }
-        .btn-master:active { transform: scale(0.98); }
         .btn-master:disabled { opacity: 0.5; box-shadow: none; cursor: not-allowed; }
 
         /* =========================================
-           VIEW: COMMANDES (SPLIT SCREEN)
+           VIEW 2: COMMANDES (Split Screen)
         ========================================= */
-        .orders-toolbar { display: flex; gap: 12px; margin-bottom: 4px; align-items: center;}
-        .filter-pill { padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 700; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border); cursor: pointer; transition: 0.2s;}
-        .filter-pill.active { background: var(--buro-blue); color: white; border-color: var(--buro-blue); }
-        .order-search { background: var(--surface); border: 1px solid var(--border); border-radius: 50px; display: flex; align-items: center; padding: 8px 16px; margin-left: auto; width: 300px;}
-        .order-search input { border: none; background: transparent; width: 100%; font-weight: 600; margin-left: 10px; }
-
-        .orders-workspace { display: flex; gap: 24px; flex: 1; overflow: hidden; }
-        
-        /* Left: Order List */
-        .orders-list-panel { flex: 1; background: transparent; display: flex; flex-direction: column; overflow-y: auto; gap: 12px; padding-right: 8px;}
+        .orders-layout { display: flex; gap: 24px; flex: 1; overflow: hidden; }
+        .orders-list-panel { flex: 1; display: flex; flex-direction: column; overflow-y: auto; gap: 12px; padding-right: 8px;}
         .order-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 20px; cursor: pointer; transition: 0.2s; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 2px rgba(0,0,0,0.02);}
-        .order-card:hover { border-color: var(--primary-blue); transform: translateY(-1px);}
-        .order-card.selected { border-color: var(--primary-blue); background: #EFF6FF; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.1); }
+        .order-card.selected { border-color: var(--primary-blue); background: #EFF6FF; }
         
-        .oc-info { display: flex; flex-direction: column; gap: 6px; }
-        .oc-id { font-family: monospace; font-size: 12px; font-weight: 700; color: var(--text-muted); }
-        .oc-client { font-weight: 800; font-size: 16px; color: var(--buro-blue); }
-        .oc-date { font-size: 12px; color: var(--text-muted); font-weight: 600;}
-        
-        .oc-stats { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-        .oc-total { font-weight: 800; color: var(--primary-blue); font-size: 18px; }
-        .badge { padding: 6px 12px; border-radius: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; }
-        .bg-paid { background: var(--success-bg); color: var(--success); }
-        .bg-credit { background: var(--warning-bg); color: #B45309; }
-        .bg-susp { background: #E2E8F0; color: #475569; }
-        .bg-cancel { background: var(--danger-bg); color: var(--danger); }
-
-        /* Right: Order Details */
         .order-details-panel { width: 450px; background: var(--surface); border-radius: var(--radius-lg); border: 1px solid var(--border); display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0; box-shadow: 0 2px 8px rgba(0,0,0,0.04);}
-        .od-empty { flex: 1; display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-weight: 600; font-size: 14px; text-align: center; padding: 40px;}
         .od-header { padding: 24px; border-bottom: 1px solid var(--border); background: #F8FAFC;}
-        .od-id { font-size: 32px; font-weight: 800; color: var(--primary-blue); margin-bottom: 8px;}
-        .od-meta { font-size: 13px; color: var(--text-muted); display: flex; justify-content: space-between; align-items: center; font-weight: 600;}
-        
         .od-client-box { padding: 20px 24px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 16px;}
-        .od-client-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--bg-light); display: flex; align-items: center; justify-content: center; color: var(--text-muted);}
-        .od-client-info h4 { font-size: 16px; font-weight: 800; color: var(--text-main); margin-bottom: 4px;}
-        .od-client-info p { font-size: 12px; color: var(--text-muted); font-weight: 600;}
-
         .od-items-scroll { flex: 1; overflow-y: auto; padding: 0 24px; }
         .od-item { display: flex; justify-content: space-between; align-items: center; padding: 16px 0; border-bottom: 1px dashed var(--border); }
-        .od-item-main { flex: 1; }
-        .od-item-name { font-weight: 700; font-size: 14px; margin-bottom: 4px; color: var(--text-main);}
-        .od-item-qty { font-size: 12px; color: var(--text-muted); font-weight: 600;}
-        .od-item-price { font-weight: 800; color: var(--text-main); font-size: 14px;}
-
         .od-summary { padding: 24px; border-top: 1px solid var(--border); background: #F8FAFC; }
-        .od-sum-row { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 12px; color: var(--text-muted); }
-        .od-sum-total { display: flex; justify-content: space-between; font-size: 18px; font-weight: 800; color: var(--buro-blue); margin-top: 16px; padding-top: 16px; border-top: 2px dashed var(--border); }
-        
         .od-actions { padding: 24px; border-top: 1px solid var(--border); display: flex; flex-direction: column; gap: 12px; background: var(--surface);}
 
+        .payment-info { background: white; border: 1px solid var(--border); border-radius: var(--radius-md); padding: 16px; margin-top: 16px; font-size: 13px; }
+        .payment-info-row { display: flex; justify-content: space-between; margin-bottom: 8px;}
+
         /* =========================================
-           MODALS (Client & Product Search)
+           MODALS
         ========================================= */
         .overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 1000; }
         .overlay.active { display: flex; }
-        .modal { background: var(--surface); width: 100%; border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column;}
-        
+        .modal { background: var(--surface); width: 100%; max-width: 450px; border-radius: var(--radius-lg); padding: 32px; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1); display: flex; flex-direction: column; max-height: 90vh; overflow-y: auto;}
         .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;}
         .modal-title { font-size: 18px; font-weight: 800; color: var(--text-main); }
         .btn-close { color: var(--text-muted); cursor: pointer; padding: 4px; border-radius: 4px;}
         .btn-close:hover { background: var(--bg-light); color: var(--text-main); }
-
-        .tabs { display: flex; background: var(--bg-light); padding: 4px; border-radius: var(--radius-md); margin-bottom: 24px;}
-        .tab { flex: 1; text-align: center; padding: 10px; font-size: 13px; font-weight: 700; color: var(--text-muted); border-radius: var(--radius-md); cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;}
-        .tab.active { background: white; color: var(--primary-blue); box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
         
         .form-group { margin-bottom: 16px; }
         .form-group label { display: block; font-size: 12px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
         .form-control { width: 100%; padding: 14px 16px; border: 1px solid var(--border); border-radius: var(--radius-md); font-size: 14px; font-weight: 600; }
         .form-control:focus { border-color: var(--primary-blue); }
 
-        #searchModalOverlay .modal { max-width: 850px; max-height: 90vh; }
-        .search-filters { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-end;}
-        .search-filters .form-group { margin-bottom: 0; flex: 1;}
-        .price-range { display: flex; align-items: center; gap: 8px; flex: 0.6;}
-        
-        .modal-table-wrap { flex: 1; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-md); min-height: 350px;}
-        .modal-table-wrap th { padding: 12px 16px; font-size: 11px; }
-        .modal-table-wrap td { padding: 12px 16px; font-size: 13px; }
-        
-        .chk-container { display: flex; align-items: center; justify-content: center; }
-        .custom-chk { width: 18px; height: 18px; border: 2px solid #CBD5E1; border-radius: 4px; cursor: pointer; accent-color: var(--primary-blue); }
-        .custom-chk:disabled { cursor: not-allowed; opacity: 0.4; }
-
-        .modal-footer { display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);}
-        .selected-count { font-size: 14px; font-weight: 700; color: var(--text-main); }
-        .modal-actions { display: flex; gap: 12px; }
+        .modal-footer { display: flex; justify-content: flex-end; gap: 12px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);}
         .btn-modal { padding: 12px 24px; border-radius: var(--radius-md); font-weight: 700; font-size: 14px; transition: 0.2s;}
         .btn-cancel { background: var(--bg-light); color: var(--text-main); border: 1px solid var(--border); }
-        .btn-cancel:hover { background: #E2E8F0; }
-        .btn-save { background: var(--primary-blue); color: white; }
-        .btn-save:hover { background: #1D4ED8; }
+        .btn-save { background: var(--primary-blue); color: white; display: flex; align-items: center; justify-content: center; gap: 8px;}
 
-        /* THERMAL PRINTER */
+        /* THERMAL PRINTER HIDING */
         #print-receipt { display: none; }
         @media print {
             body * { visibility: hidden; }
@@ -248,7 +173,6 @@
 </head>
 <body>
 
-    <!-- SIDEBAR -->
     <aside id="sidebar">
         <div class="sidebar-brand">b<span>.</span></div>
         <nav class="nav-menu">
@@ -258,59 +182,44 @@
             <div class="nav-item" title="Commandes" onclick="switchView('orders', this)" id="nav-orders">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
             </div>
-            <div class="nav-item" title="Produits">
+            <div class="nav-item" title="Produits" onclick="switchView('products', this)" id="nav-products">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
             </div>
-            <div class="nav-item" title="Clients">
+            <div class="nav-item" title="Clients" onclick="switchView('clients', this)" id="nav-clients">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             </div>
         </nav>
         <div class="sidebar-footer">
-            <svg class="time-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:20px;"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             <div class="avatar" title="Hamza Derai">HD</div>
         </div>
     </aside>
 
-    <!-- MAIN CONTENT -->
     <main id="main-content">
 
-        <!-- =========================================
-             VIEW 1: POS / CAISSE
-        ========================================= -->
         <div id="view-pos" class="view active">
-            
-            <!-- TOP BAR (Client & Scanner) -->
-            <div class="top-bar">
-                <div class="input-group" style="flex:0.4;">
+            <div class="pos-top-bar">
+                <div class="pos-input-group" style="flex:0.4;">
                     <label>Client</label>
                     <select id="clientSelect"><option value="CLIENT COMPTOIR">CLIENT COMPTOIR</option></select>
-                    <button class="btn-add-blue" onclick="openClientModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:20px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                    <button class="btn-add-blue" onclick="openClientModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
                 </div>
-                <div class="input-group" style="flex:0.6;">
+                <div class="pos-input-group" style="flex:0.6;">
                     <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 7V4h3m10 0h3v3M4 17v3h3m10 0h3v-3M7 11h2m2 0h6m-4 4h2m-6 0h2"></path></svg>
                     <input type="text" id="barcodeScanner" placeholder="Scanner le code-barres complet ou 6 chiffres..." autofocus autocomplete="off">
-                    <button class="btn-add-blue" onclick="openSearchModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:20px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+                    <button class="btn-add-blue" onclick="openSearchModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
                 </div>
             </div>
 
-            <!-- WORKSPACE (Cart + Right Panel) -->
-            <div class="workspace">
-                
-                <!-- CART (Left) -->
+            <div class="pos-workspace">
                 <div class="cart-section">
                     <div class="cart-header">PRODUITS DE LA VENTE</div>
                     <div class="table-wrap">
-                        <table>
+                        <table class="data-table" style="border:none;">
                             <thead>
                                 <tr>
-                                    <th class="col-index">#</th>
-                                    <th class="col-code">CODE-BARRE</th>
-                                    <th>ARTICLE</th>
-                                    <th style="text-align: center;">STOCK</th>
-                                    <th style="text-align: center;">QTÉ</th>
-                                    <th style="text-align: right;">PRIX UNITAIRE</th>
-                                    <th style="text-align: right;">TOTAL</th>
-                                    <th></th>
+                                    <th class="col-index">#</th><th class="col-code">Code-barre</th><th>Article</th>
+                                    <th style="text-align: center;">Stock</th><th style="text-align: center;">Qté</th>
+                                    <th style="text-align: right;">Prix unitaire</th><th style="text-align: right;">Total</th><th></th>
                                 </tr>
                             </thead>
                             <tbody id="cartTableBody">
@@ -320,23 +229,15 @@
                     </div>
                     <div class="cart-footer">
                         <div class="cart-count"><span id="totalItemsBadge">0</span> article(s)</div>
-                        <button class="btn-clear" onclick="clearCart()">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
-                            Vider la liste
-                        </button>
+                        <button class="btn-clear" onclick="clearCart()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg> Vider la liste</button>
                     </div>
                 </div>
 
-                <!-- RIGHT PANEL (Summary + Actions) -->
                 <div class="right-panel">
-                    
                     <div class="card">
                         <h3>RÉSUMÉ DE LA VENTE</h3>
                         <div class="math-row muted"><span>Sous-total</span><span id="sumSubtotal">0,00 DH</span></div>
-                        <div class="math-row">
-                            <span>Remise (DH)</span>
-                            <input type="number" id="inputRemise" class="math-input" value="0.00" step="0.01">
-                        </div>
+                        <div class="math-row"><span>Remise (DH)</span><input type="number" id="inputRemise" class="math-input" value="0.00" step="0.01"></div>
                         <div class="math-row muted"><span>TVA (20%)</span><span>Inclus</span></div>
                         
                         <div class="ttc-box">
@@ -344,24 +245,15 @@
                             <div id="sumTotalTTC">0,00 DH</div>
                         </div>
 
-                        <div class="math-row">
-                            <span>Montant reçu</span>
-                            <input type="number" id="inputReceived" class="math-input" placeholder="0.00">
-                        </div>
-                        <div class="math-row" style="margin-top: 8px;">
-                            <span>Reste à payer</span>
-                            <span class="highlight-val val-green" id="sumDue">0,00 DH</span>
-                        </div>
-                        <div class="math-row">
-                            <span>À rendre</span>
-                            <span class="highlight-val val-blue" id="sumChange">0,00 DH</span>
-                        </div>
+                        <div class="math-row"><span>Montant reçu</span><input type="number" id="inputReceived" class="math-input" placeholder="0.00"></div>
+                        <div class="math-row" style="margin-top: 8px;"><span>Reste à payer</span><span class="highlight-val val-green" id="sumDue">0,00 DH</span></div>
+                        <div class="math-row"><span>À rendre</span><span class="highlight-val val-blue" id="sumChange">0,00 DH</span></div>
                     </div>
 
                     <div class="card" style="flex:1; display: flex; flex-direction: column;">
                         <h3>ACTIONS</h3>
                         <div class="actions-grid">
-                            <button class="btn-outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path></svg> Ticket</button>
+                            <button class="btn-outline" onclick="processSale('Enregistrée', true)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path></svg> Ticket</button>
                             <button class="btn-outline"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg> Facture</button>
                             <button class="btn-outline" onclick="processSale('Enregistrée', false)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg> Sauvegarder</button>
                             <button class="btn-outline" onclick="processSale('Suspendue', false)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg> Suspendre</button>
@@ -371,125 +263,210 @@
                             Encaisser (F5)
                         </button>
                     </div>
-
                 </div>
             </div>
         </div>
 
-        <!-- =========================================
-             VIEW 2: COMMANDES (Split Screen)
-        ========================================= -->
         <div id="view-orders" class="view">
-            
-            <div class="orders-toolbar">
-                <div class="filter-pill active" onclick="filterOrders('Toutes', this)">Toutes</div>
-                <div class="filter-pill" onclick="filterOrders('Suspendue', this)">Suspendues</div>
-                <div class="filter-pill" onclick="filterOrders('Crédit', this)">À Crédit</div>
-                <div class="filter-pill" onclick="filterOrders('Payé', this)">Payées</div>
-                
-                <div class="order-search">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px; color:var(--text-muted);"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" id="orderSearchInput" placeholder="Rechercher (Client, ID)...">
+            <div class="toolbar">
+                <div style="display:flex; gap:12px;">
+                    <div class="search-box-large">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                        <input type="text" id="orderSearchInput" placeholder="Rechercher (Client, ID, Statut)...">
+                    </div>
                 </div>
             </div>
 
-            <div class="orders-workspace">
-                
-                <!-- Left: List -->
+            <div class="orders-layout">
                 <div class="orders-list-panel" id="ordersListContainer">
-                    <!-- Cards injected via JS -->
-                </div>
+                    </div>
 
-                <!-- Right: Details -->
                 <div class="order-details-panel" id="orderDetailsPanel">
-                    <div class="od-empty">Sélectionnez une commande pour voir les détails</div>
+                    <div style="flex:1; display:flex; align-items:center; justify-content:center; color:var(--text-muted); font-weight:600;">Sélectionnez une commande</div>
                 </div>
+            </div>
+        </div>
 
+        <div id="view-products" class="view">
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-icon" style="background:#EFF6FF; color:#2563EB;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg></div>
+                    <div class="metric-info"><h3 id="pm-total">0</h3><p>Total produits</p></div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon" style="background:var(--success-bg); color:var(--success);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg></div>
+                    <div class="metric-info"><h3 id="pm-instock">0</h3><p>En stock</p></div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon" style="background:var(--warning-bg); color:#B45309;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg></div>
+                    <div class="metric-info"><h3 id="pm-low">0</h3><p>Stock faible</p></div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon" style="background:var(--danger-bg); color:var(--danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg></div>
+                    <div class="metric-info"><h3 id="pm-out">0</h3><p>En rupture</p></div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <div class="search-box-large">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="productSearchInput" placeholder="Rechercher un produit, code-barre...">
+                </div>
+                <button class="btn-primary" onclick="openProductModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Nouveau produit</button>
+            </div>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">CODE-BARRE</th>
+                            <th style="width: 30%;">PRODUIT</th>
+                            <th style="width: 15%;">CATÉGORIE</th>
+                            <th style="width: 10%;">STOCK</th>
+                            <th style="width: 10%; text-align:right;">P. VENTE</th>
+                            <th style="width: 10%; text-align:right;">P. ACHAT</th>
+                            <th style="width: 5%; text-align:center;">ACTIONS</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productsTableBody">
+                        </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div id="view-clients" class="view">
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-icon" style="background:#EFF6FF; color:#2563EB;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg></div>
+                    <div class="metric-info"><h3 id="cm-total">0</h3><p>Total clients</p></div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon" style="background:var(--success-bg); color:var(--success);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><polyline points="17 11 19 13 23 9"></polyline></svg></div>
+                    <div class="metric-info"><h3 id="cm-active">0</h3><p>Clients actifs (avec achats)</p></div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon" style="background:var(--warning-bg); color:#B45309;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                    <div class="metric-info"><h3 id="cm-new">0</h3><p>Nouveaux (ce mois)</p></div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-icon" style="background:var(--danger-bg); color:var(--danger);"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+                    <div class="metric-info"><h3 id="cm-debt">0.00 DH</h3><p>Total Crédits Impayés</p></div>
+                </div>
+            </div>
+
+            <div class="toolbar">
+                <div class="search-box-large">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="clientSearchInput" placeholder="Rechercher un client (nom, téléphone, ICE)...">
+                </div>
+                <button class="btn-primary" onclick="openClientModal()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:18px;"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> Nouveau client</button>
+            </div>
+
+            <div class="data-table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">CLIENT</th>
+                            <th style="width: 15%;">TÉLÉPHONE</th>
+                            <th style="width: 15%;">ICE</th>
+                            <th style="width: 15%; text-align:right;">ACHATS TOTAUX</th>
+                            <th style="width: 15%; text-align:right;">SOLDE (CRÉDIT)</th>
+                            <th style="width: 15%; text-align:center;">STATUT</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clientsTableBody">
+                        </tbody>
+                </table>
             </div>
         </div>
 
     </main>
 
-    <!-- =========================================
-         MODALS 
-    ========================================= -->
-
-    <!-- Add Client Modal -->
     <div class="overlay" id="clientModalOverlay">
         <div class="modal" style="max-width: 450px;">
             <div class="modal-header">
-                <div class="modal-title">Ajouter un client</div>
+                <div class="modal-title">Client B2B / Particulier</div>
                 <button class="btn-close" onclick="closeModals()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
             
-            <div class="tabs">
-                <div class="tab active" id="tabPart" onclick="switchClientTab('particulier')">Particulier</div>
-                <div class="tab" id="tabSoc" onclick="switchClientTab('societe')">Société</div>
+            <div style="display: flex; background: var(--bg-light); padding: 4px; border-radius: var(--radius-md); margin-bottom: 24px;">
+                <div class="tab-btn active" id="tabPart" onclick="switchClientTab('Particulier')" style="flex:1; text-align:center; padding:10px; font-weight:700; cursor:pointer; border-radius:var(--radius-md);">Particulier</div>
+                <div class="tab-btn" id="tabSoc" onclick="switchClientTab('Société')" style="flex:1; text-align:center; padding:10px; font-weight:700; cursor:pointer; border-radius:var(--radius-md);">Société</div>
             </div>
 
-            <div class="form-group"><label>Nom / Raison sociale *</label><input type="text" id="cmName" class="form-control" placeholder="Ex: Société ABC"></div>
-            <div class="form-group" id="iceGroup" style="display:none;"><label>ICE *</label><input type="text" id="cmIce" class="form-control" placeholder="Ex: 00123456700012"></div>
-            <div class="form-group"><label>Téléphone *</label><input type="text" id="cmPhone" class="form-control" placeholder="Ex: 06 12 34 56 78"></div>
+            <div class="form-group"><label>Nom ou Raison sociale *</label><input type="text" id="cmName" class="form-control" placeholder="Ex: Atlas Bureau"></div>
+            <div class="form-group" id="iceGroup" style="display:none;"><label>ICE *</label><input type="text" id="cmIce" class="form-control" placeholder="000000000000000"></div>
+            <div class="form-group"><label>Téléphone *</label><input type="text" id="cmPhone" class="form-control" placeholder="06..."></div>
             
-            <div class="modal-footer">
-                <button class="btn-modal btn-cancel" onclick="closeModals()">Annuler</button>
-                <button class="btn-modal btn-save" onclick="saveClient()">Ajouter</button>
+            <div class="modal-footer" style="display: flex; gap: 12px; margin-top: 24px;">
+                <button class="btn-cancel" onclick="closeModals()" style="flex:1; padding:12px; border-radius:var(--radius-md); font-weight:700;">Annuler</button>
+                <button class="btn-primary" onclick="saveClient()" style="flex:1; justify-content:center;">Sauvegarder</button>
             </div>
         </div>
     </div>
 
-    <!-- Product Search Modal -->
+    <div class="overlay" id="productModalOverlay">
+        <div class="modal" style="max-width: 500px;">
+            <div class="modal-header">
+                <div class="modal-title" id="pmTitle">Ajouter un produit</div>
+                <button class="btn-close" onclick="closeModals()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
+            </div>
+            <input type="hidden" id="pmId">
+            <div style="display:flex; gap:16px;">
+                <div class="form-group" style="flex:0.4;"><label>Code-barre</label><input type="text" id="pmSku" class="form-control" placeholder="Scanner..."></div>
+                <div class="form-group" style="flex:0.6;"><label>Article *</label><input type="text" id="pmName" class="form-control" placeholder="Désignation"></div>
+            </div>
+            <div style="display:flex; gap:16px;">
+                <div class="form-group" style="flex:1;"><label>Catégorie</label><input type="text" id="pmCat" class="form-control" placeholder="Ex: Fournitures"></div>
+            </div>
+            <div style="display:flex; gap:16px;">
+                <div class="form-group" style="flex:1;"><label>Prix Achat (DH)</label><input type="number" id="pmCost" class="form-control" placeholder="0.00"></div>
+                <div class="form-group" style="flex:1;"><label>Prix Vente (DH) *</label><input type="number" id="pmSell" class="form-control" placeholder="0.00"></div>
+            </div>
+            <div style="display:flex; gap:16px;">
+                <div class="form-group" style="flex:1;"><label>Stock</label><input type="number" id="pmStock" class="form-control" value="0"></div>
+                <div class="form-group" style="flex:1;"><label>Seuil Faible</label><input type="number" id="pmMinStock" class="form-control" value="5"></div>
+            </div>
+            <div class="modal-footer" style="display: flex; gap: 12px; margin-top: 12px;">
+                <button class="btn-cancel" onclick="closeModals()" style="flex:1; padding:12px; border-radius:var(--radius-md); font-weight:700;">Annuler</button>
+                <button class="btn-primary" onclick="saveProduct()" style="flex:1; justify-content:center;">Sauvegarder</button>
+            </div>
+        </div>
+    </div>
+
     <div class="overlay" id="searchModalOverlay">
-        <div class="modal">
+        <div class="modal" style="max-width: 800px; max-height: 90vh;">
             <div class="modal-header">
                 <div class="modal-title">Rechercher un article</div>
                 <button class="btn-close" onclick="closeModals()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
             </div>
-            
-            <div class="search-filters">
-                <div class="form-group" style="flex: 1;">
-                    <label>Recherche globale (Nom, Catégorie, Code)</label>
-                    <input type="text" id="advSearchName" class="form-control" placeholder="Ex: cahier, stylo..." autocomplete="off">
-                </div>
-                <div class="form-group" style="flex: 0.6;">
-                    <label>Prix (DH)</label>
-                    <div class="price-range">
-                        <input type="number" id="advSearchMin" class="form-control" placeholder="Min" style="padding:14px 10px; text-align:center;">
-                        <span style="color:var(--text-muted); font-weight:700;">-</span>
-                        <input type="number" id="advSearchMax" class="form-control" placeholder="Max" style="padding:14px 10px; text-align:center;">
-                    </div>
+            <div class="form-group">
+                <div class="search-box-large" style="max-width:100%;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                    <input type="text" id="advSearchName" placeholder="Nom, marque, catégorie..." autocomplete="off">
                 </div>
             </div>
-
-            <div class="modal-table-wrap">
-                <table style="border-collapse: collapse; width: 100%;">
-                    <thead style="position: sticky; top: 0; background: var(--surface); z-index: 10;">
+            <div style="flex: 1; overflow-y: auto; border: 1px solid var(--border); border-radius: var(--radius-md); min-height: 350px;">
+                <table class="data-table" style="border:none;">
+                    <thead>
                         <tr>
-                            <th style="width: 5%; text-align:center; border-bottom: 1px solid var(--border);"></th>
-                            <th style="width: 20%; border-bottom: 1px solid var(--border);">CODE-BARRE</th>
-                            <th style="width: 35%; border-bottom: 1px solid var(--border);">ARTICLE</th>
-                            <th style="width: 20%; border-bottom: 1px solid var(--border);">FAMILLE</th>
-                            <th style="width: 10%; text-align:center; border-bottom: 1px solid var(--border);">STOCK</th>
-                            <th style="width: 10%; text-align:right; border-bottom: 1px solid var(--border);">PRIX</th>
+                            <th style="width:5%; text-align:center;"></th><th style="width:20%;">CODE-BARRE</th><th style="width:35%;">ARTICLE</th>
+                            <th style="width:20%;">CATÉGORIE</th><th style="width:10%; text-align:center;">STOCK</th><th style="width:10%; text-align:right;">PRIX</th>
                         </tr>
                     </thead>
-                    <tbody id="advSearchResults">
-                        <!-- Populated via JS -->
-                    </tbody>
+                    <tbody id="advSearchResults"></tbody>
                 </table>
             </div>
-
-            <div class="modal-footer">
-                <span class="selected-count"><span id="selectedCountNum">0</span> article(s) sélectionné(s)</span>
-                <div class="modal-actions">
-                    <button class="btn-modal btn-cancel" onclick="closeModals()">Fermer</button>
-                    <button class="btn-modal btn-save" onclick="addSelectedFromSearch()">Ajouter à la vente</button>
+            <div class="modal-footer" style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--border);">
+                <span style="font-weight:700;"><span id="selectedCountNum">0</span> article(s) sélectionné(s)</span>
+                <div style="display: flex; gap:12px;">
+                    <button class="btn-cancel" onclick="closeModals()" style="padding:12px 24px; border-radius:var(--radius-md); font-weight:700;">Fermer</button>
+                    <button class="btn-primary" onclick="addSelectedFromSearch()">Ajouter à la vente</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- THERMAL RECEIPT (Hidden) -->
     <div id="print-receipt">
         <div class="pr-header">
             <div style="font-size: 20px; font-weight: bold; margin-bottom: 5px;">buro.</div>
@@ -502,12 +479,10 @@
         <div style="text-align: center; margin-top: 15px; font-size: 10px;">Merci de votre visite !</div>
     </div>
 
-    <!-- SCRIPTS -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc, deleteDoc, query, orderBy, limit } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyCKY59mqLqD4GqQpkDEFqNybKIkwLvgId0",
             authDomain: "lascoburo.firebaseapp.com",
@@ -522,8 +497,9 @@
         // GLOBALS
         let allProducts = [];
         let allOrders = [];
+        let allClients = [];
         let cart = []; 
-        let clientType = 'particulier';
+        let clientType = 'Particulier';
         let selectedProductIdsForModal = new Set();
         let currentOrderFilter = 'Toutes';
         let selectedOrderId = null;
@@ -533,20 +509,38 @@
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(`view-${viewId}`).classList.add('active');
-            navEl.classList.add('active');
+            if(navEl) navEl.classList.add('active');
+            
             if(viewId === 'pos') setTimeout(() => document.getElementById('barcodeScanner').focus(), 100);
+            if(viewId === 'products') renderProductsPage();
+            if(viewId === 'clients') renderClientsPage();
         };
 
+        // Custom styling for tabs in modals
+        document.head.insertAdjacentHTML("beforeend", `<style>
+            .tab-btn { background:transparent; color:var(--text-muted); }
+            .tab-btn.active { background:white; color:var(--primary-blue); box-shadow:0 1px 3px rgba(0,0,0,0.1); }
+        </style>`);
+
         // 2. DATA FETCHING
-        onSnapshot(collection(db, "products"), snap => { allProducts = snap.docs.map(d => ({id: d.id, ...d.data()})); });
-        onSnapshot(collection(db, "clients"), snap => {
-            const clients = snap.docs.map(d => d.data());
-            document.getElementById('clientSelect').innerHTML = `<option value="CLIENT COMPTOIR">CLIENT COMPTOIR</option>` + clients.map(c => `<option value="${c.name}">${c.name.toUpperCase()}</option>`).join('');
+        onSnapshot(collection(db, "products"), snap => { 
+            allProducts = snap.docs.map(d => ({id: d.id, ...d.data()})); 
+            if(document.getElementById('view-products').classList.contains('active')) renderProductsPage();
         });
-        onSnapshot(query(collection(db, "orders"), orderBy("timestamp", "desc"), limit(100)), snap => {
+        
+        onSnapshot(collection(db, "clients"), snap => {
+            allClients = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            document.getElementById('clientSelect').innerHTML = `<option value="CLIENT COMPTOIR">CLIENT COMPTOIR</option>` + allClients.map(c => `<option value="${c.name}">${c.name.toUpperCase()}</option>`).join('');
+            if(document.getElementById('view-clients').classList.contains('active')) renderClientsPage();
+        });
+
+        onSnapshot(query(collection(db, "orders"), orderBy("timestamp", "desc"), limit(200)), snap => {
             allOrders = snap.docs.map(d => ({id: d.id, ...d.data()}));
-            renderOrdersList();
-            if(selectedOrderId) renderOrderDetail(selectedOrderId);
+            if(document.getElementById('view-orders').classList.contains('active')) {
+                renderOrdersList();
+                if(selectedOrderId) renderOrderDetail(selectedOrderId);
+            }
+            if(document.getElementById('view-clients').classList.contains('active')) renderClientsPage();
         });
 
         // 3. POS LOGIC
@@ -570,84 +564,50 @@
             }
         });
 
-        // Modal: Advanced Search
-        const searchNameInput = document.getElementById('advSearchName');
-        const searchMinInput = document.getElementById('advSearchMin');
-        const searchMaxInput = document.getElementById('advSearchMax');
-
         window.openSearchModal = () => {
             document.getElementById('searchModalOverlay').classList.add('active');
-            searchNameInput.value = ''; searchMinInput.value = ''; searchMaxInput.value = '';
-            selectedProductIdsForModal.clear(); updateSelectedCount(); runAdvancedSearch();
-            setTimeout(() => searchNameInput.focus(), 100);
+            document.getElementById('advSearchName').value = ''; selectedProductIdsForModal.clear(); updateSelectedCount(); runAdvancedSearch();
+            setTimeout(() => document.getElementById('advSearchName').focus(), 100);
         };
 
         const runAdvancedSearch = () => {
-            const q = searchNameInput.value.trim().toLowerCase();
-            const min = parseFloat(searchMinInput.value) || 0;
-            const max = parseFloat(searchMaxInput.value) || 999999;
-            const tbody = document.getElementById('advSearchResults');
-
+            const q = document.getElementById('advSearchName').value.trim().toLowerCase();
             let results = allProducts;
             if(q) results = results.filter(p => (p.name||'').toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q) || (p.sku||'').toLowerCase().includes(q));
-            if(searchMinInput.value || searchMaxInput.value) results = results.filter(p => { const price = parseFloat(p.sellPrice || 0); return price >= min && price <= max; });
-
+            
+            const tbody = document.getElementById('advSearchResults');
             if(results.length > 0) {
-                tbody.innerHTML = results.map(p => {
-                    const stock = parseInt(p.stock) || 0;
-                    const isDisabled = stock <= 0;
-                    const isChecked = selectedProductIdsForModal.has(p.id);
+                tbody.innerHTML = results.slice(0,30).map(p => {
+                    const stock = parseInt(p.stock) || 0; const isDisabled = stock <= 0; const isChecked = selectedProductIdsForModal.has(p.id);
                     return `
                     <tr style="${isDisabled ? 'opacity:0.5;' : ''}">
-                        <td class="chk-container"><input type="checkbox" class="custom-chk" value="${p.id}" onchange="toggleModalSelection(this)" ${isDisabled ? 'disabled' : ''} ${isChecked ? 'checked' : ''}></td>
+                        <td style="text-align:center;"><input type="checkbox" style="width:16px; height:16px; cursor:pointer;" value="${p.id}" onchange="toggleModalSelection(this)" ${isDisabled ? 'disabled' : ''} ${isChecked ? 'checked' : ''}></td>
                         <td style="font-family:monospace; color:var(--text-muted);">${p.sku || 'N/A'}</td>
                         <td style="font-weight:700; color:var(--text-main);">${p.name}</td>
                         <td style="color:var(--text-muted);">${p.category || 'Non classé'}</td>
-                        <td style="text-align:center;"><span class="stock-badge ${isDisabled ? 'stock-low' : 'stock-ok'}">${stock}</span></td>
+                        <td style="text-align:center;"><span class="status-badge ${isDisabled ? 'bg-err' : 'bg-ok'}">${stock}</span></td>
                         <td style="text-align:right; font-weight:800; color:var(--primary-blue);">${parseFloat(p.sellPrice || 0).toFixed(2)} DH</td>
                     </tr>`;
                 }).join('');
             } else { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:40px; color:var(--text-muted);">Aucun article trouvé.</td></tr>`; }
         };
-
-        searchNameInput.addEventListener('input', runAdvancedSearch); searchMinInput.addEventListener('input', runAdvancedSearch); searchMaxInput.addEventListener('input', runAdvancedSearch);
+        document.getElementById('advSearchName').addEventListener('input', runAdvancedSearch);
 
         window.toggleModalSelection = (checkbox) => {
             if(checkbox.checked) selectedProductIdsForModal.add(checkbox.value); else selectedProductIdsForModal.delete(checkbox.value);
             updateSelectedCount();
         };
         function updateSelectedCount() { document.getElementById('selectedCountNum').innerText = selectedProductIdsForModal.size; }
+        window.addSelectedFromSearch = () => { selectedProductIdsForModal.forEach(id => { const p = allProducts.find(x => x.id === id); if(p) addToCart(p); }); closeModals(); };
 
-        window.addSelectedFromSearch = () => {
-            selectedProductIdsForModal.forEach(id => { const p = allProducts.find(x => x.id === id); if(p) addToCart(p); });
-            closeModals();
-        };
-
-        // Modal: Add Client
-        window.openClientModal = () => { document.getElementById('clientModalOverlay').classList.add('active'); };
-        window.switchClientTab = (type) => {
-            clientType = type; document.getElementById('tabPart').classList.remove('active'); document.getElementById('tabSoc').classList.remove('active');
-            if(type === 'societe') { document.getElementById('tabSoc').classList.add('active'); document.getElementById('iceGroup').style.display = 'block'; } 
-            else { document.getElementById('tabPart').classList.add('active'); document.getElementById('iceGroup').style.display = 'none'; }
-        };
-        window.saveClient = async () => {
-            const name = document.getElementById('cmName').value.trim(); if(!name) return;
-            const data = { name: name, phone: document.getElementById('cmPhone').value, type: clientType };
-            if(clientType === 'societe') data.ice = document.getElementById('cmIce').value;
-            try { await addDoc(collection(db, "clients"), data); closeModals(); } catch(e) {}
-        };
-
-        window.closeModals = () => { document.querySelectorAll('.overlay').forEach(el => el.classList.remove('active')); barcodeInput.focus(); };
-
-        // 4. CART & MATH
+        // Cart Math
         function addToCart(product) {
             const existing = cart.find(item => item.product.id === product.id);
             if (existing) { existing.qty++; } else { cart.push({ product: product, qty: 1, unitPrice: parseFloat(product.promoPrice || product.sellPrice || 0) }); }
             renderCart();
         }
-
         window.updateQty = (index, delta) => { cart[index].qty += delta; if(cart[index].qty <= 0) cart.splice(index, 1); renderCart(); barcodeInput.focus(); };
-        window.setQty = (index, value) => { const val = parseInt(value); if(isNaN(val) || val <= 0) { cart.splice(index, 1); } else { cart[index].qty = val; } renderCart(); }
+        window.setQty = (index, value) => { const val = parseInt(value); if(isNaN(val) || val <= 0) cart.splice(index, 1); else cart[index].qty = val; renderCart(); };
         window.removeFromCart = (index) => { cart.splice(index, 1); renderCart(); barcodeInput.focus(); };
         window.clearCart = () => { cart = []; renderCart(); barcodeInput.focus(); };
 
@@ -657,26 +617,19 @@
                 tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:80px; color:var(--text-muted); font-size: 14px;">Panier vide. Scannez un article pour commencer.</td></tr>`;
                 document.getElementById('totalItemsBadge').innerText = "0"; calculateTotals(); return;
             }
-
             let itemsCount = 0;
             tbody.innerHTML = cart.map((item, index) => {
-                const p = item.product; const dbProd = allProducts.find(x => x.id === p.id) || p;
-                const stock = parseInt(dbProd.stock) || 0; const lineTotal = item.qty * item.unitPrice; itemsCount += item.qty;
-                const imgHtml = p.imageUrl ? `<img src="${p.imageUrl}" class="prod-img">` : `<div class="prod-img-placeholder">${p.name.charAt(0)}</div>`;
-
+                const p = item.product; const dbProd = allProducts.find(x => x.id === p.id) || p; const stock = parseInt(dbProd.stock) || 0;
+                itemsCount += item.qty;
                 return `
                 <tr>
-                    <td class="col-index">${index + 1}</td>
-                    <td class="col-code">${p.sku || 'N/A'}</td>
-                    <td class="col-article">${imgHtml} <span style="font-weight:700;">${p.name}</span></td>
-                    <td style="text-align:center;"><span class="stock-badge ${stock < item.qty ? 'stock-low' : 'stock-ok'}">${stock}</span></td>
+                    <td class="col-index">${index + 1}</td><td class="col-code">${p.sku || 'N/A'}</td><td class="col-article"><span style="font-weight:700;">${p.name}</span></td>
+                    <td style="text-align:center;"><span class="status-badge ${stock < item.qty ? 'bg-warn' : 'bg-ok'}">${stock}</span></td>
                     <td style="text-align:center;"><div class="qty-controls"><button class="qty-btn" onclick="updateQty(${index}, -1)">-</button><input type="number" class="qty-input" value="${item.qty}" onchange="setQty(${index}, this.value)"><button class="qty-btn" onclick="updateQty(${index}, 1)">+</button></div></td>
-                    <td style="text-align:right; color:var(--text-main); font-weight:700;">${item.unitPrice.toFixed(2)} DH</td>
-                    <td style="text-align:right;" class="col-total">${lineTotal.toFixed(2)} DH</td>
-                    <td style="text-align:right;"><button class="btn-delete" onclick="removeFromCart(${index})"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></td>
+                    <td style="text-align:right; color:var(--text-main); font-weight:700;">${item.unitPrice.toFixed(2)} DH</td><td style="text-align:right;" class="col-total">${(item.qty * item.unitPrice).toFixed(2)} DH</td>
+                    <td style="text-align:right;"><button class="btn-delete" onclick="removeFromCart(${index})">X</button></td>
                 </tr>`;
             }).join('');
-
             document.getElementById('totalItemsBadge').innerText = itemsCount; calculateTotals();
         }
 
@@ -688,10 +641,8 @@
             const remise = parseFloat(inputRemise.value) || 0; const totalTTC = Math.max(0, subtotal - remise);
             const received = parseFloat(inputReceived.value) || 0;
             
-            document.getElementById('sumSubtotal').innerText = subtotal.toFixed(2) + " DH";
-            document.getElementById('sumTotalTTC').innerText = totalTTC.toFixed(2) + " DH";
-            document.getElementById('sumDue').innerText = Math.max(0, totalTTC - received).toFixed(2) + " DH";
-            document.getElementById('sumChange').innerText = Math.max(0, received - totalTTC).toFixed(2) + " DH";
+            document.getElementById('sumSubtotal').innerText = subtotal.toFixed(2) + " DH"; document.getElementById('sumTotalTTC').innerText = totalTTC.toFixed(2) + " DH";
+            document.getElementById('sumDue').innerText = Math.max(0, totalTTC - received).toFixed(2) + " DH"; document.getElementById('sumChange').innerText = Math.max(0, received - totalTTC).toFixed(2) + " DH";
             document.getElementById('btnCheckout').disabled = cart.length === 0;
         }
 
@@ -701,24 +652,32 @@
             if (cart.length === 0) return;
             const btn = document.getElementById('btnCheckout'); btn.disabled = true; btn.innerText = "Traitement...";
 
-            const remise = parseFloat(inputRemise.value) || 0;
-            const totalTTC = Math.max(0, cart.reduce((sum, i) => sum + (i.qty * i.unitPrice), 0) - remise);
+            const totalTTC = Math.max(0, cart.reduce((sum, i) => sum + (i.qty * i.unitPrice), 0) - (parseFloat(inputRemise.value) || 0));
+            const received = parseFloat(inputReceived.value) || 0;
+            
+            // Adjust Status if Credit
+            let finalStatus = status;
+            if(status === 'Payé' && received < totalTTC) finalStatus = "Crédit";
 
             const orderData = {
                 customerName: document.getElementById('clientSelect').value,
-                status: status, timestamp: new Date().toISOString(), totalPrice: totalTTC, discount: remise,
+                status: finalStatus, timestamp: new Date().toISOString(), 
+                totalPrice: totalTTC, discount: parseFloat(inputRemise.value) || 0,
+                amountPaid: (finalStatus === "Crédit" || finalStatus === "Payé") ? Math.min(received, totalTTC) : 0,
+                firstPaymentDate: (received > 0 && finalStatus !== 'Suspendue') ? new Date().toISOString() : null,
+                lastPaymentDate: (received > 0 && finalStatus !== 'Suspendue') ? new Date().toISOString() : null,
                 cart: cart.map(i => ({ product: { id: i.product.id, name: i.product.name, sku: i.product.sku }, qty: i.qty, unitPrice: i.unitPrice }))
             };
 
             try {
                 await addDoc(collection(db, "orders"), orderData);
-                if(status !== 'Suspendue') {
+                if(finalStatus !== 'Suspendue') {
                     for (let item of cart) { const stock = parseInt((allProducts.find(p=>p.id===item.product.id)||{}).stock) || 0; await updateDoc(doc(db, "products", item.product.id), { stock: stock - item.qty }); }
                 }
                 if(shouldPrint) { buildReceipt(orderData); window.print(); }
                 clearCart(); inputRemise.value = "0.00"; inputReceived.value = ""; calculateTotals();
             } catch (error) { alert("Erreur."); } finally {
-                btn.disabled = false; btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:24px;"><rect x="2" y="4" width="20" height="16" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line><rect x="6" y="14" width="4" height="2" rx="1"></rect></svg> Encaisser (F5)`; barcodeInput.focus();
+                btn.disabled = false; btn.innerHTML = `Encaisser (F5)`; barcodeInput.focus();
             }
         };
 
@@ -726,102 +685,248 @@
             document.getElementById('printDate').innerText = new Date(order.timestamp).toLocaleString('fr-FR');
             document.getElementById('printItems').innerHTML = order.cart.map(i => `<div class="pr-item"><div style="width:60%">${i.qty}x ${i.product.name}</div><div style="width:40%; text-align:right;">${(i.qty * i.unitPrice).toFixed(2)} DH</div></div>`).join('');
             document.getElementById('printTotal').innerText = "TOTAL TTC: " + order.totalPrice.toFixed(2) + " DH";
-            const sDiv = document.getElementById('printStatus');
-            if(order.status === 'Crédit') { sDiv.innerText = "*** NON PAYÉ (CRÉDIT) ***"; } else { sDiv.innerText = ""; }
+            document.getElementById('printStatus').innerText = order.status === 'Crédit' ? `*** CRÉDIT (Payé: ${order.amountPaid} DH) ***` : "Payé";
         }
 
-        // 5. COMMANDES LOGIC (Split Screen)
+        // 4. COMMANDES (Split Screen with Credit Logic)
         window.filterOrders = (filter, el) => {
             currentOrderFilter = filter;
-            document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active')); el.classList.add('active');
+            document.querySelectorAll('#view-orders .filter-pill').forEach(p => p.classList.remove('active')); el.classList.add('active');
             renderOrdersList();
         };
 
         function renderOrdersList() {
             const container = document.getElementById('ordersListContainer');
             let filtered = allOrders;
-            if(currentOrderFilter !== 'Toutes') { filtered = filtered.filter(o => o.status === currentOrderFilter || (currentOrderFilter==='Crédit' && o.status.includes('Crédit'))); }
+            if(currentOrderFilter !== 'Toutes') filtered = filtered.filter(o => o.status === currentOrderFilter || (currentOrderFilter==='Crédit' && o.status === 'Crédit'));
             
             const q = document.getElementById('orderSearchInput').value.trim().toLowerCase();
             if(q) filtered = filtered.filter(o => o.customerName.toLowerCase().includes(q) || o.id.toLowerCase().includes(q));
 
-            if(filtered.length === 0) { container.innerHTML = `<div style="text-align:center; padding:40px; color:var(--text-muted);">Aucune commande trouvée.</div>`; return; }
+            if(filtered.length === 0) { container.innerHTML = `<div style="padding:40px; text-align:center; color:var(--text-muted);">Aucune commande.</div>`; return; }
 
             container.innerHTML = filtered.map(o => {
                 const date = new Date(o.timestamp).toLocaleString('fr-FR', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
                 const isSelected = selectedOrderId === o.id ? 'selected' : '';
-                let badgeClass = 'bg-paid'; let badgeText = o.status;
-                if(o.status.includes('Crédit')) badgeClass = 'bg-credit';
-                if(o.status === 'Suspendue') badgeClass = 'bg-susp';
-                if(o.status === 'Annulée') badgeClass = 'bg-cancel';
-
+                let badgeClass = 'bg-ok'; if(o.status === 'Suspendue') badgeClass = 'bg-neutral'; else if(o.status === 'Crédit') badgeClass = 'bg-warn'; else if(o.status === 'Annulée') badgeClass = 'bg-err';
                 return `
-                <div class="order-card ${isSelected}" onclick="selectOrder('${o.id}')" id="card-${o.id}">
-                    <div class="oc-info"><div class="oc-id">#${o.id.substring(0,8).toUpperCase()}</div><div class="oc-client">${o.customerName}</div><div class="oc-date">${date}</div></div>
-                    <div class="oc-stats"><div class="oc-total">${parseFloat(o.totalPrice).toFixed(2)} DH</div><div class="badge ${badgeClass}">${badgeText}</div></div>
+                <div class="order-card ${isSelected}" onclick="selectOrder('${o.id}')" id="card-${o.id}" style="background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:16px; margin-bottom:12px; cursor:pointer;">
+                    <div><div style="font-family:monospace; font-size:12px; color:var(--text-muted);">#${o.id.substring(0,8).toUpperCase()}</div><div style="font-weight:800; font-size:15px; color:var(--buro-blue);">${o.customerName}</div><div style="font-size:12px; color:var(--text-muted);">${date}</div></div>
+                    <div style="text-align:right;"><div style="font-weight:800; color:var(--primary-blue); font-size:16px; margin-bottom:6px;">${parseFloat(o.totalPrice).toFixed(2)} DH</div><div class="status-badge ${badgeClass}">${o.status}</div></div>
                 </div>`;
             }).join('');
         }
-
         document.getElementById('orderSearchInput').addEventListener('input', renderOrdersList);
 
         window.selectOrder = (id) => {
             selectedOrderId = id; renderOrdersList();
             const o = allOrders.find(x => x.id === id); if(!o) return;
             
-            const date = new Date(o.timestamp).toLocaleString('fr-FR');
-            let actionsHtml = `<button class="btn-outline" style="width:100%; justify-content:center;" onclick="reprintTicket('${o.id}')">Imprimer Ticket</button>`;
+            const dateStr = new Date(o.timestamp).toLocaleString('fr-FR');
+            const paid = parseFloat(o.amountPaid || 0);
+            const due = Math.max(0, o.totalPrice - paid);
+            
+            let paymentHistoryHtml = '';
+            if (o.status === 'Crédit' || o.status === 'Payé') {
+                const firstD = o.firstPaymentDate ? new Date(o.firstPaymentDate).toLocaleDateString('fr-FR') : '-';
+                const lastD = o.lastPaymentDate ? new Date(o.lastPaymentDate).toLocaleDateString('fr-FR') : '-';
+                paymentHistoryHtml = `
+                    <div class="payment-info">
+                        <div class="payment-info-row"><span style="color:var(--text-muted);">Montant Payé:</span><span style="font-weight:800; color:var(--success);">${paid.toFixed(2)} DH</span></div>
+                        <div class="payment-info-row"><span style="color:var(--text-muted);">Reste à Payer:</span><span style="font-weight:800; color:var(--danger);">${due.toFixed(2)} DH</span></div>
+                        <div class="payment-info-row" style="margin-top:12px; font-size:11px; color:var(--text-muted);"><span style="color:var(--text-muted);">1er paiement:</span><span>${firstD}</span></div>
+                        <div class="payment-info-row" style="font-size:11px; color:var(--text-muted); margin-bottom:0;"><span style="color:var(--text-muted);">Dernier paiement:</span><span>${lastD}</span></div>
+                    </div>`;
+            }
+
+            let actionsHtml = `<button class="btn-outline" style="width:100%; justify-content:center; margin-bottom:12px;" onclick="reprintTicket('${o.id}')">Imprimer Ticket</button>`;
             
             if(o.status === 'Suspendue') {
-                actionsHtml = `<button class="btn-master" style="margin-bottom:12px; font-size:14px; padding:12px;" onclick="resumeOrder('${o.id}')">Reprendre la vente</button>` + actionsHtml;
-                actionsHtml += `<button class="btn-outline" style="margin-top:12px; color:var(--danger); border-color:var(--danger-bg); width:100%; justify-content:center;" onclick="cancelOrder('${o.id}')">Supprimer la suspension</button>`;
-            } else if(o.status.includes('Crédit')) {
-                actionsHtml = `<button class="btn-master" style="margin-bottom:12px; font-size:14px; padding:12px; background:var(--success); color:white;" onclick="markOrderPaid('${o.id}')">Encaisser le Crédit</button>` + actionsHtml;
-            } else if(o.status !== 'Annulée') {
-                actionsHtml += `<button class="btn-outline" style="margin-top:12px; color:var(--danger); border-color:var(--danger-bg); width:100%; justify-content:center;" onclick="cancelOrder('${o.id}')">Annuler la commande</button>`;
+                actionsHtml = `<button class="btn-primary" style="width:100%; justify-content:center; margin-bottom:12px;" onclick="resumeOrder('${o.id}')">Reprendre la vente</button>` + actionsHtml;
+                actionsHtml += `<button class="btn-outline" style="color:var(--danger); width:100%; justify-content:center;" onclick="cancelOrder('${o.id}')">Supprimer la suspension</button>`;
+            } else if(o.status === 'Crédit') {
+                actionsHtml = `
+                    <div style="display:flex; gap:8px; margin-bottom:12px;">
+                        <input type="number" id="payCreditAmount" class="math-input" style="flex:1;" placeholder="Montant DH" value="${due.toFixed(2)}">
+                        <button class="btn-primary" style="background:var(--success);" onclick="addPaymentToOrder('${o.id}')">Encaisser</button>
+                    </div>` + actionsHtml;
             }
 
             document.getElementById('orderDetailsPanel').innerHTML = `
-                <div class="od-header">
-                    <div class="od-id">${parseFloat(o.totalPrice).toFixed(2)} DH</div>
-                    <div class="od-meta"><span>#${o.id.substring(0,8).toUpperCase()}</span><span>${date}</span></div>
+                <div style="padding:24px; border-bottom:1px solid var(--border); background:#F8FAFC;">
+                    <div style="font-size:32px; font-weight:800; color:var(--primary-blue); margin-bottom:8px;">${parseFloat(o.totalPrice).toFixed(2)} DH</div>
+                    <div style="font-size:13px; color:var(--text-muted); display:flex; justify-content:space-between; font-weight:600;"><span>#${o.id.substring(0,8).toUpperCase()}</span><span>${dateStr}</span></div>
                 </div>
-                <div class="od-client-box">
-                    <div class="od-client-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
-                    <div class="od-client-info"><h4>${o.customerName}</h4><p>Statut : ${o.status}</p></div>
+                <div style="padding:20px 24px; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:16px;">
+                    <div style="width:44px; height:44px; border-radius:50%; background:var(--bg-light); display:flex; align-items:center; justify-content:center;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:20px; color:var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></div>
+                    <div><h4 style="font-size:16px; font-weight:800; color:var(--text-main); margin-bottom:4px;">${o.customerName}</h4><p style="font-size:12px; color:var(--text-muted); font-weight:600;">Statut : ${o.status}</p></div>
                 </div>
-                <div class="od-items-scroll">
-                    ${(o.cart||[]).map(i => `<div class="od-item"><div class="od-item-main"><div class="od-item-name">${i.product.name}</div><div class="od-item-qty">${i.qty}x à ${parseFloat(i.unitPrice).toFixed(2)} DH</div></div><div class="od-item-price">${(i.qty * i.unitPrice).toFixed(2)} DH</div></div>`).join('')}
-                    <div class="od-summary">
-                        <div class="od-sum-row"><span>Remise appliquée</span><span>- ${parseFloat(o.discount||0).toFixed(2)} DH</span></div>
-                        <div class="od-sum-total"><span>Total</span><span>${parseFloat(o.totalPrice).toFixed(2)} DH</span></div>
-                    </div>
+                <div style="flex:1; overflow-y:auto; padding:0 24px;">
+                    ${(o.cart||[]).map(i => `<div style="display:flex; justify-content:space-between; align-items:center; padding:16px 0; border-bottom:1px dashed var(--border);"><div style="flex:1;"><div style="font-weight:700; font-size:14px; margin-bottom:4px; color:var(--text-main);">${i.product.name}</div><div style="font-size:12px; color:var(--text-muted); font-weight:600;">${i.qty}x à ${parseFloat(i.unitPrice).toFixed(2)} DH</div></div><div style="font-weight:800; color:var(--text-main); font-size:14px;">${(i.qty * i.unitPrice).toFixed(2)} DH</div></div>`).join('')}
+                    ${paymentHistoryHtml}
                 </div>
-                <div class="od-actions">${actionsHtml}</div>
+                <div style="padding:24px; border-top:1px solid var(--border); display:flex; flex-direction:column; background:var(--surface);">${actionsHtml}</div>
             `;
+        };
+
+        window.addPaymentToOrder = async (id) => {
+            const o = allOrders.find(x => x.id === id); if(!o) return;
+            const payAmount = parseFloat(document.getElementById('payCreditAmount').value) || 0;
+            if(payAmount <= 0) return alert("Montant invalide");
+            
+            const newPaid = (parseFloat(o.amountPaid) || 0) + payAmount;
+            const isFullyPaid = newPaid >= o.totalPrice;
+            
+            const updates = {
+                amountPaid: newPaid,
+                lastPaymentDate: new Date().toISOString(),
+                status: isFullyPaid ? "Payé" : "Crédit"
+            };
+            if(!o.firstPaymentDate) updates.firstPaymentDate = new Date().toISOString();
+
+            try { await updateDoc(doc(db, "orders", id), updates); selectOrder(id); } catch(e) { alert("Erreur"); }
         };
 
         window.resumeOrder = async (id) => {
             const o = allOrders.find(x => x.id === id); if(!o) return;
             cart = o.cart.map(i => { const fullProd = allProducts.find(p => p.id === i.product.id) || i.product; return { product: fullProd, qty: i.qty, unitPrice: i.unitPrice }; });
-            document.getElementById('clientSelect').value = o.customerName || "CLIENT COMPTOIR";
-            inputRemise.value = o.discount || "0.00";
-            
+            document.getElementById('clientSelect').value = o.customerName || "CLIENT COMPTOIR"; inputRemise.value = o.discount || "0.00";
             await deleteDoc(doc(db, "orders", id)); selectedOrderId = null;
             renderCart(); switchView('pos', document.getElementById('nav-pos'));
         };
 
         window.cancelOrder = async (id) => {
-            if(!confirm("Êtes-vous sûr de vouloir annuler cette commande et restaurer le stock ?")) return;
+            if(!confirm("Annuler cette commande et restaurer le stock ?")) return;
             const o = allOrders.find(x => x.id === id); if(!o) return;
-            if(o.status !== 'Suspendue') {
-                for (let item of o.cart) { const liveP = allProducts.find(p => p.id === item.product.id); if(liveP) { const s = parseInt(liveP.stock) || 0; await updateDoc(doc(db, "products", item.product.id), { stock: s + item.qty }); } }
-            }
+            if(o.status !== 'Suspendue') { for (let item of o.cart) { const liveP = allProducts.find(p => p.id === item.product.id); if(liveP) { const s = parseInt(liveP.stock) || 0; await updateDoc(doc(db, "products", item.product.id), { stock: s + item.qty }); } } }
             await updateDoc(doc(db, "orders", id), { status: 'Annulée' }); selectOrder(id);
         };
-
-        window.markOrderPaid = async (id) => { try { await updateDoc(doc(db, "orders", id), { status: "Payé" }); selectOrder(id); } catch(e) {} };
         window.reprintTicket = (id) => { const o = allOrders.find(x => x.id === id); if(o) { buildReceipt(o); window.print(); } };
+
+        // 5. PRODUITS (Inventory)
+        window.renderProductsPage = () => {
+            const tbody = document.getElementById('productsTableBody');
+            const q = document.getElementById('productSearchInput').value.trim().toLowerCase();
+            let filtered = allProducts;
+            if(q) filtered = filtered.filter(p => (p.name||'').toLowerCase().includes(q) || (p.sku||'').toLowerCase().includes(q));
+
+            let totalProds = allProducts.length; let inStock = 0; let lowStock = 0; let outStock = 0;
+            allProducts.forEach(p => {
+                const s = parseInt(p.stock) || 0; const min = parseInt(p.lowStockThreshold) || 5;
+                if(s <= 0) outStock++; else if(s <= min) lowStock++; else inStock++;
+            });
+            document.getElementById('pm-total').innerText = totalProds; document.getElementById('pm-instock').innerText = inStock;
+            document.getElementById('pm-low').innerText = lowStock; document.getElementById('pm-out').innerText = outStock;
+
+            if(filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:40px;">Aucun produit trouvé.</td></tr>`; return; }
+
+            tbody.innerHTML = filtered.map(p => {
+                const stock = parseInt(p.stock) || 0; const min = parseInt(p.lowStockThreshold) || 5;
+                let badgeClass = 'bg-ok'; let badgeText = 'En stock';
+                if(stock <= 0) { badgeClass = 'bg-err'; badgeText = 'Rupture'; } else if(stock <= min) { badgeClass = 'bg-warn'; badgeText = 'Faible'; }
+                
+                return `
+                <tr>
+                    <td style="font-family:monospace; color:var(--text-muted);">${p.sku || 'N/A'}</td>
+                    <td style="font-weight:700;">${p.name}</td>
+                    <td style="color:var(--text-muted);"><span style="background:var(--bg-light); padding:4px 8px; border-radius:4px; font-size:11px;">${p.category || 'Standard'}</span></td>
+                    <td><span class="status-badge ${badgeClass}">${stock}</span></td>
+                    <td style="text-align:right; font-weight:800; color:var(--text-main);">${parseFloat(p.sellPrice || 0).toFixed(2)} DH</td>
+                    <td style="text-align:right; color:var(--text-muted);">${parseFloat(p.costPrice || 0).toFixed(2)} DH</td>
+                    <td style="text-align:center;">
+                        <button style="border:1px solid var(--border); padding:6px; border-radius:6px; background:white; cursor:pointer;" onclick="openProductModal('${p.id}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" style="width:16px; color:var(--text-muted);"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button>
+                    </td>
+                </tr>`;
+            }).join('');
+        };
+        document.getElementById('productSearchInput').addEventListener('input', renderProductsPage);
+
+        // Product Modal Logic
+        window.openProductModal = (id = '') => {
+            const modal = document.getElementById('productModalOverlay');
+            if (id) {
+                const p = allProducts.find(x => x.id === id);
+                document.getElementById('pmTitle').innerText = "Modifier produit"; document.getElementById('pmId').value = id;
+                document.getElementById('pmSku').value = p.sku || ''; document.getElementById('pmName').value = p.name || '';
+                document.getElementById('pmCat').value = p.category || ''; document.getElementById('pmCost').value = p.costPrice || ''; document.getElementById('pmSell').value = p.sellPrice || '';
+                document.getElementById('pmStock').value = p.stock || 0; document.getElementById('pmMinStock').value = p.lowStockThreshold || 5;
+            } else {
+                document.getElementById('pmTitle').innerText = "Nouveau produit"; document.getElementById('pmId').value = '';
+                document.getElementById('pmSku').value = ''; document.getElementById('pmName').value = ''; document.getElementById('pmCat').value = ''; document.getElementById('pmCost').value = ''; document.getElementById('pmSell').value = '';
+                document.getElementById('pmStock').value = 0; document.getElementById('pmMinStock').value = 5;
+            }
+            modal.classList.add('active');
+        };
+
+        window.saveProduct = async () => {
+            const id = document.getElementById('pmId').value;
+            const data = {
+                sku: document.getElementById('pmSku').value, name: document.getElementById('pmName').value, category: document.getElementById('pmCat').value,
+                costPrice: parseFloat(document.getElementById('pmCost').value) || 0, sellPrice: parseFloat(document.getElementById('pmSell').value) || 0,
+                stock: parseInt(document.getElementById('pmStock').value) || 0, lowStockThreshold: parseInt(document.getElementById('pmMinStock').value) || 5
+            };
+            if(!data.name) return;
+            try { if (id) await updateDoc(doc(db, "products", id), data); else await addDoc(collection(db, "products"), data); closeModals(); } catch(e) {}
+        };
+
+        // 6. CLIENTS (CRM)
+        window.renderClientsPage = () => {
+            const tbody = document.getElementById('clientsTableBody');
+            const q = document.getElementById('clientSearchInput').value.trim().toLowerCase();
+            let filtered = allClients.filter(c => c.name !== 'CLIENT COMPTOIR'); // Hide default
+            if(q) filtered = filtered.filter(c => (c.name||'').toLowerCase().includes(q) || (c.phone||'').includes(q));
+
+            let totalCredit = 0; let activeCount = 0;
+            
+            // Calculate LTV and Debt for each client based on allOrders
+            const clientStats = filtered.map(c => {
+                const clientOrders = allOrders.filter(o => o.customerName === c.name && o.status !== 'Annulée' && o.status !== 'Suspendue');
+                const totalLTV = clientOrders.reduce((sum, o) => sum + parseFloat(o.totalPrice || 0), 0);
+                const debt = clientOrders.filter(o => o.status === 'Crédit').reduce((sum, o) => sum + Math.max(0, (o.totalPrice||0) - (o.amountPaid||0)), 0);
+                
+                totalCredit += debt;
+                if(totalLTV > 0) activeCount++;
+                return { ...c, ltv: totalLTV, debt: debt };
+            });
+
+            document.getElementById('cm-total').innerText = allClients.length - 1; 
+            document.getElementById('cm-active').innerText = activeCount;
+            document.getElementById('cm-new').innerText = "0"; // Mock
+            document.getElementById('cm-debt').innerText = totalCredit.toFixed(2) + " DH";
+
+            if(clientStats.length === 0) { tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:40px;">Aucun client trouvé.</td></tr>`; return; }
+
+            tbody.innerHTML = clientStats.map(c => {
+                let badgeClass = 'bg-ok'; let badgeText = 'Actif';
+                if(c.debt > 0) { badgeClass = 'bg-warn'; badgeText = 'Solde Dû'; }
+                
+                return `
+                <tr>
+                    <td><div style="display:flex; align-items:center; gap:12px;"><div style="width:32px; height:32px; border-radius:50%; background:var(--bg-light); display:flex; align-items:center; justify-content:center; color:var(--buro-blue); font-weight:800;">${(c.name||'C').charAt(0).toUpperCase()}</div><div><div style="font-weight:800; color:var(--text-main);">${c.name}</div><div style="font-size:11px; color:var(--primary-blue);">${c.type || 'Particulier'}</div></div></div></td>
+                    <td style="color:var(--text-muted); font-weight:600;">${c.phone || '-'}</td>
+                    <td style="font-family:monospace; color:var(--text-muted);">${c.ice || '-'}</td>
+                    <td style="text-align:right; font-weight:800; color:var(--primary-blue);">${c.ltv.toFixed(2)} DH</td>
+                    <td style="text-align:right; font-weight:800; color:${c.debt > 0 ? 'var(--danger)' : 'var(--success)'};">${c.debt.toFixed(2)} DH</td>
+                    <td style="text-align:center;"><span class="status-badge ${badgeClass}">${badgeText}</span></td>
+                </tr>`;
+            }).join('');
+        };
+        document.getElementById('clientSearchInput').addEventListener('input', renderClientsPage);
+
+        // Modals
+        window.openClientModal = () => { document.getElementById('clientModalOverlay').classList.add('active'); };
+        window.switchClientTab = (type) => {
+            clientType = type; document.querySelectorAll('#clientModalOverlay .tab-btn').forEach(e=>e.classList.remove('active'));
+            if(type==='Société'){ document.getElementById('tabSoc').classList.add('active'); document.getElementById('iceGroup').style.display = 'block'; }
+            else { document.getElementById('tabPart').classList.add('active'); document.getElementById('iceGroup').style.display = 'none'; }
+        };
+        window.saveClient = async () => {
+            const name = document.getElementById('cmName').value.trim(); if(!name) return;
+            const data = { name: name, phone: document.getElementById('cmPhone').value, type: clientType };
+            if(clientType === 'Société') data.ice = document.getElementById('cmIce').value;
+            try { await addDoc(collection(db, "clients"), data); closeModals(); } catch(e) {}
+        };
+        window.closeModals = () => { document.querySelectorAll('.overlay').forEach(el => el.classList.remove('active')); };
 
     </script>
 </body>
