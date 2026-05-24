@@ -553,7 +553,7 @@
                     <svg viewBox="0 0 24 24"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
                     <span style="font-weight:800; font-size:14px; color:var(--text-main);">Description</span>
                 </div>
-                <textarea id="pDesc" class="form-control" placeholder="Description détaillée du produit (optionnel)..." style="height: 100px; resize: none("></textarea>
+                <textarea id="pDesc" class="form-control" placeholder="Description détaillée du produit (optionnel)..." style="height: 100px; resize: none;"></textarea>
             </div>
 
             <div class="card" style="margin-bottom:12px;">
@@ -585,29 +585,57 @@
     <div id="view-packs" class="app-view container">
         <div class="header-top">
             <div>
-                <h1 style="font-size: 20px;">Gestion des Packs</h1>
+                <h1>Gestion des Packs</h1>
                 <p>Configurez les offres Rentrée Scolaire 3 étapes</p>
             </div>
         </div>
         
         <div class="card">
             <h3 style="font-size: 15px; margin-bottom:14px; font-weight:800;">Créer un Pack Scolaire</h3>
+            
             <div class="form-group">
                 <label>Nom du Pack</label>
                 <input type="text" id="packName" class="form-control" placeholder="Ex: Pack Complet CE1 - Victor Hugo">
             </div>
+            
             <div class="form-group">
                 <label>École Assujettie</label>
                 <input type="text" id="packSchool" class="form-control" placeholder="Ex: Victor Hugo">
             </div>
+
+            <div class="form-group">
+                <label>URL du Logo de l'École</label>
+                <input type="text" id="packSchoolLogo" class="form-control" placeholder="Ex: https://lien-image.com/logo.png">
+            </div>
+            
             <div class="form-group">
                 <label>Niveau Cible</label>
                 <input type="text" id="packLevel" class="form-control" placeholder="Ex: CE1">
             </div>
+
+            <div class="card" style="border: 1px solid var(--border); padding: 12px; margin-bottom: 16px; background: var(--bg-main);">
+                <label style="color: var(--primary); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">1. Articles obligatoires dans le pack</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                    <select id="packItemSelector" class="form-control" style="padding: 10px;"></select>
+                    <button class="btn btn-primary" style="width: auto; padding: 0 16px;" onclick="window.addItemToPackRecipe()">+</button>
+                </div>
+                <div id="packRecipeContainer" class="chip-container" style="flex-direction: column; gap: 6px;"></div>
+            </div>
+
+            <div class="card" style="border: 1px solid var(--border); padding: 12px; margin-bottom: 16px; background: var(--bg-main);">
+                <label style="color: var(--orange); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">2. Articles en option (Upsell / En plus)</label>
+                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                    <select id="packUpsellSelector" class="form-control" style="padding: 10px;"></select>
+                    <button class="btn btn-outline" style="width: auto; padding: 0 16px; border-color: var(--orange); color: var(--orange);" onclick="window.addUpsellToPackRecipe()">+</button>
+                </div>
+                <div id="packUpsellContainer" class="chip-container"></div>
+            </div>
+            
             <div class="form-group">
                 <label>Prix Spécial du Bundle (DH)</label>
                 <input type="number" id="packBundlePrice" class="form-control" placeholder="270.00">
             </div>
+            
             <button class="btn btn-primary" onclick="window.savePackConfig()">Enregistrer le Pack Scolaire</button>
         </div>
 
@@ -925,6 +953,15 @@
                 if (outCount > 0) { outAlertCard.classList.add('active'); document.getElementById('outOfStockText').innerText = `${outCount} produit${outCount>1?'s':''} en rupture de stock`; } else outAlertCard.classList.remove('active');
             }
             if(currentProductFilter === 'all') renderProductsAdminList(allProducts); else filterProduits(currentProductFilter);
+
+            // Dynamically populate the Pack Builder Selectors with live inventory
+            const itemSel = document.getElementById('packItemSelector');
+            const upsellSel = document.getElementById('packUpsellSelector');
+            if(itemSel && upsellSel) {
+                const optionsHtml = '<option value="">Choisir un produit...</option>' + allProducts.map(p => `<option value="${p.id}">${p.name} (${safeNum(p.sellPrice)} DH)</option>`).join('');
+                itemSel.innerHTML = optionsHtml;
+                upsellSel.innerHTML = optionsHtml;
+            }
         });
 
         window.filterProduits = (type) => { currentProductFilter = type; switchTab('produits'); renderProductsAdminList(allProducts); };
@@ -1062,11 +1099,9 @@
             
             document.getElementById('pFeatured').checked = false; window.productTags = []; renderTagsUI();
             
-            // Textbooks Reset
             document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
             document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = '';
 
-            // Bulk Options Reset
             document.getElementById('pBulkToggle').checked = false; document.getElementById('bulkConfigUI').style.display = 'none';
             document.getElementById('pBulkQty').value = ''; document.getElementById('pBulkPrice').value = '';
 
@@ -1085,7 +1120,6 @@
             document.getElementById('pFeatured').checked = p.featured || false; document.getElementById('pPromoPrice').value = p.promoPrice || '';
             window.productTags = p.tags ? [...p.tags] : []; renderTagsUI(); window.previewWizardImg();
 
-            // Textbooks Loader
             if(p.isTextbook) {
                 document.getElementById('textbookToggle').checked = true; document.getElementById('textbookConfig').style.display = 'block';
                 document.getElementById('tbLevel').value = p.textbookLevel || '';
@@ -1096,7 +1130,6 @@
                 document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = '';
             }
 
-            // Bulk Options Loader
             if(p.hasBulkPricing) {
                 document.getElementById('pBulkToggle').checked = true; document.getElementById('bulkConfigUI').style.display = 'block';
                 document.getElementById('pBulkQty').value = p.bulkQtyTrigger || '';
@@ -1139,32 +1172,89 @@
             } catch (e) { console.error(e); alert("Erreur lors de l'enregistrement."); }
         };
 
-        // School Packs Publisher Automation
+        // --- DYNAMIC PACK BUILDER FUNCTIONS ---
+        window.currentPackItems = [];
+        window.currentPackUpsells = [];
+
+        window.addItemToPackRecipe = () => {
+            const sel = document.getElementById('packItemSelector');
+            const pId = sel.value; if(!pId) return;
+            const prod = allProducts.find(p => p.id === pId); if(!prod) return;
+            
+            if(!window.currentPackItems.find(item => item.productId === pId)) {
+                window.currentPackItems.push({ productId: pId, name: prod.name, qty: 1 });
+                renderPackRecipeUI();
+            }
+        };
+
+        window.addUpsellToPackRecipe = () => {
+            const sel = document.getElementById('packUpsellSelector');
+            const pId = sel.value; if(!pId) return;
+            const prod = allProducts.find(p => p.id === pId); if(!prod) return;
+            
+            if(!window.currentPackUpsells.find(id => id === pId)) {
+                window.currentPackUpsells.push(pId);
+                renderPackUpsellUI();
+            }
+        };
+
+        window.updatePackItemQty = (index, qty) => {
+            window.currentPackItems[index].qty = parseInt(qty) || 1;
+        };
+
+        window.removeRecipeItem = (index) => { window.currentPackItems.splice(index, 1); renderPackRecipeUI(); };
+        window.removeUpsellItem = (index) => { window.currentPackUpsells.splice(index, 1); renderPackUpsellUI(); };
+
+        function renderPackRecipeUI() {
+            document.getElementById('packRecipeContainer').innerHTML = window.currentPackItems.map((item, i) => `
+                <div class="v-row" style="background: white; padding: 8px 12px; border-radius: 10px; margin-bottom:4px;">
+                    <span style="font-size:12px; font-weight:600; flex:1;">${item.name}</span>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <input type="number" class="form-control" value="${item.qty}" style="padding:6px; width:50px; text-align:center;" onchange="window.updatePackItemQty(${i}, this.value)">
+                        <button class="btn-icon-small" style="background:#FEE2E2; color:var(--danger); width:28px; height:28px;" onclick="window.removeRecipeItem(${i})">✕</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function renderPackUpsellUI() {
+            document.getElementById('packUpsellContainer').innerHTML = window.currentPackUpsells.map((id, i) => {
+                const prod = allProducts.find(p => p.id === id);
+                return `<div class="tag-chip" style="background: var(--orange-light); color: var(--orange); border-color: #FED7AA;">${prod ? prod.name : 'Inconnu'} <span onclick="window.removeUpsellItem(${i})" style="cursor:pointer;">✕</span></div>`;
+            }).join('');
+        }
+
         window.savePackConfig = async () => {
             const name = document.getElementById('packName').value.trim();
             const schoolName = document.getElementById('packSchool').value.trim();
+            const schoolLogo = document.getElementById('packSchoolLogo').value.trim();
             const level = document.getElementById('packLevel').value.trim();
             const bundlePrice = parseFloat(document.getElementById('packBundlePrice').value) || 0;
 
-            if(!name || !schoolName || !level || bundlePrice === 0) {
-                return alert("Veuillez renseigner toutes les informations requises pour le pack.");
+            if(!name || !schoolName || !level || bundlePrice === 0 || window.currentPackItems.length === 0) {
+                return alert("Veuillez remplir les informations de base et inclure au moins un produit obligatoire.");
             }
 
             try {
                 const packData = {
-                    name, schoolName, level, bundlePrice,
+                    name, schoolName, schoolLogo, level, bundlePrice,
                     timestamp: new Date().toISOString(),
-                    coreItems: [], 
+                    coreItems: window.currentPackItems, 
+                    upsellItems: window.currentPackUpsells, 
                     isPackActive: true
                 };
                 await addDoc(collection(db, "packs"), packData);
-                showToast("Pack Scolaire publié sur l'application !");
+                showToast("Pack Scolaire créé avec succès !");
+                
                 document.getElementById('packName').value = '';
                 document.getElementById('packSchool').value = '';
+                document.getElementById('packSchoolLogo').value = '';
                 document.getElementById('packLevel').value = '';
                 document.getElementById('packBundlePrice').value = '';
+                window.currentPackItems = []; window.currentPackUpsells = [];
+                renderPackRecipeUI(); renderPackUpsellUI();
             } catch(e) {
-                console.error("Pack Save Error:", e);
+                console.error("Pack Save Exception:", e);
                 alert("Erreur lors de la création du pack.");
             }
         };
@@ -1177,16 +1267,25 @@
                 container.innerHTML = `<div class="empty-state">Aucun pack configuré pour le moment.</div>`;
                 return;
             }
-            container.innerHTML = packs.map(pk => `
-                <div class="prod-card">
-                    <div class="prod-info">
-                        <h4>${pk.name}</h4>
-                        <div class="prod-meta">École: <strong>${pk.schoolName}</strong> • Niveau: <strong>${pk.level}</strong></div>
-                        <div class="prod-stock stock-good" style="font-size:13px; font-weight:800; margin-top:4px;">${pk.bundlePrice.toFixed(2)} DH</div>
+            container.innerHTML = packs.map(pk => {
+                const itemsCount = pk.coreItems ? pk.coreItems.length : 0;
+                const upsellCount = pk.upsellItems ? pk.upsellItems.length : 0;
+                return `
+                <div class="prod-card" style="align-items: flex-start; flex-direction: column; gap: 4px;">
+                    <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+                        <h4 style="margin:0;">${pk.name}</h4>
+                        <strong style="color:var(--accent); font-size:14px;">${safeNum(pk.bundlePrice).toFixed(2)} DH</strong>
                     </div>
-                </div>
-            `).join('');
+                    <div class="prod-meta" style="margin:0;">École: <strong>${pk.schoolName}</strong> • Niveau: <strong>${pk.level}</strong></div>
+                    <div style="display:flex; gap:8px; margin-top:4px;">
+                        <span class="badge b-processing" style="font-size:9px;">${itemsCount} Articles obligatoires</span>
+                        <span class="badge b-pending" style="font-size:9px; background: var(--orange-light); color: var(--orange);">${upsellCount} Options en plus</span>
+                    </div>
+                </div>`;
+            }).join('');
         });
+
+        // --- END PACK BUILDER ---
 
         document.getElementById('modalConfirmBtn').addEventListener('click', () => { if(window.confirmActionCallback) window.confirmActionCallback(); });
         function showToast(msg) { const t = document.getElementById('toastBox'); document.getElementById('toastMsg').innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
