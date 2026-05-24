@@ -47,6 +47,7 @@
         .main-stat-card { background: linear-gradient(135deg, #3A5BC7 0%, #1E3A8A 100%); border-radius: var(--radius-card); padding: 20px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px rgba(45, 75, 155, 0.3); margin-bottom: 20px; cursor: pointer; transition: 0.2s; }
         .main-stat-card:active { transform: scale(0.98); }
         .msc-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.15); border-radius: 14px; display: flex; align-items:center; justify-content: center; margin-right: 16px; flex-shrink: 0;}
+        .msc-icon svg { stroke: currentColor; }
         .msc-content { flex: 1; }
         .msc-content h3 { font-size: 18px; font-weight: 800; margin-bottom: 4px; }
         .msc-content p { font-size: 12px; color: rgba(255,255,255,0.8); line-height: 1.3;}
@@ -476,23 +477,45 @@
             <div class="card" style="margin-bottom:12px;">
                 <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
                     <div style="display:flex; align-items:center; gap:8px; color:var(--primary);">
-                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                        <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 20V2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path></svg>
                         <span style="font-weight:800; font-size:14px; color:var(--text-main);">Manuel scolaire</span>
                     </div>
                     <label class="switch"><input type="checkbox" id="textbookToggle" onchange="document.getElementById('textbookConfig').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
                 </div>
                 <div id="textbookConfig" style="display:none;">
                     <div class="form-group">
-                        <label>Niveau (ex: 2AC, Tronc Commun)</label>
+                        <label>Niveau Cible (ex: CP, CE1, Tronc Commun)</label>
                         <input type="text" id="tbLevel" class="form-control" placeholder="Ajouter le niveau...">
                     </div>
                     <div class="form-group">
-                        <label>Matière (ex: Mathématiques, Français)</label>
+                        <label>Matière d'étude (ex: Mathématiques)</label>
                         <input type="text" id="tbSubject" class="form-control" placeholder="Ajouter la matière...">
                     </div>
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label>Éditeur (ex: Nathan, Hatier)</label>
-                        <input type="text" id="tbPublisher" class="form-control" placeholder="Ajouter l'éditeur...">
+                        <label>École Associée à Marrakech (ex: Victor Hugo, Majorelle)</label>
+                        <input type="text" id="tbSchool" class="form-control" placeholder="Ex: Victor Hugo">
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom:12px;">
+                <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:8px; color:var(--orange);">
+                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Option de Gros / En Vrac</span>
+                    </div>
+                    <label class="switch"><input type="checkbox" id="pBulkToggle" onchange="document.getElementById('bulkConfigUI').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
+                </div>
+                <div id="bulkConfigUI" style="display:none;">
+                    <div style="display:flex; gap:12px;">
+                        <div class="form-group" style="flex:1;">
+                            <label>Quantité Seuil (Boîte)</label>
+                            <input type="number" id="pBulkQty" class="form-control" placeholder="50">
+                        </div>
+                        <div class="form-group" style="flex:1;">
+                            <label>Prix Unitaire Spécial (DH)</label>
+                            <input type="number" id="pBulkPrice" class="form-control" placeholder="1.40">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -501,7 +524,7 @@
                 <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
                     <div style="display:flex; align-items:center; gap:8px; color:var(--purple);">
                         <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Variantes</span>
+                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Variantes (Multi-Photos)</span>
                     </div>
                     <label class="switch"><input type="checkbox" id="varToggle" onchange="document.getElementById('variantConfig').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
                 </div>
@@ -530,7 +553,7 @@
                     <svg viewBox="0 0 24 24"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
                     <span style="font-weight:800; font-size:14px; color:var(--text-main);">Description</span>
                 </div>
-                <textarea id="pDesc" class="form-control" placeholder="Description détaillée du produit (optionnel)..." style="height: 100px; resize: none;"></textarea>
+                <textarea id="pDesc" class="form-control" placeholder="Description détaillée du produit (optionnel)..." style="height: 100px; resize: none("></textarea>
             </div>
 
             <div class="card" style="margin-bottom:12px;">
@@ -558,10 +581,44 @@
             </div>
         </div>
     </div>
+
+    <div id="view-packs" class="app-view container">
+        <div class="header-top">
+            <div>
+                <h1 style="font-size: 20px;">Gestion des Packs</h1>
+                <p>Configurez les offres Rentrée Scolaire 3 étapes</p>
+            </div>
+        </div>
+        
+        <div class="card">
+            <h3 style="font-size: 15px; margin-bottom:14px; font-weight:800;">Créer un Pack Scolaire</h3>
+            <div class="form-group">
+                <label>Nom du Pack</label>
+                <input type="text" id="packName" class="form-control" placeholder="Ex: Pack Complet CE1 - Victor Hugo">
+            </div>
+            <div class="form-group">
+                <label>École Assujettie</label>
+                <input type="text" id="packSchool" class="form-control" placeholder="Ex: Victor Hugo">
+            </div>
+            <div class="form-group">
+                <label>Niveau Cible</label>
+                <input type="text" id="packLevel" class="form-control" placeholder="Ex: CE1">
+            </div>
+            <div class="form-group">
+                <label>Prix Spécial du Bundle (DH)</label>
+                <input type="number" id="packBundlePrice" class="form-control" placeholder="270.00">
+            </div>
+            <button class="btn btn-primary" onclick="window.savePackConfig()">Enregistrer le Pack Scolaire</button>
+        </div>
+
+        <div class="section-title" style="margin-top: 24px;">Packs Actifs en ligne</div>
+        <div id="adminPacksListContainer"></div>
+    </div>
     
     <div id="view-analytics" class="app-view container">
         <div class="analytics-header">
-            <h1 style="font-size: 20px; font-weight:800;">Statistiques</h1>
+            <div class="back-btn" onclick="switchTab('dashboard')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></div>
+            <h1 style="font-size: 20px; font-weight:800; flex:1; text-align:center; margin-right:40px;">Statistiques</h1>
         </div>
         <h3 style="font-size: 14px; margin-bottom: 12px;">Résumé</h3>
         <div class="analytics-grid">
@@ -583,7 +640,7 @@
         <div class="nav-item" id="nav-ajouter" onclick="prepareAddProduct()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Ajouter</div>
         <div class="nav-item" id="nav-produits" onclick="switchTab('produits')"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Produits</div>
         <div class="nav-item" id="nav-commandes" onclick="switchTab('commandes')"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Commandes</div>
-        <div class="nav-item" id="nav-analytics" onclick="switchTab('analytics')"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg> Analytics</div>
+        <div class="nav-item" id="nav-packs" onclick="switchTab('packs')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Packs S.</div>
     </nav>
 
     <div class="overlay" id="confirmOverlay">
@@ -608,7 +665,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // ⚠️ REPLACE WITH YOUR ACTUAL FIREBASE CONFIG
         const firebaseConfig = {
             apiKey: "AIzaSyCKY59mqLqD4GqQpkDEFqNybKIkwLvgId0",
             authDomain: "lascoburo.firebaseapp.com",
@@ -629,10 +685,10 @@
             document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(`view-${tabId}`).classList.add('active');
-            let navTarget = tabId === 'order-detail' ? 'commandes' : tabId;
+            let navTarget = (tabId === 'order-detail' || tabId === 'analytics') ? 'dashboard' : tabId;
             const navItem = document.getElementById(`nav-${navTarget}`);
             if(navItem) navItem.classList.add('active');
-            if(tabId !== 'order-detail') localStorage.setItem('lascoAdminTab', tabId);
+            if(tabId !== 'order-detail' && tabId !== 'analytics') localStorage.setItem('lascoAdminTab', tabId);
             if(tabId !== 'produits' && currentProductFilter !== 'all') {
                 currentProductFilter = 'all'; document.getElementById('prodFilterBanner').classList.remove('active');
                 if(allProducts.length) renderProductsAdminList(allProducts);
@@ -1006,9 +1062,13 @@
             
             document.getElementById('pFeatured').checked = false; window.productTags = []; renderTagsUI();
             
-            // Textbooks reset
+            // Textbooks Reset
             document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
-            document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbPublisher').value = '';
+            document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = '';
+
+            // Bulk Options Reset
+            document.getElementById('pBulkToggle').checked = false; document.getElementById('bulkConfigUI').style.display = 'none';
+            document.getElementById('pBulkQty').value = ''; document.getElementById('pBulkPrice').value = '';
 
             document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; window.productVariants = []; renderVariantUI();
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
@@ -1025,15 +1085,25 @@
             document.getElementById('pFeatured').checked = p.featured || false; document.getElementById('pPromoPrice').value = p.promoPrice || '';
             window.productTags = p.tags ? [...p.tags] : []; renderTagsUI(); window.previewWizardImg();
 
-            // Textbooks load
+            // Textbooks Loader
             if(p.isTextbook) {
                 document.getElementById('textbookToggle').checked = true; document.getElementById('textbookConfig').style.display = 'block';
                 document.getElementById('tbLevel').value = p.textbookLevel || '';
                 document.getElementById('tbSubject').value = p.textbookSubject || '';
-                document.getElementById('tbPublisher').value = p.textbookPublisher || '';
+                document.getElementById('tbSchool').value = p.textbookSchool || '';
             } else {
                 document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
-                document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbPublisher').value = '';
+                document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = '';
+            }
+
+            // Bulk Options Loader
+            if(p.hasBulkPricing) {
+                document.getElementById('pBulkToggle').checked = true; document.getElementById('bulkConfigUI').style.display = 'block';
+                document.getElementById('pBulkQty').value = p.bulkQtyTrigger || '';
+                document.getElementById('pBulkPrice').value = p.bulkPricePerUnit || '';
+            } else {
+                document.getElementById('pBulkToggle').checked = false; document.getElementById('bulkConfigUI').style.display = 'none';
+                document.getElementById('pBulkQty').value = ''; document.getElementById('pBulkPrice').value = '';
             }
 
             if(p.variants && p.variants.length > 0) { document.getElementById('varToggle').checked = true; document.getElementById('variantConfig').style.display = 'block'; window.productVariants = [...p.variants]; renderVariantUI(); } 
@@ -1054,7 +1124,10 @@
                 isTextbook: document.getElementById('textbookToggle').checked,
                 textbookLevel: document.getElementById('textbookToggle').checked ? document.getElementById('tbLevel').value.trim() : "",
                 textbookSubject: document.getElementById('textbookToggle').checked ? document.getElementById('tbSubject').value.trim() : "",
-                textbookPublisher: document.getElementById('textbookToggle').checked ? document.getElementById('tbPublisher').value.trim() : "",
+                textbookSchool: document.getElementById('textbookToggle').checked ? document.getElementById('tbSchool').value.trim() : "",
+                hasBulkPricing: document.getElementById('pBulkToggle').checked,
+                bulkQtyTrigger: document.getElementById('pBulkToggle').checked ? parseInt(document.getElementById('pBulkQty').value) || 0 : null,
+                bulkPricePerUnit: document.getElementById('pBulkToggle').checked ? parseFloat(document.getElementById('pBulkPrice').value) || 0 : null,
                 variants: hasVars ? window.productVariants : []
             };
 
@@ -1065,6 +1138,56 @@
                 switchTab('produits');
             } catch (e) { console.error(e); alert("Erreur lors de l'enregistrement."); }
         };
+
+        // School Packs Publisher Automation
+        window.savePackConfig = async () => {
+            const name = document.getElementById('packName').value.trim();
+            const schoolName = document.getElementById('packSchool').value.trim();
+            const level = document.getElementById('packLevel').value.trim();
+            const bundlePrice = parseFloat(document.getElementById('packBundlePrice').value) || 0;
+
+            if(!name || !schoolName || !level || bundlePrice === 0) {
+                return alert("Veuillez renseigner toutes les informations requises pour le pack.");
+            }
+
+            try {
+                const packData = {
+                    name, schoolName, level, bundlePrice,
+                    timestamp: new Date().toISOString(),
+                    coreItems: [], 
+                    isPackActive: true
+                };
+                await addDoc(collection(db, "packs"), packData);
+                showToast("Pack Scolaire publié sur l'application !");
+                document.getElementById('packName').value = '';
+                document.getElementById('packSchool').value = '';
+                document.getElementById('packLevel').value = '';
+                document.getElementById('packBundlePrice').value = '';
+            } catch(e) {
+                console.error("Pack Save Error:", e);
+                alert("Erreur lors de la création du pack.");
+            }
+        };
+
+        onSnapshot(collection(db, "packs"), snap => {
+            const packs = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            const container = document.getElementById('adminPacksListContainer');
+            if(!container) return;
+            if(packs.length === 0) {
+                container.innerHTML = `<div class="empty-state">Aucun pack configuré pour le moment.</div>`;
+                return;
+            }
+            container.innerHTML = packs.map(pk => `
+                <div class="prod-card">
+                    <div class="prod-info">
+                        <h4>${pk.name}</h4>
+                        <div class="prod-meta">École: <strong>${pk.schoolName}</strong> • Niveau: <strong>${pk.level}</strong></div>
+                        <div class="prod-stock stock-good" style="font-size:13px; font-weight:800; margin-top:4px;">${pk.bundlePrice.toFixed(2)} DH</div>
+                    </div>
+                </div>
+            `).join('');
+        });
+
         document.getElementById('modalConfirmBtn').addEventListener('click', () => { if(window.confirmActionCallback) window.confirmActionCallback(); });
         function showToast(msg) { const t = document.getElementById('toastBox'); document.getElementById('toastMsg').innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
     </script>
