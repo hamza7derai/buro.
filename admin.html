@@ -190,13 +190,19 @@
         .item-img img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply;}
         .item-details { flex: 1; }
         .item-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
-        .item-meta { font-size: 12px; color: var(--text-muted); }
+        .item-meta { font-size: 12px; color: var(--text-muted); display:flex; gap: 6px; align-items: center;}
         .item-price { font-size: 13px; font-weight: 700; text-align: right; }
         
         .summary-box { background: var(--surface); border-radius: var(--radius-btn); padding: 16px; margin-top: 24px; border: 1px solid var(--border); }
         .summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 12px; color: var(--text-muted); font-weight: 500; }
         .summary-row.total { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 0; padding-top: 12px; border-top: 1px dashed var(--border); }
         .action-stack { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
+
+        /* SEARCH DROPDOWN FOR PACKS */
+        .search-dropdown-list { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border); border-radius: 8px; max-height: 200px; overflow-y: auto; z-index: 10; display: none; box-shadow: var(--shadow-modal); margin-top: 4px; }
+        .search-dropdown-item { padding: 12px; border-bottom: 1px solid var(--bg-main); font-size: 13px; cursor: pointer; display: flex; justify-content: space-between; }
+        .search-dropdown-item:last-child { border-bottom: none; }
+        .search-dropdown-item:hover { background: var(--primary-light); }
 
         /* FAB & BOTTOM NAV */
         .fab { position: fixed; bottom: 100px; right: 20px; width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(45, 75, 155, 0.4); border: none; cursor: pointer; z-index: 80; transition: 0.2s;}
@@ -591,7 +597,8 @@
         </div>
         
         <div class="card">
-            <h3 style="font-size: 15px; margin-bottom:14px; font-weight:800;">Créer un Pack Scolaire</h3>
+            <h3 style="font-size: 15px; margin-bottom:14px; font-weight:800;" id="packBuilderTitle">Créer un Pack Scolaire</h3>
+            <input type="hidden" id="editPackId" value="">
             
             <div class="form-group">
                 <label>Nom du Pack</label>
@@ -612,34 +619,49 @@
                 <label>Niveau Cible</label>
                 <input type="text" id="packLevel" class="form-control" placeholder="Ex: CE1">
             </div>
+            
+            <div class="info-banner" style="margin-bottom: 24px;">
+                <svg viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span style="font-size: 11px;">Note : Le client choisira "Fille" ou "Garçon" au moment de l'achat sur le site. Ce choix apparaîtra dans les détails de la commande pour vous aider à préparer les bonnes couleurs.</span>
+            </div>
 
             <div class="card" style="border: 1px solid var(--border); padding: 12px; margin-bottom: 16px; background: var(--bg-main);">
                 <label style="color: var(--primary); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">1. Articles obligatoires dans le pack</label>
-                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                    <select id="packItemSelector" class="form-control" style="padding: 10px;"></select>
-                    <button class="btn btn-primary" style="width: auto; padding: 0 16px;" onclick="window.addItemToPackRecipe()">+</button>
+                
+                <div style="position: relative; margin-bottom: 12px;">
+                    <input type="text" id="packItemSearch" class="form-control" placeholder="Rechercher un produit (ex: Cahier)..." oninput="window.filterPackSearch(this.value, 'core')" onfocus="window.filterPackSearch(this.value, 'core')" autocomplete="off" style="padding: 10px 14px;">
+                    <div id="packItemResults" class="search-dropdown-list"></div>
                 </div>
+
                 <div id="packRecipeContainer" class="chip-container" style="flex-direction: column; gap: 6px;"></div>
             </div>
 
             <div class="card" style="border: 1px solid var(--border); padding: 12px; margin-bottom: 16px; background: var(--bg-main);">
                 <label style="color: var(--orange); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">2. Articles en option (Upsell / En plus)</label>
-                <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                    <select id="packUpsellSelector" class="form-control" style="padding: 10px;"></select>
-                    <button class="btn btn-outline" style="width: auto; padding: 0 16px; border-color: var(--orange); color: var(--orange);" onclick="window.addUpsellToPackRecipe()">+</button>
+                
+                <div style="position: relative; margin-bottom: 12px;">
+                    <input type="text" id="packUpsellSearch" class="form-control" placeholder="Rechercher un produit (ex: Sac à dos)..." oninput="window.filterPackSearch(this.value, 'upsell')" onfocus="window.filterPackSearch(this.value, 'upsell')" autocomplete="off" style="padding: 10px 14px;">
+                    <div id="packUpsellResults" class="search-dropdown-list"></div>
                 </div>
+
                 <div id="packUpsellContainer" class="chip-container"></div>
             </div>
             
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
+                <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Valeur réelle (Articles obligatoires) :</span>
+                <span id="packRealValue" style="font-size: 14px; font-weight: 800; text-decoration: line-through; color: var(--text-muted);">0.00 DH</span>
+            </div>
+
             <div class="form-group">
                 <label>Prix Spécial du Bundle (DH)</label>
-                <input type="number" id="packBundlePrice" class="form-control" placeholder="270.00">
+                <input type="number" id="packBundlePrice" class="form-control" placeholder="Ex: 270.00">
             </div>
             
-            <button class="btn btn-primary" onclick="window.savePackConfig()">Enregistrer le Pack Scolaire</button>
+            <button class="btn btn-primary" onclick="window.savePackConfig()" id="btnSavePack">Enregistrer le Pack Scolaire</button>
+            <button class="btn btn-outline" style="margin-top: 8px; display: none;" onclick="window.resetPackBuilder()" id="btnCancelPackEdit">Annuler la modification</button>
         </div>
 
-        <div class="section-title" style="margin-top: 24px;">Packs Actifs en ligne</div>
+        <div class="section-title" style="margin-top: 32px;">Packs Actifs en ligne</div>
         <div id="adminPacksListContainer"></div>
     </div>
     
@@ -704,10 +726,20 @@
         const app = initializeApp(firebaseConfig);
         const db = getFirestore(app);
 
-        let allOrders = [], allProducts = [], globalCategoriesData = [];
+        let allOrders = [], allProducts = [], globalCategoriesData = [], allPacks = [];
         let currentOrderFilter = 'Toutes', currentProductFilter = 'all', currentEditProductId = null; 
         window.productVariants = []; window.productTags = []; let currentCatAddingType = ''; 
         const safeNum = (val) => isNaN(parseFloat(val)) ? 0 : parseFloat(val);
+
+        // Click outside to close search dropdowns
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#packItemSearch') && !e.target.closest('#packItemResults')) {
+                document.getElementById('packItemResults').style.display = 'none';
+            }
+            if (!e.target.closest('#packUpsellSearch') && !e.target.closest('#packUpsellResults')) {
+                document.getElementById('packUpsellResults').style.display = 'none';
+            }
+        });
 
         window.switchTab = (tabId) => {
             document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
@@ -953,15 +985,6 @@
                 if (outCount > 0) { outAlertCard.classList.add('active'); document.getElementById('outOfStockText').innerText = `${outCount} produit${outCount>1?'s':''} en rupture de stock`; } else outAlertCard.classList.remove('active');
             }
             if(currentProductFilter === 'all') renderProductsAdminList(allProducts); else filterProduits(currentProductFilter);
-
-            // Dynamically populate the Pack Builder Selectors with live inventory
-            const itemSel = document.getElementById('packItemSelector');
-            const upsellSel = document.getElementById('packUpsellSelector');
-            if(itemSel && upsellSel) {
-                const optionsHtml = '<option value="">Choisir un produit...</option>' + allProducts.map(p => `<option value="${p.id}">${p.name} (${safeNum(p.sellPrice)} DH)</option>`).join('');
-                itemSel.innerHTML = optionsHtml;
-                upsellSel.innerHTML = optionsHtml;
-            }
         });
 
         window.filterProduits = (type) => { currentProductFilter = type; switchTab('produits'); renderProductsAdminList(allProducts); };
@@ -1002,8 +1025,20 @@
 
             document.getElementById('det-items-count').innerText = `Articles (${order.totalItems || 0})`;
             document.getElementById('det-items-list').innerHTML = (order.cart || []).map(item => {
-                const p = item.product || {}; const img = p.imageUrl ? `<img src="${p.imageUrl}">` : ''; const vText = item.variantName ? `<span style="color:var(--primary);">${item.variantName}</span>` : ''; const price = safeNum(item.unitPrice) || safeNum(p.sellPrice);
-                return `<div class="item-row"><div class="item-img">${img}</div><div class="item-details"><div class="item-name">${p.name || 'Produit'} ${vText}</div><div class="item-meta">x${item.qty}</div></div><div class="item-price">${(price * item.qty).toFixed(2)} DH</div></div>`;
+                const p = item.product || {}; 
+                const img = p.imageUrl ? `<img src="${p.imageUrl}">` : ''; 
+                const vText = item.variantName ? `<span style="color:var(--primary);">${item.variantName}</span>` : ''; 
+                
+                // NEW: Handle Pack Gender Metadata (Fille/Garçon) for Order view
+                let packGenderTag = '';
+                if(item.packGender) {
+                    const genderColor = item.packGender === 'Fille' ? '#DB2777' : '#2563EB';
+                    const genderBg = item.packGender === 'Fille' ? '#FCE7F3' : '#DBEAFE';
+                    packGenderTag = `<span style="background:${genderBg}; color:${genderColor}; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:700;">${item.packGender}</span>`;
+                }
+
+                const price = safeNum(item.unitPrice) || safeNum(p.sellPrice);
+                return `<div class="item-row"><div class="item-img">${img}</div><div class="item-details"><div class="item-name">${p.name || 'Produit'} ${vText}</div><div class="item-meta">x${item.qty} ${packGenderTag}</div></div><div class="item-price">${(price * item.qty).toFixed(2)} DH</div></div>`;
             }).join('');
 
             const deliveryFee = safeNum(order.deliveryFee);
@@ -1172,49 +1207,75 @@
             } catch (e) { console.error(e); alert("Erreur lors de l'enregistrement."); }
         };
 
-        // --- DYNAMIC PACK BUILDER FUNCTIONS ---
+        // --- NEW: DYNAMIC PACK BUILDER WITH SMART SEARCH ---
         window.currentPackItems = [];
         window.currentPackUpsells = [];
-
-        window.addItemToPackRecipe = () => {
-            const sel = document.getElementById('packItemSelector');
-            const pId = sel.value; if(!pId) return;
-            const prod = allProducts.find(p => p.id === pId); if(!prod) return;
+        
+        window.filterPackSearch = (query, type) => {
+            const resultsDiv = type === 'core' ? document.getElementById('packItemResults') : document.getElementById('packUpsellResults');
+            if(!query.trim()) { resultsDiv.style.display = 'none'; return; }
             
-            if(!window.currentPackItems.find(item => item.productId === pId)) {
-                window.currentPackItems.push({ productId: pId, name: prod.name, qty: 1 });
-                renderPackRecipeUI();
+            const q = query.toLowerCase();
+            const matches = allProducts.filter(p => (p.name || '').toLowerCase().includes(q) || (p.sku || '').toLowerCase().includes(q)).slice(0, 8); // Top 8 results
+            
+            if(matches.length === 0) {
+                resultsDiv.innerHTML = '<div class="search-dropdown-item" style="color:var(--text-muted); cursor:default;">Aucun produit trouvé</div>';
+            } else {
+                resultsDiv.innerHTML = matches.map(p => `
+                    <div class="search-dropdown-item" onclick="window.addFromSearch('${p.id}', '${type}')">
+                        <span>${p.name}</span>
+                        <span style="font-weight:700; color:var(--primary);">${safeNum(p.sellPrice).toFixed(2)} DH</span>
+                    </div>
+                `).join('');
             }
+            resultsDiv.style.display = 'block';
         };
 
-        window.addUpsellToPackRecipe = () => {
-            const sel = document.getElementById('packUpsellSelector');
-            const pId = sel.value; if(!pId) return;
+        window.addFromSearch = (pId, type) => {
             const prod = allProducts.find(p => p.id === pId); if(!prod) return;
             
-            if(!window.currentPackUpsells.find(id => id === pId)) {
-                window.currentPackUpsells.push(pId);
-                renderPackUpsellUI();
+            if(type === 'core') {
+                if(!window.currentPackItems.find(item => item.productId === pId)) {
+                    window.currentPackItems.push({ productId: pId, name: prod.name, qty: 1, unitPrice: safeNum(prod.sellPrice) });
+                    renderPackRecipeUI();
+                }
+                document.getElementById('packItemSearch').value = '';
+                document.getElementById('packItemResults').style.display = 'none';
+            } else {
+                if(!window.currentPackUpsells.find(id => id === pId)) {
+                    window.currentPackUpsells.push(pId);
+                    renderPackUpsellUI();
+                }
+                document.getElementById('packUpsellSearch').value = '';
+                document.getElementById('packUpsellResults').style.display = 'none';
             }
         };
 
         window.updatePackItemQty = (index, qty) => {
             window.currentPackItems[index].qty = parseInt(qty) || 1;
+            calculateRealValue();
         };
 
         window.removeRecipeItem = (index) => { window.currentPackItems.splice(index, 1); renderPackRecipeUI(); };
         window.removeUpsellItem = (index) => { window.currentPackUpsells.splice(index, 1); renderPackUpsellUI(); };
 
+        function calculateRealValue() {
+            let total = 0;
+            window.currentPackItems.forEach(item => { total += (item.qty * item.unitPrice); });
+            document.getElementById('packRealValue').innerText = total.toFixed(2) + ' DH';
+        }
+
         function renderPackRecipeUI() {
             document.getElementById('packRecipeContainer').innerHTML = window.currentPackItems.map((item, i) => `
-                <div class="v-row" style="background: white; padding: 8px 12px; border-radius: 10px; margin-bottom:4px;">
-                    <span style="font-size:12px; font-weight:600; flex:1;">${item.name}</span>
+                <div class="v-row" style="background: white; padding: 8px 12px; border-radius: 10px; margin-bottom:4px; border: 1px solid var(--border);">
+                    <span style="font-size:12px; font-weight:600; flex:1;">${item.name} <span style="color:var(--text-muted); font-weight:400;">(${item.unitPrice.toFixed(2)} DH)</span></span>
                     <div style="display:flex; align-items:center; gap:8px;">
                         <input type="number" class="form-control" value="${item.qty}" style="padding:6px; width:50px; text-align:center;" onchange="window.updatePackItemQty(${i}, this.value)">
                         <button class="btn-icon-small" style="background:#FEE2E2; color:var(--danger); width:28px; height:28px;" onclick="window.removeRecipeItem(${i})">✕</button>
                     </div>
                 </div>
             `).join('');
+            calculateRealValue();
         }
 
         function renderPackUpsellUI() {
@@ -1225,6 +1286,7 @@
         }
 
         window.savePackConfig = async () => {
+            const editId = document.getElementById('editPackId').value;
             const name = document.getElementById('packName').value.trim();
             const schoolName = document.getElementById('packSchool').value.trim();
             const schoolLogo = document.getElementById('packSchoolLogo').value.trim();
@@ -1237,49 +1299,133 @@
 
             try {
                 const packData = {
-                    name, schoolName, schoolLogo, level, bundlePrice,
-                    timestamp: new Date().toISOString(),
+                    name: name.charAt(0).toUpperCase() + name.slice(1), // Auto-capitalize
+                    schoolName, schoolLogo, level, bundlePrice,
                     coreItems: window.currentPackItems, 
                     upsellItems: window.currentPackUpsells, 
                     isPackActive: true
                 };
-                await addDoc(collection(db, "packs"), packData);
-                showToast("Pack Scolaire créé avec succès !");
+
+                if (editId) {
+                    await updateDoc(doc(db, "packs", editId), packData);
+                    showToast("Pack modifié avec succès !");
+                } else {
+                    packData.timestamp = new Date().toISOString();
+                    await addDoc(collection(db, "packs"), packData);
+                    showToast("Nouveau Pack créé !");
+                }
                 
-                document.getElementById('packName').value = '';
-                document.getElementById('packSchool').value = '';
-                document.getElementById('packSchoolLogo').value = '';
-                document.getElementById('packLevel').value = '';
-                document.getElementById('packBundlePrice').value = '';
-                window.currentPackItems = []; window.currentPackUpsells = [];
-                renderPackRecipeUI(); renderPackUpsellUI();
+                window.resetPackBuilder();
             } catch(e) {
                 console.error("Pack Save Exception:", e);
-                alert("Erreur lors de la création du pack.");
+                alert("Erreur lors de la sauvegarde du pack.");
             }
         };
 
+        window.resetPackBuilder = () => {
+            document.getElementById('editPackId').value = '';
+            document.getElementById('packBuilderTitle').innerText = 'Créer un Pack Scolaire';
+            document.getElementById('btnSavePack').innerText = 'Enregistrer le Pack Scolaire';
+            document.getElementById('btnCancelPackEdit').style.display = 'none';
+            
+            document.getElementById('packName').value = '';
+            document.getElementById('packSchool').value = '';
+            document.getElementById('packSchoolLogo').value = '';
+            document.getElementById('packLevel').value = '';
+            document.getElementById('packBundlePrice').value = '';
+            window.currentPackItems = []; window.currentPackUpsells = [];
+            renderPackRecipeUI(); renderPackUpsellUI();
+            window.scrollTo(0,0);
+        };
+
+        window.editPack = (id) => {
+            const pk = allPacks.find(p => p.id === id); if(!pk) return;
+            document.getElementById('editPackId').value = pk.id;
+            document.getElementById('packBuilderTitle').innerText = 'Modifier le Pack';
+            document.getElementById('btnSavePack').innerText = 'Mettre à jour le Pack';
+            document.getElementById('btnCancelPackEdit').style.display = 'block';
+
+            document.getElementById('packName').value = pk.name || '';
+            document.getElementById('packSchool').value = pk.schoolName || '';
+            document.getElementById('packSchoolLogo').value = pk.schoolLogo || '';
+            document.getElementById('packLevel').value = pk.level || '';
+            document.getElementById('packBundlePrice').value = pk.bundlePrice || '';
+            
+            window.currentPackItems = pk.coreItems ? [...pk.coreItems] : [];
+            window.currentPackUpsells = pk.upsellItems ? [...pk.upsellItems] : [];
+            
+            renderPackRecipeUI(); renderPackUpsellUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.duplicatePack = (id) => {
+            const pk = allPacks.find(p => p.id === id); if(!pk) return;
+            window.resetPackBuilder(); // Ensure we are in "Create" mode, not edit
+            
+            document.getElementById('packName').value = pk.name + ' (Copie)';
+            document.getElementById('packSchool').value = pk.schoolName || '';
+            document.getElementById('packSchoolLogo').value = pk.schoolLogo || '';
+            document.getElementById('packLevel').value = pk.level || '';
+            document.getElementById('packBundlePrice').value = pk.bundlePrice || '';
+            
+            window.currentPackItems = pk.coreItems ? JSON.parse(JSON.stringify(pk.coreItems)) : [];
+            window.currentPackUpsells = pk.upsellItems ? [...pk.upsellItems] : [];
+            
+            renderPackRecipeUI(); renderPackUpsellUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            showToast("Pack dupliqué. Modifiez et enregistrez.");
+        };
+
+        window.promptDeletePack = (id) => {
+            document.getElementById('modalTitle').innerText = "Supprimer le Pack"; 
+            document.getElementById('modalMsg').innerText = "Cette action retirera ce pack du site client. Confirmer ?";
+            const btn = document.getElementById('modalConfirmBtn'); btn.className = 'btn btn-primary'; btn.style.background = 'var(--danger)';
+            window.confirmActionCallback = async () => { 
+                closeModals(); 
+                try { 
+                    await deleteDoc(doc(db, "packs", id)); 
+                    showToast("Pack supprimé"); 
+                } catch(e) { alert("Erreur."); } 
+            }; 
+            document.getElementById('confirmOverlay').classList.add('active');
+        };
+
         onSnapshot(collection(db, "packs"), snap => {
-            const packs = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            allPacks = snap.docs.map(d => ({id: d.id, ...d.data()}));
             const container = document.getElementById('adminPacksListContainer');
             if(!container) return;
-            if(packs.length === 0) {
+            if(allPacks.length === 0) {
                 container.innerHTML = `<div class="empty-state">Aucun pack configuré pour le moment.</div>`;
                 return;
             }
-            container.innerHTML = packs.map(pk => {
+            container.innerHTML = allPacks.map(pk => {
                 const itemsCount = pk.coreItems ? pk.coreItems.length : 0;
                 const upsellCount = pk.upsellItems ? pk.upsellItems.length : 0;
+                
+                // Calculate Real Value for the display card
+                let realValue = 0;
+                if(pk.coreItems) { pk.coreItems.forEach(i => realValue += (i.qty * i.unitPrice)); }
+
                 return `
                 <div class="prod-card" style="align-items: flex-start; flex-direction: column; gap: 4px;">
-                    <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
-                        <h4 style="margin:0;">${pk.name}</h4>
-                        <strong style="color:var(--accent); font-size:14px;">${safeNum(pk.bundlePrice).toFixed(2)} DH</strong>
+                    <div style="display:flex; justify-content:space-between; width:100%; align-items:flex-start;">
+                        <div>
+                            <h4 style="margin:0;">${pk.name}</h4>
+                            <div class="prod-meta" style="margin-top:2px;">École: <strong>${pk.schoolName}</strong> • Niveau: <strong>${pk.level}</strong></div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color:var(--text-muted); font-size:11px; text-decoration: line-through;">${realValue.toFixed(2)} DH</div>
+                            <strong style="color:var(--accent); font-size:14px;">${safeNum(pk.bundlePrice).toFixed(2)} DH</strong>
+                        </div>
                     </div>
-                    <div class="prod-meta" style="margin:0;">École: <strong>${pk.schoolName}</strong> • Niveau: <strong>${pk.level}</strong></div>
                     <div style="display:flex; gap:8px; margin-top:4px;">
-                        <span class="badge b-processing" style="font-size:9px;">${itemsCount} Articles obligatoires</span>
+                        <span class="badge b-processing" style="font-size:9px; background:var(--primary-light); color:var(--primary);">${itemsCount} Articles obligatoires</span>
                         <span class="badge b-pending" style="font-size:9px; background: var(--orange-light); color: var(--orange);">${upsellCount} Options en plus</span>
+                    </div>
+                    <div style="display:flex; gap:8px; margin-top:12px; width: 100%;">
+                        <button class="btn-outline" style="flex:1; padding: 6px; font-size: 11px; border-radius: 8px;" onclick="window.editPack('${pk.id}')">✏️ Éditer</button>
+                        <button class="btn-outline" style="flex:1; padding: 6px; font-size: 11px; border-radius: 8px;" onclick="window.duplicatePack('${pk.id}')">📋 Dupliquer</button>
+                        <button class="btn-danger-outline" style="padding: 6px; width: 36px; border-radius: 8px; flex-shrink:0;" onclick="window.promptDeletePack('${pk.id}')">🗑️</button>
                     </div>
                 </div>`;
             }).join('');
