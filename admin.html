@@ -151,8 +151,6 @@
         .wizard-step.active { display: block; }
         .wizard-footer { display: flex; gap: 12px; margin-top: 30px; }
         .wizard-footer .btn { flex: 1; }
-        .upload-box { border: 2px dashed var(--border); border-radius: var(--radius-card); padding: 40px 20px; text-align: center; background: var(--surface); margin-bottom: 24px; cursor: pointer; transition: 0.2s;}
-        .upload-box:active { background: var(--bg-main); }
         
         /* Toggles & Chips UI */
         .toggle-wrapper { display: flex; justify-content: space-between; align-items: center; padding: 0; background: transparent; border: none; margin-bottom: 0; }
@@ -167,14 +165,17 @@
         .v-chip { padding: 8px 12px; border-radius: 20px; background: var(--primary-light); color: var(--primary); border: 1px solid #C7D2FE; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
         .v-chip span { cursor: pointer; display: flex; align-items: center; justify-content: center; width: 16px; height: 16px; background: rgba(0,0,0,0.1); border-radius: 50%; }
         
-        .tag-chip { padding: 8px 12px; border-radius: 8px; background: var(--accent-light); color: var(--accent); border: 1px solid #BBF7D0; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 6px; }
-
-        .v-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid var(--border); }
-        .v-row:last-child { border-bottom: none; }
-        .v-row-left { display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 600; width: 100px;}
-        .v-dot { width: 12px; height: 12px; border-radius: 50%; }
-        .v-row-right { display: flex; align-items: center; gap: 12px; flex: 1;}
-
+        /* SMART BADGES */
+        .smart-tag { padding: 8px 16px; border-radius: 20px; border: 1px solid var(--border); font-size: 12px; font-weight: 700; color: var(--text-muted); cursor: pointer; transition: 0.2s; background: var(--surface); user-select: none; }
+        .smart-tag.active { background: var(--text-main); color: white; border-color: var(--text-main); box-shadow: 0 4px 10px rgba(0,0,0,0.1);}
+        
+        /* IMAGE GALLERY GRID */
+        .gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 16px; }
+        .gallery-thumb { position: relative; aspect-ratio: 1; border-radius: 12px; overflow: hidden; border: 1px solid var(--border); background: var(--bg-main); display: flex; align-items: center; justify-content: center; }
+        .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; }
+        .gallery-thumb.main-img { grid-column: span 2; aspect-ratio: 16/9; border: 2px solid var(--primary); }
+        .gallery-delete { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.6); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; backdrop-filter: blur(4px); border:none;}
+        
         /* ORDER DETAILS */
         .detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
         .back-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--surface); border-radius: 50%; box-shadow: var(--shadow-sm); cursor: pointer; flex-shrink: 0;}
@@ -367,22 +368,22 @@
             <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Informations de base</h3>
             <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Ajoutez les informations principales de votre produit.</p>
             
-            <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 12px;">Image du produit</label>
-            <div class="upload-box" onclick="document.getElementById('pImg').focus()" id="uploadBoxUI">
-                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                <p>Ajouter une image</p>
-                <span>Coller le lien ci-dessous</span>
-            </div>
-            
-            <div class="search-box" style="margin-bottom: 24px;">
+            <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 12px;">Galerie d'images (Jusqu'à 4 photos) *</label>
+            <div class="search-box" style="margin-bottom: 16px;">
                 <svg class="search-icon" viewBox="0 0 24 24" style="color:var(--primary);"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                <input type="text" id="pImg" placeholder="Coller l'URL de l'image" style="padding-left:44px;" oninput="previewWizardImg(); validateStep1();">
+                <input type="text" id="galleryInput" placeholder="Coller le lien de l'image ici..." style="padding-left:44px;" onkeydown="if(event.key==='Enter') window.addImageToGallery()">
+                <button class="btn-primary" style="position:absolute; right:4px; top:4px; bottom:4px; border-radius:8px; padding:0 16px; width:auto; font-size:12px;" onclick="window.addImageToGallery()">Ajouter</button>
             </div>
-            <img id="previewImg" style="width: 100px; height: 100px; border-radius: 16px; object-fit: cover; margin-bottom: 24px; display: none; border: 1px solid var(--border); margin-left: auto; margin-right: auto;" src="">
+            <div id="galleryContainer" class="gallery-grid"></div>
 
             <div class="form-group">
                 <label>Nom du produit *</label>
-                <input type="text" id="pName" class="form-control" placeholder="Ex: Stylo Pilot G-2" oninput="validateStep1()">
+                <input type="text" id="pName" class="form-control" placeholder="Ex: Sac à dos Orbit" oninput="validateStep1()">
+            </div>
+            
+            <div class="form-group">
+                <label>Marque (Optionnel)</label>
+                <input type="text" id="pBrand" class="form-control" placeholder="Ex: Eastpak, Apple, Moleskine...">
             </div>
 
             <div class="form-group">
@@ -481,6 +482,20 @@
             </div>
 
             <div class="card" style="margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--accent);">
+                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Badges Marketing</span>
+                </div>
+                <div class="chip-container" id="marketingBadgesContainer">
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Nouveau', this)">Nouveau</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Best Seller', this)">Best Seller</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Rentrée Scolaire', this)">Rentrée Scolaire</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Promo', this)">Promo</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Recommandé', this)">Recommandé</div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom:12px;">
                 <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
                     <div style="display:flex; align-items:center; gap:8px; color:var(--primary);">
                         <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 20V2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path></svg>
@@ -530,7 +545,7 @@
                 <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
                     <div style="display:flex; align-items:center; gap:8px; color:var(--purple);">
                         <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Variantes (Multi-Photos)</span>
+                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Variantes (Optionnel)</span>
                     </div>
                     <label class="switch"><input type="checkbox" id="varToggle" onchange="document.getElementById('variantConfig').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
                 </div>
@@ -562,13 +577,9 @@
                 <textarea id="pDesc" class="form-control" placeholder="Description détaillée du produit (optionnel)..." style="height: 100px; resize: none;"></textarea>
             </div>
 
-            <div class="card" style="margin-bottom:12px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--accent);">
-                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Tags</span>
-                </div>
+            <div class="card" style="margin-bottom:12px; display:none;">
                 <div style="display:flex; gap:8px; margin-bottom: 12px;">
-                    <input type="text" id="pTagInput" class="form-control" placeholder="Ajouter un tag (ex: scolaire)..." style="padding: 12px;">
+                    <input type="text" id="pTagInput" class="form-control" placeholder="Ajouter un tag personnalisé..." style="padding: 12px;">
                     <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="addTagOption()">+ Ajouter</button>
                 </div>
                 <div class="chip-container" id="tagChips"></div>
@@ -728,16 +739,19 @@
 
         let allOrders = [], allProducts = [], globalCategoriesData = [], allPacks = [];
         let currentOrderFilter = 'Toutes', currentProductFilter = 'all', currentEditProductId = null; 
-        window.productVariants = []; window.productTags = []; let currentCatAddingType = ''; 
+        window.productVariants = []; window.productTags = []; window.marketingTags = []; window.productImages = [];
+        let currentCatAddingType = ''; 
         const safeNum = (val) => isNaN(parseFloat(val)) ? 0 : parseFloat(val);
 
         // Click outside to close search dropdowns
         document.addEventListener('click', (e) => {
             if (!e.target.closest('#packItemSearch') && !e.target.closest('#packItemResults')) {
-                document.getElementById('packItemResults').style.display = 'none';
+                const results1 = document.getElementById('packItemResults');
+                if(results1) results1.style.display = 'none';
             }
             if (!e.target.closest('#packUpsellSearch') && !e.target.closest('#packUpsellResults')) {
-                document.getElementById('packUpsellResults').style.display = 'none';
+                const results2 = document.getElementById('packUpsellResults');
+                if(results2) results2.style.display = 'none';
             }
         });
 
@@ -760,16 +774,51 @@
             const savedTab = localStorage.getItem('lascoAdminTab') || 'dashboard'; switchTab(savedTab);
         });
 
-        window.validateStep1 = () => {
-            const name = document.getElementById('pName').value.trim(); const cat = document.getElementById('pCat').value;
-            const btn = document.getElementById('btnNext1'); if(name && cat) { btn.disabled = false; } else { btn.disabled = true; }
+        // --- NEW: MULTI-IMAGE GALLERY LOGIC ---
+        window.addImageToGallery = () => {
+            const input = document.getElementById('galleryInput');
+            const url = input.value.trim();
+            if(url && window.productImages.length < 4) {
+                window.productImages.push(url);
+                input.value = '';
+                renderGalleryUI();
+                validateStep1();
+            } else if (window.productImages.length >= 4) {
+                alert("Vous ne pouvez ajouter que 4 images maximum.");
+            }
         };
 
-        window.previewWizardImg = () => {
-            const url = document.getElementById('pImg').value; const imgEl = document.getElementById('previewImg');
-            if(url) { imgEl.src = url; imgEl.style.display = 'block'; document.getElementById('uploadBoxUI').style.display='none'; }
-            else { imgEl.style.display = 'none'; document.getElementById('uploadBoxUI').style.display='flex'; }
+        window.removeImageFromGallery = (index) => {
+            window.productImages.splice(index, 1);
+            renderGalleryUI();
+            validateStep1();
+        };
+
+        function renderGalleryUI() {
+            const container = document.getElementById('galleryContainer');
+            if(window.productImages.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
+            container.innerHTML = window.productImages.map((url, i) => {
+                const isMain = i === 0;
+                const cssClass = isMain ? 'gallery-thumb main-img' : 'gallery-thumb';
+                return `
+                <div class="${cssClass}">
+                    <img src="${url}">
+                    <button class="gallery-delete" onclick="window.removeImageFromGallery(${i})">✕</button>
+                    ${isMain ? `<span style="position:absolute; bottom:6px; left:6px; background:var(--primary); color:white; font-size:9px; padding:2px 6px; border-radius:4px; font-weight:800;">PRINCIPALE</span>` : ''}
+                </div>`;
+            }).join('');
         }
+
+        window.validateStep1 = () => {
+            const name = document.getElementById('pName').value.trim(); 
+            const cat = document.getElementById('pCat').value;
+            const hasImg = window.productImages.length > 0;
+            const btn = document.getElementById('btnNext1'); 
+            if(name && cat && hasImg) { btn.disabled = false; } else { btn.disabled = true; }
+        };
 
         window.validateStep2 = () => {
             const sell = document.getElementById('pSell').value; const stock = document.getElementById('pStock').value; const lowStock = document.getElementById('pLowStock').value;
@@ -794,6 +843,30 @@
             else { badge.style.display = 'none'; }
         };
 
+        // --- NEW: SMART MARKETING TAGS LOGIC ---
+        window.toggleSmartTag = (tagName, el) => {
+            const index = window.marketingTags.indexOf(tagName);
+            if(index > -1) {
+                window.marketingTags.splice(index, 1);
+                el.classList.remove('active');
+            } else {
+                window.marketingTags.push(tagName);
+                el.classList.add('active');
+            }
+        };
+
+        function renderSmartTagsUI() {
+            document.querySelectorAll('.smart-tag').forEach(el => {
+                const tag = el.innerText.trim();
+                if(window.marketingTags.includes(tag)) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
+            });
+        }
+
+        // Custom tags backup
         window.addTagOption = () => {
             const input = document.getElementById('pTagInput'); const val = input.value.trim();
             if(val && !window.productTags.includes(val.toLowerCase())) { window.productTags.push(val.toLowerCase()); input.value = ''; renderTagsUI(); }
@@ -943,7 +1016,12 @@
                 if (sortedProducts.length === 0) { container.innerHTML = '<div class="empty-state">Aucune vente enregistrée.</div>'; return; }
                 container.innerHTML = sortedProducts.map(item => {
                     const p = item.product || {}; const name = p.name || 'Produit inconnu'; const price = safeNum(p.sellPrice).toFixed(2);
-                    const img = p.imageUrl ? `<img src="${p.imageUrl}">` : `<span style="font-weight:bold; color:var(--primary);">${name.charAt(0)}</span>`;
+                    
+                    // NEW: Render primary image dynamically
+                    let imgSrc = '';
+                    if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
+                    const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:bold; color:var(--primary);">${name.charAt(0)}</span>`;
+                    
                     return `<div class="top-product"><div class="tp-img">${img}</div><div class="tp-info"><h4>${name}</h4><p>${price} DH</p></div><div class="tp-sales">${item.totalSold} vendus</div></div>`;
                 }).join('');
             } catch (error) { console.error("PopProd Error:", error); }
@@ -1026,10 +1104,11 @@
             document.getElementById('det-items-count').innerText = `Articles (${order.totalItems || 0})`;
             document.getElementById('det-items-list').innerHTML = (order.cart || []).map(item => {
                 const p = item.product || {}; 
-                const img = p.imageUrl ? `<img src="${p.imageUrl}">` : ''; 
+                let imgSrc = '';
+                if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
+                const img = imgSrc ? `<img src="${imgSrc}">` : ''; 
                 const vText = item.variantName ? `<span style="color:var(--primary);">${item.variantName}</span>` : ''; 
                 
-                // NEW: Handle Pack Gender Metadata (Fille/Garçon) for Order view
                 let packGenderTag = '';
                 if(item.packGender) {
                     const genderColor = item.packGender === 'Fille' ? '#DB2777' : '#2563EB';
@@ -1106,12 +1185,18 @@
                 if(filtered.length === 0) { container.innerHTML = `<div class="empty-state">Aucun produit trouvé.</div>`; return; }
 
                 container.innerHTML = filtered.map(p => {
-                    const name = p.name || 'Inconnu'; const img = p.imageUrl ? `<img src="${p.imageUrl}">` : `<span style="font-weight:800;color:var(--text-muted);">${name.charAt(0)}</span>`;
+                    const name = p.name || 'Inconnu'; 
+                    let imgSrc = '';
+                    if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
+                    const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:800;color:var(--text-muted);">${name.charAt(0)}</span>`;
+                    
                     const stock = parseInt(p.stock)||0; const limit = parseInt(p.lowStockThreshold)||5;
                     let stockClass = 'stock-good', stockText = `${stock} en stock`;
                     if (stock <= 0) { stockClass = 'stock-out'; stockText = 'Rupture'; } else if (stock <= limit) { stockClass = 'stock-low'; stockText = `Stock: ${stock} (Faible)`; }
+                    
+                    const brandHTML = p.brand ? ` • <span style="font-weight:700;">${p.brand}</span>` : '';
 
-                    return `<div class="prod-card"><div class="prod-img-box">${img}</div><div class="prod-info"><h4>${name}</h4><div class="prod-meta">${p.category||'Sans cat'} • <strong style="color:var(--primary);">${safeNum(p.sellPrice)} DH</strong></div><div class="prod-stock ${stockClass}">${stockText}</div></div><div class="prod-actions"><button class="btn-icon-small btn-edit-prod" onclick="editProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button><button class="btn-icon-small btn-del-prod" onclick="promptDeleteProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></div></div>`;
+                    return `<div class="prod-card"><div class="prod-img-box">${img}</div><div class="prod-info"><h4>${name}</h4><div class="prod-meta">${p.category||'Sans cat'}${brandHTML} • <strong style="color:var(--primary);">${safeNum(p.sellPrice)} DH</strong></div><div class="prod-stock ${stockClass}">${stockText}</div></div><div class="prod-actions"><button class="btn-icon-small btn-edit-prod" onclick="editProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button><button class="btn-icon-small btn-del-prod" onclick="promptDeleteProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></div></div>`;
                 }).join('');
             } catch(e) { console.error("Prod List Error:", e); }
         }
@@ -1119,7 +1204,7 @@
         document.getElementById('searchProdInput').addEventListener('input', e => {
             const q = e.target.value.toLowerCase(); let subset = allProducts;
             if (currentProductFilter === 'rupture') subset = subset.filter(p => (parseInt(p.stock)||0) <= 0); if (currentProductFilter === 'faible') subset = subset.filter(p => { const s = parseInt(p.stock)||0; return s > 0 && s <= (parseInt(p.lowStockThreshold)||5); });
-            renderProductsAdminList(subset.filter(p => (p.name||'').toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q)));
+            renderProductsAdminList(subset.filter(p => (p.name||'').toLowerCase().includes(q) || (p.category||'').toLowerCase().includes(q) || (p.brand||'').toLowerCase().includes(q)));
         });
 
         window.promptDeleteProduct = (id) => {
@@ -1130,9 +1215,18 @@
 
         window.prepareAddProduct = () => {
             currentEditProductId = null; document.getElementById('wizardTitle').innerText = "Ajouter un produit"; document.querySelectorAll('#view-ajouter input').forEach(i => { if(i.type !== 'checkbox') i.value = '' });
-            document.getElementById('previewImg').style.display = 'none'; document.getElementById('uploadBoxUI').style.display = 'flex'; document.getElementById('pLowStock').value = 5;
             
-            document.getElementById('pFeatured').checked = false; window.productTags = []; renderTagsUI();
+            // RESET MULTI IMAGE
+            window.productImages = []; document.getElementById('galleryInput').value = ''; renderGalleryUI();
+
+            document.getElementById('pBrand').value = '';
+            document.getElementById('pLowStock').value = 5;
+            document.getElementById('pFeatured').checked = false; 
+            
+            // RESET SMART TAGS
+            window.marketingTags = []; renderSmartTagsUI();
+            
+            window.productTags = []; renderTagsUI();
             
             document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
             document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = '';
@@ -1147,13 +1241,30 @@
         window.editProduct = (id) => {
             const p = allProducts.find(x => x.id === id); if(!p) return;
             currentEditProductId = id; document.getElementById('wizardTitle').innerText = "Modifier le produit";
-            document.getElementById('pName').value = p.name || ''; document.getElementById('pCat').value = p.category || '';
+            document.getElementById('pName').value = p.name || ''; 
+            document.getElementById('pBrand').value = p.brand || ''; 
+            document.getElementById('pCat').value = p.category || '';
             loadSubCats(); setTimeout(() => document.getElementById('pSubCat').value = p.subCategory || '', 100);
+            
+            // LOAD MULTI IMAGE
+            if(p.images && p.images.length > 0) {
+                window.productImages = [...p.images];
+            } else if (p.imageUrl) {
+                window.productImages = [p.imageUrl]; // Backward compatibility
+            } else {
+                window.productImages = [];
+            }
+            renderGalleryUI();
+
             document.getElementById('pCost').value = p.costPrice || ''; document.getElementById('pSell').value = p.sellPrice || '';
             document.getElementById('pStock').value = p.stock || ''; document.getElementById('pLowStock').value = p.lowStockThreshold || 5;
-            document.getElementById('pImg').value = p.imageUrl || '';
+            
             document.getElementById('pFeatured').checked = p.featured || false; document.getElementById('pPromoPrice').value = p.promoPrice || '';
-            window.productTags = p.tags ? [...p.tags] : []; renderTagsUI(); window.previewWizardImg();
+            
+            // LOAD SMART TAGS
+            window.marketingTags = p.marketingTags ? [...p.marketingTags] : []; renderSmartTagsUI();
+
+            window.productTags = p.tags ? [...p.tags] : []; renderTagsUI(); 
 
             if(p.isTextbook) {
                 document.getElementById('textbookToggle').checked = true; document.getElementById('textbookConfig').style.display = 'block';
@@ -1185,10 +1296,27 @@
             if(hasVars && window.productVariants.length > 0) { calculatedStock = window.productVariants.reduce((sum, v) => sum + (parseInt(v.stock) || 0), 0); }
 
             const data = {
-                name: document.getElementById('pName').value, category: document.getElementById('pCat').value || "Non classé", subCategory: document.getElementById('pSubCat').value || "",
-                costPrice: parseFloat(document.getElementById('pCost').value) || 0, sellPrice: parseFloat(document.getElementById('pSell').value) || 0, stock: calculatedStock,
-                lowStockThreshold: parseInt(document.getElementById('pLowStock').value) || 5, imageUrl: document.getElementById('pImg').value, featured: document.getElementById('pFeatured').checked,
-                promoPrice: parseFloat(document.getElementById('pPromoPrice').value) || null, tags: window.productTags, sku: document.getElementById('pSku').value || "", 
+                name: document.getElementById('pName').value.trim(), 
+                brand: document.getElementById('pBrand').value.trim(),
+                category: document.getElementById('pCat').value || "Non classé", 
+                subCategory: document.getElementById('pSubCat').value || "",
+                costPrice: parseFloat(document.getElementById('pCost').value) || 0, 
+                sellPrice: parseFloat(document.getElementById('pSell').value) || 0, 
+                stock: calculatedStock,
+                lowStockThreshold: parseInt(document.getElementById('pLowStock').value) || 5, 
+                
+                // SAVE MULTI IMAGES
+                images: window.productImages,
+                imageUrl: window.productImages.length > 0 ? window.productImages[0] : "", // For backward compatibility with your POS checkout cart image
+
+                featured: document.getElementById('pFeatured').checked,
+                promoPrice: parseFloat(document.getElementById('pPromoPrice').value) || null, 
+                
+                // SAVE SMART TAGS
+                marketingTags: window.marketingTags,
+                
+                tags: window.productTags, 
+                sku: document.getElementById('pSku').value || "", 
                 isTextbook: document.getElementById('textbookToggle').checked,
                 textbookLevel: document.getElementById('textbookToggle').checked ? document.getElementById('tbLevel').value.trim() : "",
                 textbookSubject: document.getElementById('textbookToggle').checked ? document.getElementById('tbSubject').value.trim() : "",
@@ -1199,7 +1327,8 @@
                 variants: hasVars ? window.productVariants : []
             };
 
-            if(!data.name || !data.category) return alert("Veuillez remplir les informations de base.");
+            if(!data.name || !data.category || data.images.length === 0) return alert("Veuillez remplir le nom, la catégorie et ajouter au moins une image.");
+            
             try {
                 if(currentEditProductId) { await updateDoc(doc(db, "products", currentEditProductId), data); showToast("Produit modifié !"); } 
                 else { data.timestamp = new Date().toISOString(); await addDoc(collection(db, "products"), data); showToast("Nouveau produit ajouté !"); }
@@ -1207,7 +1336,7 @@
             } catch (e) { console.error(e); alert("Erreur lors de l'enregistrement."); }
         };
 
-        // --- NEW: DYNAMIC PACK BUILDER WITH SMART SEARCH ---
+        // --- DYNAMIC PACK BUILDER FUNCTIONS ---
         window.currentPackItems = [];
         window.currentPackUpsells = [];
         
@@ -1216,7 +1345,7 @@
             if(!query.trim()) { resultsDiv.style.display = 'none'; return; }
             
             const q = query.toLowerCase();
-            const matches = allProducts.filter(p => (p.name || '').toLowerCase().includes(q) || (p.sku || '').toLowerCase().includes(q)).slice(0, 8); // Top 8 results
+            const matches = allProducts.filter(p => (p.name || '').toLowerCase().includes(q) || (p.sku || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q)).slice(0, 8);
             
             if(matches.length === 0) {
                 resultsDiv.innerHTML = '<div class="search-dropdown-item" style="color:var(--text-muted); cursor:default;">Aucun produit trouvé</div>';
@@ -1299,7 +1428,7 @@
 
             try {
                 const packData = {
-                    name: name.charAt(0).toUpperCase() + name.slice(1), // Auto-capitalize
+                    name: name.charAt(0).toUpperCase() + name.slice(1), 
                     schoolName, schoolLogo, level, bundlePrice,
                     coreItems: window.currentPackItems, 
                     upsellItems: window.currentPackUpsells, 
@@ -1360,7 +1489,7 @@
 
         window.duplicatePack = (id) => {
             const pk = allPacks.find(p => p.id === id); if(!pk) return;
-            window.resetPackBuilder(); // Ensure we are in "Create" mode, not edit
+            window.resetPackBuilder(); 
             
             document.getElementById('packName').value = pk.name + ' (Copie)';
             document.getElementById('packSchool').value = pk.schoolName || '';
@@ -1402,7 +1531,6 @@
                 const itemsCount = pk.coreItems ? pk.coreItems.length : 0;
                 const upsellCount = pk.upsellItems ? pk.upsellItems.length : 0;
                 
-                // Calculate Real Value for the display card
                 let realValue = 0;
                 if(pk.coreItems) { pk.coreItems.forEach(i => realValue += (i.qty * i.unitPrice)); }
 
@@ -1430,8 +1558,6 @@
                 </div>`;
             }).join('');
         });
-
-        // --- END PACK BUILDER ---
 
         document.getElementById('modalConfirmBtn').addEventListener('click', () => { if(window.confirmActionCallback) window.confirmActionCallback(); });
         function showToast(msg) { const t = document.getElementById('toastBox'); document.getElementById('toastMsg').innerText = msg; t.classList.add('show'); setTimeout(() => t.classList.remove('show'), 3000); }
