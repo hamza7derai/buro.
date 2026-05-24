@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Lascoburo Admin Mobile</title>
+    <title>Buro Admin Mobile</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -410,25 +410,33 @@
         </div>
 
         <div id="wizard-2" class="wizard-step">
-            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Prix & Stock de Base</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Si ce produit n'a pas de variantes, le stock est géré ici.</p>
+            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Prix & Stock</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Définissez le prix et la quantité disponible.</p>
             
             <div class="form-group">
                 <label>Prix d'achat (DH)</label>
                 <input type="number" id="pCost" class="form-control" placeholder="8.00">
             </div>
             <div class="form-group">
-                <label>Prix de vente de base (DH) *</label>
+                <label>Prix de vente (DH) *</label>
                 <input type="number" id="pSell" class="form-control" placeholder="15.00" oninput="validateStep2()">
             </div>
             <div class="form-group">
                 <label>Stock global *</label>
                 <input type="number" id="pStock" class="form-control" placeholder="50" oninput="validateStep2()">
-                <span style="font-size: 11px; color: var(--text-muted); margin-top: 6px; display: block;">Sera ignoré si vous ajoutez des variantes à l'étape suivante.</span>
+                <span style="font-size: 11px; color: var(--text-muted); margin-top: 6px; display: block;">Quantité totale disponible pour ce produit.</span>
             </div>
             <div class="form-group">
                 <label>Seuil de stock faible *</label>
                 <input type="number" id="pLowStock" class="form-control" placeholder="5" value="5" oninput="validateStep2()">
+            </div>
+
+            <div class="info-banner" style="margin-top:24px;">
+                <svg viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <div>
+                    <strong style="display:block; margin-bottom:4px;">À propos du seuil de stock</strong>
+                    Une alerte vous sera envoyée quand le stock sera inférieur ou égal à ce seuil.
+                </div>
             </div>
 
             <div class="wizard-footer">
@@ -439,23 +447,24 @@
 
         <div id="wizard-3" class="wizard-step">
             <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Configuration avancée</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Variantes, marketing et autres options.</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Configurez les options supplémentaires de votre produit.</p>
             
-            <div class="card" style="margin-bottom:12px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--accent);">
-                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
-                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Badges Marketing</span>
+            <div class="card toggle-wrapper" style="margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:12px;">
+                    <svg viewBox="0 0 24 24" style="color:var(--warning); fill:var(--warning);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                    <div>
+                        <span class="toggle-label" style="display:block; font-size:14px;">Produit en vedette</span>
+                        <span style="font-size:11px; color:var(--text-muted); font-weight: 500;">Affiché en haut de la boutique</span>
+                    </div>
                 </div>
-                <div class="chip-container" id="marketingBadgesContainer">
-                    <div class="smart-tag" onclick="window.toggleSmartTag('Nouveau', this)">Nouveau</div>
-                    <div class="smart-tag" onclick="window.toggleSmartTag('Best Seller', this)">Best Seller</div>
-                    <div class="smart-tag" onclick="window.toggleSmartTag('Rentrée Scolaire', this)">Rentrée Scolaire</div>
-                    <div class="smart-tag" onclick="window.toggleSmartTag('Promo', this)">Promo</div>
-                    <div class="smart-tag" onclick="window.toggleSmartTag('Recommandé', this)">Recommandé</div>
-                </div>
+                <label class="switch"><input type="checkbox" id="pFeatured"><span class="slider"></span></label>
             </div>
 
             <div class="card" style="margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; color:var(--accent);">
+                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Prix & Promotion</span>
+                </div>
                 <div style="display:flex; gap:12px;">
                     <div class="form-group" style="flex:1; margin-bottom:0;">
                         <label>Prix normal (DH)</label>
@@ -473,52 +482,17 @@
             </div>
 
             <div class="card" style="margin-bottom:12px;">
-                <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
-                    <div style="display:flex; align-items:center; gap:8px; color:var(--purple);">
-                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
-                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Matrice de Variantes</span>
-                    </div>
-                    <label class="switch"><input type="checkbox" id="varToggle" onchange="document.getElementById('variantConfig').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--accent);">
+                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Badges Marketing</span>
                 </div>
-                
-                <div id="variantConfig" style="display:none;">
-                    <div class="form-group">
-                        <label>Ajout rapide par thème</label>
-                        <select class="form-control" id="varPresetType" style="padding: 12px;" onchange="window.loadVariantPresets()">
-                            <option value="custom">Sélectionner un thème...</option>
-                            <option value="tech">Connectique (Câbles, Ports)</option>
-                            <option value="paper">Papeterie (Pages, Grilles)</option>
-                            <option value="color">Couleurs basiques</option>
-                            <option value="size">Tailles (Mode, Sacs)</option>
-                        </select>
-                    </div>
-                    
-                    <div id="presetChipsContainer" class="chip-container" style="margin-bottom: 16px; display:none;"></div>
-
-                    <div class="form-group">
-                        <label>Ou ajouter une option manuellement</label>
-                        <div style="display:flex; gap:8px; margin-bottom: 12px;">
-                            <input type="text" id="vNameInput" class="form-control" placeholder="Ex: USB-C 2 Mètres..." style="padding: 12px;">
-                            <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="window.addVariantOption()">+ Ajouter</button>
-                        </div>
-                    </div>
-                    
-                    <div style="margin-top: 24px;" id="vStockSection">
-                        <label style="font-size: 13px; font-weight: 700; display:flex; justify-content:space-between; margin-bottom: 12px;">
-                            <span>Options configurées</span>
-                            <span style="color:var(--text-muted); font-weight:500;">Stock & Prix unitaire</span>
-                        </label>
-                        <div id="vRowsContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
-                    </div>
+                <div class="chip-container" id="marketingBadgesContainer">
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Nouveau', this)">Nouveau</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Best Seller', this)">Best Seller</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Rentrée Scolaire', this)">Rentrée Scolaire</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Promo', this)">Promo</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Recommandé', this)">Recommandé</div>
                 </div>
-            </div>
-
-            <div class="card" style="margin-bottom:12px; display:none;">
-                <div style="display:flex; gap:8px; margin-bottom: 12px;">
-                    <input type="text" id="pTagInput" class="form-control" placeholder="Ajouter un tag personnalisé..." style="padding: 12px;">
-                    <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="addTagOption()">+ Ajouter</button>
-                </div>
-                <div class="chip-container" id="tagChips"></div>
             </div>
 
             <div class="card" style="margin-bottom:12px;">
@@ -539,7 +513,7 @@
                         <input type="text" id="tbSubject" class="form-control" placeholder="Ajouter la matière...">
                     </div>
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label>École Associée à Marrakech</label>
+                        <label>École Associée à Marrakech (ex: Victor Hugo, Majorelle)</label>
                         <input type="text" id="tbSchool" class="form-control" placeholder="Ex: Victor Hugo">
                     </div>
                 </div>
@@ -560,11 +534,55 @@
                             <input type="number" id="pBulkQty" class="form-control" placeholder="50">
                         </div>
                         <div class="form-group" style="flex:1;">
-                            <label>Prix Unitaire (DH)</label>
+                            <label>Prix Unitaire Spécial (DH)</label>
                             <input type="number" id="pBulkPrice" class="form-control" placeholder="1.40">
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div class="card" style="margin-bottom:12px;">
+                <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:8px; color:var(--purple);">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Variantes (Optionnel)</span>
+                    </div>
+                    <label class="switch"><input type="checkbox" id="varToggle" onchange="document.getElementById('variantConfig').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
+                </div>
+                <div id="variantConfig" style="display:none;">
+                    <div class="form-group">
+                        <label>Type de variante</label>
+                        <select class="form-control" id="varType" style="padding: 12px;"><option>Couleur</option><option>Taille</option><option>Autre</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Options (ex: Bleu, Rouge)</label>
+                        <div style="display:flex; gap:8px; margin-bottom: 12px;">
+                            <input type="text" id="vNameInput" class="form-control" placeholder="Ajouter une option..." style="padding: 12px;">
+                            <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="addVariantOption()">+ Ajouter</button>
+                        </div>
+                        <div class="chip-container" id="vChips"></div>
+                    </div>
+                    <div style="margin-top: 24px;" id="vStockSection">
+                        <label style="font-size: 13px; font-weight: 700; display:block; margin-bottom: 12px;">Stock par variante</label>
+                        <div id="vRowsContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--primary);">
+                    <svg viewBox="0 0 24 24"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Description</span>
+                </div>
+                <textarea id="pDesc" class="form-control" placeholder="Description détaillée du produit (optionnel)..." style="height: 100px; resize: none;"></textarea>
+            </div>
+
+            <div class="card" style="margin-bottom:12px; display:none;">
+                <div style="display:flex; gap:8px; margin-bottom: 12px;">
+                    <input type="text" id="pTagInput" class="form-control" placeholder="Ajouter un tag personnalisé..." style="padding: 12px;">
+                    <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="addTagOption()">+ Ajouter</button>
+                </div>
+                <div class="chip-container" id="tagChips"></div>
             </div>
 
             <div class="card" style="margin-bottom:12px;">
@@ -612,6 +630,11 @@
                 <label>Niveau Cible</label>
                 <input type="text" id="packLevel" class="form-control" placeholder="Ex: CE1">
             </div>
+            
+            <div class="info-banner" style="margin-bottom: 24px;">
+                <svg viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span style="font-size: 11px;">Note : Le client choisira "Fille" ou "Garçon" au moment de l'achat sur le site. Ce choix apparaîtra dans les détails de la commande pour vous aider à préparer les bonnes couleurs.</span>
+            </div>
 
             <div class="card" style="border: 1px solid var(--border); padding: 12px; margin-bottom: 16px; background: var(--bg-main);">
                 <label style="color: var(--primary); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">1. Articles obligatoires dans le pack</label>
@@ -636,7 +659,7 @@
             </div>
             
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
-                <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Valeur réelle :</span>
+                <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Valeur réelle (Articles obligatoires) :</span>
                 <span id="packRealValue" style="font-size: 14px; font-weight: 800; text-decoration: line-through; color: var(--text-muted);">0.00 DH</span>
             </div>
 
@@ -646,7 +669,7 @@
             </div>
             
             <button class="btn btn-primary" onclick="window.savePackConfig()" id="btnSavePack">Enregistrer le Pack Scolaire</button>
-            <button class="btn btn-outline" style="margin-top: 8px; display: none;" onclick="window.resetPackBuilder()" id="btnCancelPackEdit">Annuler</button>
+            <button class="btn btn-outline" style="margin-top: 8px; display: none;" onclick="window.resetPackBuilder()" id="btnCancelPackEdit">Annuler la modification</button>
         </div>
 
         <div class="section-title" style="margin-top: 32px;">Packs Actifs en ligne</div>
@@ -720,6 +743,7 @@
         let currentCatAddingType = ''; 
         const safeNum = (val) => isNaN(parseFloat(val)) ? 0 : parseFloat(val);
 
+        // Click outside to close search dropdowns
         document.addEventListener('click', (e) => {
             if (!e.target.closest('#packItemSearch') && !e.target.closest('#packItemResults')) {
                 const results1 = document.getElementById('packItemResults');
@@ -750,7 +774,7 @@
             const savedTab = localStorage.getItem('lascoAdminTab') || 'dashboard'; switchTab(savedTab);
         });
 
-        // --- MULTI-IMAGE GALLERY LOGIC ---
+        // --- NEW: MULTI-IMAGE GALLERY LOGIC ---
         window.addImageToGallery = () => {
             const input = document.getElementById('galleryInput');
             const url = input.value.trim();
@@ -819,7 +843,7 @@
             else { badge.style.display = 'none'; }
         };
 
-        // --- SMART MARKETING TAGS LOGIC ---
+        // --- NEW: SMART MARKETING TAGS LOGIC ---
         window.toggleSmartTag = (tagName, el) => {
             const index = window.marketingTags.indexOf(tagName);
             if(index > -1) {
@@ -842,72 +866,49 @@
             });
         }
 
-        // --- ADVANCED VARIATION MATRIX ---
-        window.loadVariantPresets = () => {
-            const type = document.getElementById('varPresetType').value;
-            const container = document.getElementById('presetChipsContainer');
-            let presets = [];
-            
-            if(type === 'tech') presets = ['USB-C', 'Lightning', 'Micro-USB', 'Jack 3.5mm'];
-            else if(type === 'paper') presets = ['96 pages', '100 pages', '200 pages', 'Ligné', 'Quadrillé 5x5', 'Pages blanches'];
-            else if(type === 'color') presets = ['Noir', 'Blanc', 'Bleu', 'Rouge', 'Vert', 'Gris', 'Rose'];
-            else if(type === 'size') presets = ['XS', 'S', 'M', 'L', 'XL', 'Standard', 'Grand'];
-
-            if(presets.length > 0) {
-                container.innerHTML = presets.map(p => `<div class="smart-tag" onclick="window.addPresetVariant('${p}')" style="font-size:11px; padding:6px 12px;">+ ${p}</div>`).join('');
-                container.style.display = 'flex';
-            } else {
-                container.style.display = 'none';
-            }
+        // Custom tags backup
+        window.addTagOption = () => {
+            const input = document.getElementById('pTagInput'); const val = input.value.trim();
+            if(val && !window.productTags.includes(val.toLowerCase())) { window.productTags.push(val.toLowerCase()); input.value = ''; renderTagsUI(); }
         };
+        window.removeTag = (index) => { window.productTags.splice(index, 1); renderTagsUI(); };
+        function renderTagsUI() {
+            document.getElementById('tagChips').innerHTML = window.productTags.map((t, i) => `
+                <div class="tag-chip">${t} <span style="cursor:pointer;" onclick="removeTag(${i})"><svg viewBox="0 0 24 24" style="width:12px; height:12px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></div>
+            `).join('');
+        }
 
-        window.addPresetVariant = (name) => {
-            document.getElementById('vNameInput').value = name;
-            window.addVariantOption();
-        };
+        function getColorHex(name) {
+            const n = name.toLowerCase(); if(n.includes('bleu')) return '#2563EB'; if(n.includes('rouge')) return '#EF4444';
+            if(n.includes('noir')) return '#0F172A'; if(n.includes('vert')) return '#10B981';
+            if(n.includes('jaune')) return '#F59E0B'; if(n.includes('rose')) return '#EC4899'; if(n.includes('blanc')) return '#FFFFFF'; return null;
+        }
 
         window.addVariantOption = () => {
-            const input = document.getElementById('vNameInput'); 
-            const name = input.value.trim();
-            const basePrice = parseFloat(document.getElementById('pSell').value) || 0;
-            
-            if(name && !window.productVariants.find(v => v.name.toLowerCase() === name.toLowerCase())) { 
-                window.productVariants.push({ name: name, stock: 0, price: basePrice }); 
-                input.value = ''; 
-                renderVariantUI(); 
-            }
+            const input = document.getElementById('vNameInput'); const name = input.value.trim();
+            if(name && !window.productVariants.find(v => v.name.toLowerCase() === name.toLowerCase())) { window.productVariants.push({ name: name, stock: 0 }); input.value = ''; renderVariantUI(); }
         };
-
         window.removeVar = (index) => { window.productVariants.splice(index, 1); renderVariantUI(); };
         window.updateVarStock = (index, val) => { window.productVariants[index].stock = parseInt(val) || 0; };
-        window.updateVarPrice = (index, val) => { window.productVariants[index].price = parseFloat(val) || 0; };
 
         function renderVariantUI() {
+            const isColor = document.getElementById('varType').value === 'Couleur';
+            document.getElementById('vChips').innerHTML = window.productVariants.map((v, i) => `
+                <div class="v-chip">${v.name} <span onclick="removeVar(${i})"><svg viewBox="0 0 24 24" style="width:12px; height:12px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></div>
+            `).join('');
             if(window.productVariants.length > 0) {
                 document.getElementById('vStockSection').style.display = 'block';
-                document.getElementById('vRowsContainer').innerHTML = window.productVariants.map((v, i) => `
-                    <div style="background: white; border: 1px solid var(--border); border-radius: 12px; padding: 12px; display: flex; flex-direction: column; gap: 10px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center;">
-                            <span style="font-weight:700; font-size:13px;">${v.name}</span>
-                            <button class="btn-icon-small" style="background:#FEE2E2; color:var(--danger); width:28px; height:28px;" onclick="window.removeVar(${i})">✕</button>
-                        </div>
-                        <div style="display:flex; gap:8px;">
-                            <div style="flex:1;">
-                                <label style="font-size:10px; color:var(--text-muted); display:block; margin-bottom:4px;">Stock (Unités)</label>
-                                <input type="number" class="form-control" value="${v.stock}" onchange="window.updateVarStock(${i}, this.value)" style="padding:8px; text-align:center;">
-                            </div>
-                            <div style="flex:1;">
-                                <label style="font-size:10px; color:var(--text-muted); display:block; margin-bottom:4px;">Prix Spécifique (DH)</label>
-                                <input type="number" class="form-control" value="${v.price}" onchange="window.updateVarPrice(${i}, this.value)" style="padding:8px; text-align:center;">
-                            </div>
-                        </div>
-                    </div>
-                `).join('');
-            } else { 
-                document.getElementById('vStockSection').style.display = 'none'; 
-                document.getElementById('vRowsContainer').innerHTML = '';
-            }
+                document.getElementById('vRowsContainer').innerHTML = window.productVariants.map((v, i) => {
+                    let dotColor = '#CBD5E1'; if(isColor) { const hex = getColorHex(v.name); if(hex) dotColor = hex; }
+                    return `
+                    <div class="v-row"><div class="v-row-left"><div class="v-dot" style="background:${dotColor};"></div>${v.name}</div>
+                        <div class="v-row-right"><input type="number" class="form-control" value="${v.stock}" onchange="updateVarStock(${i}, this.value)" style="padding:10px; width:70px; text-align:center;"><span style="font-size:12px; color:var(--text-muted);">pièces</span></div>
+                        <button class="btn-icon-small" style="background:#FEE2E2; color:var(--danger); flex-shrink:0;" onclick="removeVar(${i})"><svg viewBox="0 0 24 24" style="width:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+                    </div>`;
+                }).join('');
+            } else { document.getElementById('vStockSection').style.display = 'none'; }
         }
+        document.getElementById('varType').addEventListener('change', renderVariantUI);
 
         window.openAddCategoryModal = (type) => {
             currentCatAddingType = type;
@@ -1016,6 +1017,7 @@
                 container.innerHTML = sortedProducts.map(item => {
                     const p = item.product || {}; const name = p.name || 'Produit inconnu'; const price = safeNum(p.sellPrice).toFixed(2);
                     
+                    // NEW: Render primary image dynamically
                     let imgSrc = '';
                     if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
                     const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:bold; color:var(--primary);">${name.charAt(0)}</span>`;
@@ -1214,14 +1216,17 @@
         window.prepareAddProduct = () => {
             currentEditProductId = null; document.getElementById('wizardTitle').innerText = "Ajouter un produit"; document.querySelectorAll('#view-ajouter input').forEach(i => { if(i.type !== 'checkbox') i.value = '' });
             
+            // RESET MULTI IMAGE
             window.productImages = []; document.getElementById('galleryInput').value = ''; renderGalleryUI();
 
             document.getElementById('pBrand').value = '';
             document.getElementById('pLowStock').value = 5;
             document.getElementById('pFeatured').checked = false; 
             
+            // RESET SMART TAGS
             window.marketingTags = []; renderSmartTagsUI();
-            window.productTags = []; 
+            
+            window.productTags = []; renderTagsUI();
             
             document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
             document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = '';
@@ -1229,11 +1234,7 @@
             document.getElementById('pBulkToggle').checked = false; document.getElementById('bulkConfigUI').style.display = 'none';
             document.getElementById('pBulkQty').value = ''; document.getElementById('pBulkPrice').value = '';
 
-            document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; 
-            document.getElementById('varPresetType').value = 'custom';
-            document.getElementById('presetChipsContainer').style.display = 'none';
-            window.productVariants = []; renderVariantUI();
-            
+            document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; window.productVariants = []; renderVariantUI();
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
         };
 
@@ -1245,10 +1246,11 @@
             document.getElementById('pCat').value = p.category || '';
             loadSubCats(); setTimeout(() => document.getElementById('pSubCat').value = p.subCategory || '', 100);
             
+            // LOAD MULTI IMAGE
             if(p.images && p.images.length > 0) {
                 window.productImages = [...p.images];
             } else if (p.imageUrl) {
-                window.productImages = [p.imageUrl]; 
+                window.productImages = [p.imageUrl]; // Backward compatibility
             } else {
                 window.productImages = [];
             }
@@ -1259,8 +1261,10 @@
             
             document.getElementById('pFeatured').checked = p.featured || false; document.getElementById('pPromoPrice').value = p.promoPrice || '';
             
+            // LOAD SMART TAGS
             window.marketingTags = p.marketingTags ? [...p.marketingTags] : []; renderSmartTagsUI();
-            window.productTags = p.tags ? [...p.tags] : []; 
+
+            window.productTags = p.tags ? [...p.tags] : []; renderTagsUI(); 
 
             if(p.isTextbook) {
                 document.getElementById('textbookToggle').checked = true; document.getElementById('textbookConfig').style.display = 'block';
@@ -1281,21 +1285,8 @@
                 document.getElementById('pBulkQty').value = ''; document.getElementById('pBulkPrice').value = '';
             }
 
-            if(p.variants && p.variants.length > 0) { 
-                document.getElementById('varToggle').checked = true; 
-                document.getElementById('variantConfig').style.display = 'block'; 
-                window.productVariants = [...p.variants]; 
-                renderVariantUI(); 
-            } else { 
-                document.getElementById('varToggle').checked = false; 
-                document.getElementById('variantConfig').style.display = 'none'; 
-                window.productVariants = []; 
-                renderVariantUI(); 
-            }
-            
-            document.getElementById('varPresetType').value = 'custom';
-            document.getElementById('presetChipsContainer').style.display = 'none';
-            
+            if(p.variants && p.variants.length > 0) { document.getElementById('varToggle').checked = true; document.getElementById('variantConfig').style.display = 'block'; window.productVariants = [...p.variants]; renderVariantUI(); } 
+            else { document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; window.productVariants = []; renderVariantUI(); }
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
         };
 
@@ -1314,15 +1305,17 @@
                 stock: calculatedStock,
                 lowStockThreshold: parseInt(document.getElementById('pLowStock').value) || 5, 
                 
+                // SAVE MULTI IMAGES
                 images: window.productImages,
-                imageUrl: window.productImages.length > 0 ? window.productImages[0] : "", 
+                imageUrl: window.productImages.length > 0 ? window.productImages[0] : "", // For backward compatibility with your POS checkout cart image
 
                 featured: document.getElementById('pFeatured').checked,
                 promoPrice: parseFloat(document.getElementById('pPromoPrice').value) || null, 
                 
+                // SAVE SMART TAGS
                 marketingTags: window.marketingTags,
-                tags: window.productTags, 
                 
+                tags: window.productTags, 
                 sku: document.getElementById('pSku').value || "", 
                 isTextbook: document.getElementById('textbookToggle').checked,
                 textbookLevel: document.getElementById('textbookToggle').checked ? document.getElementById('tbLevel').value.trim() : "",
@@ -1343,7 +1336,7 @@
             } catch (e) { console.error(e); alert("Erreur lors de l'enregistrement."); }
         };
 
-        // --- PACK BUILDER FUNCTIONS ---
+        // --- DYNAMIC PACK BUILDER FUNCTIONS ---
         window.currentPackItems = [];
         window.currentPackUpsells = [];
         
