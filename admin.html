@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Buro Admin Mobile</title>
+    <title>Lascoburo Admin Mobile</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -94,10 +94,11 @@
         .prod-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 4px;}
         .prod-stock { font-size: 11px; font-weight: 700; }
         .stock-good { color: var(--accent); } .stock-low { color: var(--warning); } .stock-out { color: var(--danger); }
-        .prod-actions { display: flex; gap: 8px; align-items: center; }
-        .btn-icon-small { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: 0.2s;}
+        .prod-actions { display: flex; gap: 6px; align-items: center; }
+        .btn-icon-small { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: 0.2s;}
         .btn-icon-small:active { transform: scale(0.9); }
         .btn-edit-prod { background: var(--primary-light); color: var(--primary); }
+        .btn-dup-prod { background: var(--purple-light); color: var(--purple); }
         .btn-del-prod { background: var(--danger-light); color: var(--danger); }
 
         /* ANALYTICS GRID */
@@ -411,16 +412,24 @@
 
         <div id="wizard-2" class="wizard-step">
             <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Prix & Stock</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Définissez le prix et la quantité disponible.</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Définissez le prix, la valeur barrée et l'inventaire.</p>
             
             <div class="form-group">
                 <label>Prix d'achat (DH)</label>
                 <input type="number" id="pCost" class="form-control" placeholder="8.00">
             </div>
-            <div class="form-group">
-                <label>Prix de vente (DH) *</label>
-                <input type="number" id="pSell" class="form-control" placeholder="15.00" oninput="validateStep2()">
+            
+            <div style="display:flex; gap:12px;">
+                <div class="form-group" style="flex:1;">
+                    <label>Prix de vente (DH) *</label>
+                    <input type="number" id="pSell" class="form-control" placeholder="15.00" oninput="validateStep2()">
+                </div>
+                <div class="form-group" style="flex:1;">
+                    <label>Prix barré (DH)</label>
+                    <input type="number" id="pCompare" class="form-control" placeholder="20.00">
+                </div>
             </div>
+
             <div class="form-group">
                 <label>Stock global *</label>
                 <input type="number" id="pStock" class="form-control" placeholder="50" oninput="validateStep2()">
@@ -431,12 +440,26 @@
                 <input type="number" id="pLowStock" class="form-control" placeholder="5" value="5" oninput="validateStep2()">
             </div>
 
-            <div class="info-banner" style="margin-top:24px;">
-                <svg viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                <div>
-                    <strong style="display:block; margin-bottom:4px;">À propos du seuil de stock</strong>
-                    Une alerte vous sera envoyée quand le stock sera inférieur ou égal à ce seuil.
+            <div class="card" style="margin-bottom:12px; margin-top: 24px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--orange);">
+                    <svg viewBox="0 0 24 24" style="width:18px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Prix Dégressifs (Packs)</span>
                 </div>
+                <div style="display:flex; gap:8px;">
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label>Pack de 5</label>
+                        <input type="number" id="pPack5" class="form-control" placeholder="DH">
+                    </div>
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label>Pack de 10</label>
+                        <input type="number" id="pPack10" class="form-control" placeholder="DH">
+                    </div>
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label>Pack de 20</label>
+                        <input type="number" id="pPack20" class="form-control" placeholder="DH">
+                    </div>
+                </div>
+                <span style="font-size: 11px; color: var(--text-muted); margin-top: 8px; display: block;">Optionnel. Remplissez ces champs pour appliquer automatiquement une remise sur les achats en quantité.</span>
             </div>
 
             <div class="wizard-footer">
@@ -504,39 +527,23 @@
                     <label class="switch"><input type="checkbox" id="textbookToggle" onchange="document.getElementById('textbookConfig').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
                 </div>
                 <div id="textbookConfig" style="display:none;">
-                    <div class="form-group">
-                        <label>Niveau Cible (ex: CP, CE1, Tronc Commun)</label>
-                        <input type="text" id="tbLevel" class="form-control" placeholder="Ajouter le niveau...">
-                    </div>
-                    <div class="form-group">
-                        <label>Matière d'étude (ex: Mathématiques)</label>
-                        <input type="text" id="tbSubject" class="form-control" placeholder="Ajouter la matière...">
-                    </div>
-                    <div class="form-group" style="margin-bottom: 0;">
-                        <label>École Associée à Marrakech (ex: Victor Hugo, Majorelle)</label>
-                        <input type="text" id="tbSchool" class="form-control" placeholder="Ex: Victor Hugo">
-                    </div>
-                </div>
-            </div>
-
-            <div class="card" style="margin-bottom:12px;">
-                <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
-                    <div style="display:flex; align-items:center; gap:8px; color:var(--orange);">
-                        <svg viewBox="0 0 24 24"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
-                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Option de Gros / En Vrac</span>
-                    </div>
-                    <label class="switch"><input type="checkbox" id="pBulkToggle" onchange="document.getElementById('bulkConfigUI').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
-                </div>
-                <div id="bulkConfigUI" style="display:none;">
                     <div style="display:flex; gap:12px;">
                         <div class="form-group" style="flex:1;">
-                            <label>Quantité Seuil (Boîte)</label>
-                            <input type="number" id="pBulkQty" class="form-control" placeholder="50">
+                            <label>Niveau (ex: CE1)</label>
+                            <input type="text" id="tbLevel" class="form-control" placeholder="Niveau...">
                         </div>
                         <div class="form-group" style="flex:1;">
-                            <label>Prix Unitaire Spécial (DH)</label>
-                            <input type="number" id="pBulkPrice" class="form-control" placeholder="1.40">
+                            <label>Matière (ex: Math)</label>
+                            <input type="text" id="tbSubject" class="form-control" placeholder="Matière...">
                         </div>
+                    </div>
+                    <div class="form-group">
+                        <label>École Associée (ex: Victor Hugo)</label>
+                        <input type="text" id="tbSchool" class="form-control" placeholder="Ex: Victor Hugo">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Langue d'étude</label>
+                        <input type="text" id="tbLanguage" class="form-control" placeholder="Ex: Français, Arabe...">
                     </div>
                 </div>
             </div>
@@ -570,16 +577,32 @@
             </div>
 
             <div class="card" style="margin-bottom:12px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--primary);">
-                    <svg viewBox="0 0 24 24"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
-                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Description</span>
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--purple);">
+                    <svg viewBox="0 0 24 24" style="width:18px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Produits Liés</span>
                 </div>
-                <textarea id="pDesc" class="form-control" placeholder="Description détaillée du produit (optionnel)..." style="height: 100px; resize: none;"></textarea>
+                <div class="form-group" style="margin:0;">
+                    <label>SKU des produits liés (séparés par des virgules)</label>
+                    <input type="text" id="pRelated" class="form-control" placeholder="Ex: SKU-01, SKU-02...">
+                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block;">Ces produits s'afficheront dans la section "Vous aimerez aussi".</span>
+                </div>
             </div>
 
-            <div class="card" style="margin-bottom:12px; display:none;">
+            <div class="card" style="margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--primary);">
+                    <svg viewBox="0 0 24 24"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Description détaillée</span>
+                </div>
+                <textarea id="pDesc" class="form-control" placeholder="Description détaillée du produit..." style="height: 100px; resize: none;"></textarea>
+            </div>
+
+            <div class="card" style="margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--accent);">
+                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Tags Techniques</span>
+                </div>
                 <div style="display:flex; gap:8px; margin-bottom: 12px;">
-                    <input type="text" id="pTagInput" class="form-control" placeholder="Ajouter un tag personnalisé..." style="padding: 12px;">
+                    <input type="text" id="pTagInput" class="form-control" placeholder="Ajouter un tag..." style="padding: 12px;">
                     <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="addTagOption()">+ Ajouter</button>
                 </div>
                 <div class="chip-container" id="tagChips"></div>
@@ -1017,7 +1040,6 @@
                 container.innerHTML = sortedProducts.map(item => {
                     const p = item.product || {}; const name = p.name || 'Produit inconnu'; const price = safeNum(p.sellPrice).toFixed(2);
                     
-                    // NEW: Render primary image dynamically
                     let imgSrc = '';
                     if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
                     const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:bold; color:var(--primary);">${name.charAt(0)}</span>`;
@@ -1063,6 +1085,15 @@
                 if (outCount > 0) { outAlertCard.classList.add('active'); document.getElementById('outOfStockText').innerText = `${outCount} produit${outCount>1?'s':''} en rupture de stock`; } else outAlertCard.classList.remove('active');
             }
             if(currentProductFilter === 'all') renderProductsAdminList(allProducts); else filterProduits(currentProductFilter);
+
+            // Dynamically populate the Pack Builder Selectors with live inventory
+            const itemSel = document.getElementById('packItemSelector');
+            const upsellSel = document.getElementById('packUpsellSelector');
+            if(itemSel && upsellSel) {
+                const optionsHtml = '<option value="">Choisir un produit...</option>' + allProducts.map(p => `<option value="${p.id}">${p.name} (${safeNum(p.sellPrice)} DH)</option>`).join('');
+                itemSel.innerHTML = optionsHtml;
+                upsellSel.innerHTML = optionsHtml;
+            }
         });
 
         window.filterProduits = (type) => { currentProductFilter = type; switchTab('produits'); renderProductsAdminList(allProducts); };
@@ -1196,7 +1227,11 @@
                     
                     const brandHTML = p.brand ? ` • <span style="font-weight:700;">${p.brand}</span>` : '';
 
-                    return `<div class="prod-card"><div class="prod-img-box">${img}</div><div class="prod-info"><h4>${name}</h4><div class="prod-meta">${p.category||'Sans cat'}${brandHTML} • <strong style="color:var(--primary);">${safeNum(p.sellPrice)} DH</strong></div><div class="prod-stock ${stockClass}">${stockText}</div></div><div class="prod-actions"><button class="btn-icon-small btn-edit-prod" onclick="editProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button><button class="btn-icon-small btn-del-prod" onclick="promptDeleteProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button></div></div>`;
+                    return `<div class="prod-card"><div class="prod-img-box">${img}</div><div class="prod-info"><h4>${name}</h4><div class="prod-meta">${p.category||'Sans cat'}${brandHTML} • <strong style="color:var(--primary);">${safeNum(p.sellPrice)} DH</strong></div><div class="prod-stock ${stockClass}">${stockText}</div></div><div class="prod-actions">
+                        <button class="btn-icon-small btn-edit-prod" onclick="editProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button>
+                        <button class="btn-icon-small btn-dup-prod" onclick="window.duplicateProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                        <button class="btn-icon-small btn-del-prod" onclick="promptDeleteProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+                    </div></div>`;
                 }).join('');
             } catch(e) { console.error("Prod List Error:", e); }
         }
@@ -1215,6 +1250,7 @@
 
         window.prepareAddProduct = () => {
             currentEditProductId = null; document.getElementById('wizardTitle').innerText = "Ajouter un produit"; document.querySelectorAll('#view-ajouter input').forEach(i => { if(i.type !== 'checkbox') i.value = '' });
+            document.getElementById('pDesc').value = '';
             
             // RESET MULTI IMAGE
             window.productImages = []; document.getElementById('galleryInput').value = ''; renderGalleryUI();
@@ -1225,14 +1261,12 @@
             
             // RESET SMART TAGS
             window.marketingTags = []; renderSmartTagsUI();
-            
             window.productTags = []; renderTagsUI();
             
             document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
-            document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = '';
+            document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = ''; document.getElementById('tbLanguage').value = '';
 
-            document.getElementById('pBulkToggle').checked = false; document.getElementById('bulkConfigUI').style.display = 'none';
-            document.getElementById('pBulkQty').value = ''; document.getElementById('pBulkPrice').value = '';
+            document.getElementById('pPack5').value = ''; document.getElementById('pPack10').value = ''; document.getElementById('pPack20').value = '';
 
             document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; window.productVariants = []; renderVariantUI();
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
@@ -1250,20 +1284,31 @@
             if(p.images && p.images.length > 0) {
                 window.productImages = [...p.images];
             } else if (p.imageUrl) {
-                window.productImages = [p.imageUrl]; // Backward compatibility
+                window.productImages = [p.imageUrl];
             } else {
                 window.productImages = [];
             }
             renderGalleryUI();
 
-            document.getElementById('pCost').value = p.costPrice || ''; document.getElementById('pSell').value = p.sellPrice || '';
-            document.getElementById('pStock').value = p.stock || ''; document.getElementById('pLowStock').value = p.lowStockThreshold || 5;
+            document.getElementById('pCost').value = p.costPrice || ''; 
+            document.getElementById('pSell').value = p.sellPrice || '';
+            document.getElementById('pCompare').value = p.comparePrice || '';
             
-            document.getElementById('pFeatured').checked = p.featured || false; document.getElementById('pPromoPrice').value = p.promoPrice || '';
+            document.getElementById('pStock').value = p.stock || ''; 
+            document.getElementById('pLowStock').value = p.lowStockThreshold || 5;
+            
+            // TIERED PRICING (Packs)
+            document.getElementById('pPack5').value = p.pack5Price || '';
+            document.getElementById('pPack10').value = p.pack10Price || '';
+            document.getElementById('pPack20').value = p.pack20Price || '';
+            
+            document.getElementById('pFeatured').checked = p.featured || false; 
+            document.getElementById('pPromoPrice').value = p.promoPrice || '';
+            document.getElementById('pDesc').value = p.description || '';
+            document.getElementById('pRelated').value = p.relatedProducts || '';
             
             // LOAD SMART TAGS
             window.marketingTags = p.marketingTags ? [...p.marketingTags] : []; renderSmartTagsUI();
-
             window.productTags = p.tags ? [...p.tags] : []; renderTagsUI(); 
 
             if(p.isTextbook) {
@@ -1271,23 +1316,73 @@
                 document.getElementById('tbLevel').value = p.textbookLevel || '';
                 document.getElementById('tbSubject').value = p.textbookSubject || '';
                 document.getElementById('tbSchool').value = p.textbookSchool || '';
+                document.getElementById('tbLanguage').value = p.textbookLanguage || '';
             } else {
                 document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
-                document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = '';
-            }
-
-            if(p.hasBulkPricing) {
-                document.getElementById('pBulkToggle').checked = true; document.getElementById('bulkConfigUI').style.display = 'block';
-                document.getElementById('pBulkQty').value = p.bulkQtyTrigger || '';
-                document.getElementById('pBulkPrice').value = p.bulkPricePerUnit || '';
-            } else {
-                document.getElementById('pBulkToggle').checked = false; document.getElementById('bulkConfigUI').style.display = 'none';
-                document.getElementById('pBulkQty').value = ''; document.getElementById('pBulkPrice').value = '';
+                document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = ''; document.getElementById('tbLanguage').value = '';
             }
 
             if(p.variants && p.variants.length > 0) { document.getElementById('varToggle').checked = true; document.getElementById('variantConfig').style.display = 'block'; window.productVariants = [...p.variants]; renderVariantUI(); } 
             else { document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; window.productVariants = []; renderVariantUI(); }
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
+        };
+
+        // --- NEW: DUPLICATE PRODUCT LOGIC ---
+        window.duplicateProduct = (id) => {
+            const p = allProducts.find(x => x.id === id); 
+            if(!p) return;
+            
+            currentEditProductId = null; 
+            document.getElementById('wizardTitle').innerText = "Dupliquer le produit";
+            
+            document.getElementById('pName').value = (p.name || '') + " (Copie)"; 
+            document.getElementById('pBrand').value = p.brand || ''; 
+            document.getElementById('pCat').value = p.category || '';
+            loadSubCats(); setTimeout(() => document.getElementById('pSubCat').value = p.subCategory || '', 100);
+            
+            window.productImages = p.images ? [...p.images] : (p.imageUrl ? [p.imageUrl] : []);
+            renderGalleryUI();
+            
+            document.getElementById('pCost').value = p.costPrice || ''; 
+            document.getElementById('pSell').value = p.sellPrice || '';
+            document.getElementById('pCompare').value = p.comparePrice || '';
+            
+            document.getElementById('pStock').value = p.stock || ''; 
+            document.getElementById('pLowStock').value = p.lowStockThreshold || 5;
+            
+            document.getElementById('pPack5').value = p.pack5Price || '';
+            document.getElementById('pPack10').value = p.pack10Price || '';
+            document.getElementById('pPack20').value = p.pack20Price || '';
+            
+            document.getElementById('pFeatured').checked = p.featured || false; 
+            document.getElementById('pPromoPrice').value = p.promoPrice || '';
+            document.getElementById('pDesc').value = p.description || '';
+            document.getElementById('pRelated').value = p.relatedProducts || '';
+            
+            window.productTags = p.tags ? [...p.tags] : []; renderTagsUI();
+            window.marketingTags = p.marketingTags ? [...p.marketingTags] : []; renderSmartTagsUI();
+
+            if(p.isTextbook) {
+                document.getElementById('textbookToggle').checked = true; document.getElementById('textbookConfig').style.display = 'block';
+                document.getElementById('tbLevel').value = p.textbookLevel || '';
+                document.getElementById('tbSubject').value = p.textbookSubject || '';
+                document.getElementById('tbSchool').value = p.textbookSchool || '';
+                document.getElementById('tbLanguage').value = p.textbookLanguage || '';
+            } else {
+                document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
+                document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = ''; document.getElementById('tbLanguage').value = '';
+            }
+
+            if(p.variants && p.variants.length > 0) { 
+                document.getElementById('varToggle').checked = true; document.getElementById('variantConfig').style.display = 'block'; 
+                window.productVariants = [...p.variants]; renderVariantUI(); 
+            } else {
+                document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; 
+                window.productVariants = []; renderVariantUI();
+            }
+
+            switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
+            showToast("Produit dupliqué ! Modifiez le nom/SKU et enregistrez.");
         };
 
         window.saveProductData = async () => {
@@ -1302,28 +1397,32 @@
                 subCategory: document.getElementById('pSubCat').value || "",
                 costPrice: parseFloat(document.getElementById('pCost').value) || 0, 
                 sellPrice: parseFloat(document.getElementById('pSell').value) || 0, 
+                comparePrice: parseFloat(document.getElementById('pCompare').value) || null,
                 stock: calculatedStock,
                 lowStockThreshold: parseInt(document.getElementById('pLowStock').value) || 5, 
                 
-                // SAVE MULTI IMAGES
+                pack5Price: parseFloat(document.getElementById('pPack5').value) || null,
+                pack10Price: parseFloat(document.getElementById('pPack10').value) || null,
+                pack20Price: parseFloat(document.getElementById('pPack20').value) || null,
+                
                 images: window.productImages,
-                imageUrl: window.productImages.length > 0 ? window.productImages[0] : "", // For backward compatibility with your POS checkout cart image
+                imageUrl: window.productImages.length > 0 ? window.productImages[0] : "", 
 
                 featured: document.getElementById('pFeatured').checked,
                 promoPrice: parseFloat(document.getElementById('pPromoPrice').value) || null, 
+                description: document.getElementById('pDesc').value.trim(),
+                relatedProducts: document.getElementById('pRelated').value.trim(),
                 
-                // SAVE SMART TAGS
                 marketingTags: window.marketingTags,
-                
                 tags: window.productTags, 
                 sku: document.getElementById('pSku').value || "", 
+                
                 isTextbook: document.getElementById('textbookToggle').checked,
                 textbookLevel: document.getElementById('textbookToggle').checked ? document.getElementById('tbLevel').value.trim() : "",
                 textbookSubject: document.getElementById('textbookToggle').checked ? document.getElementById('tbSubject').value.trim() : "",
                 textbookSchool: document.getElementById('textbookToggle').checked ? document.getElementById('tbSchool').value.trim() : "",
-                hasBulkPricing: document.getElementById('pBulkToggle').checked,
-                bulkQtyTrigger: document.getElementById('pBulkToggle').checked ? parseInt(document.getElementById('pBulkQty').value) || 0 : null,
-                bulkPricePerUnit: document.getElementById('pBulkToggle').checked ? parseFloat(document.getElementById('pBulkPrice').value) || 0 : null,
+                textbookLanguage: document.getElementById('textbookToggle').checked ? document.getElementById('tbLanguage').value.trim() : "",
+                
                 variants: hasVars ? window.productVariants : []
             };
 
