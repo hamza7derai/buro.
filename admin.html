@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>buro. Admin Mobile</title>
+    <title>buro. Admin Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -175,7 +175,7 @@
         .gallery-thumb.main-img { grid-column: span 2; aspect-ratio: 16/9; border: 2px solid var(--primary); }
         .gallery-delete { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.6); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; backdrop-filter: blur(4px); border:none;}
         
-        /* OPTION GROUPS BUILDER (TASCO STYLE) */
+        /* NEW: OPTION GROUPS BUILDER (COMPACT LAYOUT) */
         .og-card { background: var(--bg-main); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
         .og-header { display: flex; gap: 12px; margin-bottom: 16px; align-items: center;}
         .og-name { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-weight: 800; font-size: 14px; outline:none;}
@@ -188,11 +188,14 @@
         .og-radio-lbl input[type="radio"] { width: 16px; height: 16px; accent-color: var(--orange); }
         .og-style { padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; font-weight: 700; background: var(--bg-main); outline: none; color: var(--text-main);}
 
-        .og-opt-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 10px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 8px;}
-        .og-opt-row1 { display: flex; gap: 6px; align-items: center; }
-        .oo-name, .oo-price, .oo-cost, .oo-stock { padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; font-weight: 600; outline:none; }
-        .oo-del-btn { background: var(--danger-light); color: var(--danger); border: none; border-radius: 8px; width: 34px; height: 34px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;}
-        .oo-img { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; outline:none;}
+        .og-opt-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 8px;}
+        .og-opt-row1 { display: flex; gap: 6px; }
+        .oo-name { flex: 2; padding: 8px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; font-weight: 600; outline:none; min-width: 80px;}
+        .oo-price { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; text-align: center; font-weight: 600; outline:none; min-width: 50px;}
+        .oo-cost { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; text-align: center; font-weight: 600; outline:none; min-width: 50px;}
+        .oo-stock { flex: 1; padding: 8px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; text-align: center; font-weight: 600; outline:none; min-width: 50px;}
+        .oo-del-btn { background: var(--bg-main); color: var(--text-muted); border: 1px solid var(--border); border-radius: 8px; width: 32px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;}
+        .oo-img { width: 100%; padding: 8px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; outline:none;}
 
         /* ORDER DETAILS */
         .detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
@@ -253,7 +256,7 @@
         <div class="header-top">
             <div>
                 <h1>Hello, buro. 👋</h1>
-                <p>Activity overview</p>
+                <p>Overview of your activity</p>
             </div>
         </div>
 
@@ -262,8 +265,8 @@
                 <svg viewBox="0 0 24 24" style="width:28px; height:28px;"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line><line x1="13" y1="13" x2="17" y2="17"></line><line x1="17" y1="13" x2="17" y2="17"></line><line x1="13" y1="17" x2="17" y2="17"></line></svg>
             </div>
             <div class="msc-content">
-                <h3>Statistics</h3>
-                <p>Check all your sales, profits, costs and performance.</p>
+                <h3>Analytics</h3>
+                <p>Check all your sales, profits, costs, and performance.</p>
             </div>
             <div class="msc-arrow">
                 <svg viewBox="0 0 24 24" style="width:20px; height:20px;"><polyline points="9 18 15 12 9 6"></polyline></svg>
@@ -273,7 +276,7 @@
         <div class="alert-card warning" id="alertLowStock" onclick="filterProduits('faible')">
             <div class="alert-content">
                 <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
-                <span id="lowStockText">0 product in low stock</span>
+                <span id="lowStockText">0 product(s) low in stock</span>
             </div>
             <svg viewBox="0 0 24 24" style="width:16px; color:inherit;"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </div>
@@ -281,19 +284,19 @@
         <div class="alert-card danger" id="alertOutOfStock" onclick="filterProduits('rupture')">
             <div class="alert-content">
                 <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>
-                <span id="outOfStockText">0 product out of stock</span>
+                <span id="outOfStockText">0 product(s) out of stock</span>
             </div>
             <svg viewBox="0 0 24 24" style="width:16px; color:inherit;"><polyline points="9 18 15 12 9 6"></polyline></svg>
         </div>
 
         <div class="section-title" style="margin-top: 32px;">
-            Recent Orders
+            Recent orders
             <span class="section-link" onclick="switchTab('commandes')">See all</span>
         </div>
         <div id="dashRecentOrdersContainer"></div>
 
         <div class="section-title" style="margin-top: 32px;">
-            Popular Products
+            Popular products
             <span class="section-link" onclick="switchTab('produits')">See all</span>
         </div>
         <div class="card" id="dashPopularProductsContainer" style="padding-top: 4px; padding-bottom: 4px;"></div>
@@ -305,14 +308,14 @@
         </div>
         <div class="search-box">
             <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" placeholder="Search an order...">
+            <input type="text" placeholder="Search for an order...">
         </div>
         <div class="tabs-scroll">
-            <div class="tab-pill active" onclick="filterOrdersList('Toutes', this)">All</div>
-            <div class="tab-pill" onclick="filterOrdersList('En attente', this)">Pending</div>
-            <div class="tab-pill" onclick="filterOrdersList('En cours', this)">Processing</div>
-            <div class="tab-pill" onclick="filterOrdersList('Livrées', this)">Delivered</div>
-            <div class="tab-pill" onclick="filterOrdersList('Annulées', this)">Canceled</div>
+            <div class="tab-pill active" onclick="filterOrdersList('All', this)">All</div>
+            <div class="tab-pill" onclick="filterOrdersList('Pending', this)">Pending</div>
+            <div class="tab-pill" onclick="filterOrdersList('Processing', this)">Processing</div>
+            <div class="tab-pill" onclick="filterOrdersList('Delivered', this)">Delivered</div>
+            <div class="tab-pill" onclick="filterOrdersList('Cancelled', this)">Cancelled</div>
         </div>
         <div id="adminOrderListContainer"></div>
     </div>
@@ -327,7 +330,7 @@
         </div>
         <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 20px; font-weight: 500;" id="det-date">Date</p>
         <div class="card info-list">
-            <div class="info-row"><div class="info-label"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Client</div><div class="info-val" id="det-client">-</div></div>
+            <div class="info-row"><div class="info-label"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Customer</div><div class="info-val" id="det-client">-</div></div>
             <div class="info-row"><div class="info-label"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg> Phone</div><div class="info-val">Not provided</div></div>
             <div class="info-row"><div class="info-label"><svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg> Neighborhood</div><div class="info-val" id="det-neighborhood">-</div></div>
             <div class="info-row"><div class="info-label"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path><line x1="2" y1="12" x2="22" y2="12"></line></svg> Channel</div><div class="info-val">WhatsApp</div></div>
@@ -351,7 +354,7 @@
         </div>
         <div class="search-box">
             <svg class="search-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-            <input type="text" id="searchProdInput" placeholder="Search a product...">
+            <input type="text" id="searchProdInput" placeholder="Search for a product...">
         </div>
         <div class="filter-banner" id="prodFilterBanner">
             <span id="prodFilterText">Active filter</span>
@@ -377,24 +380,24 @@
 
         <div id="wizard-1" class="wizard-step active">
             <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Basic Information</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Add the main details of your product.</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Add main product details.</p>
             
             <label style="font-size: 13px; font-weight: 700; display: block; margin-bottom: 12px;">Image Gallery (Up to 4 photos) *</label>
             <div class="search-box" style="margin-bottom: 16px;">
                 <svg class="search-icon" viewBox="0 0 24 24" style="color:var(--primary);"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
-                <input type="text" id="galleryInput" placeholder="Paste image URL here..." style="padding-left:44px;" onkeydown="if(event.key==='Enter') window.addImageToGallery()">
+                <input type="text" id="galleryInput" placeholder="Paste image link here..." style="padding-left:44px;" onkeydown="if(event.key==='Enter') window.addImageToGallery()">
                 <button class="btn-primary" style="position:absolute; right:4px; top:4px; bottom:4px; border-radius:8px; padding:0 16px; width:auto; font-size:12px;" onclick="window.addImageToGallery()">Add</button>
             </div>
             <div id="galleryContainer" class="gallery-grid"></div>
 
             <div class="form-group">
                 <label>Product Name *</label>
-                <input type="text" id="pName" class="form-control" placeholder="Ex: Sac à dos Orbit" oninput="validateStep1()">
+                <input type="text" id="pName" class="form-control" placeholder="e.g.: Orbit Backpack" oninput="validateStep1()">
             </div>
             
             <div class="form-group">
                 <label>Brand (Optional)</label>
-                <input type="text" id="pBrand" class="form-control" placeholder="Ex: Eastpak, Apple, Moleskine...">
+                <input type="text" id="pBrand" class="form-control" placeholder="e.g.: Eastpak, Apple, Moleskine...">
             </div>
 
             <div class="form-group">
@@ -411,45 +414,40 @@
                 <label>Subcategory</label>
                 <div class="input-with-action">
                     <select id="pSubCat" class="form-control">
-                        <option value="">Select a main category first...</option>
+                        <option value="">Select a category first...</option>
                     </select>
                     <div class="btn-plus-field" onclick="openAddCategoryModal('sub')"><svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></div>
                 </div>
             </div>
 
-            <button class="btn btn-primary" id="btnNext1" style="margin-top: 30px;" onclick="goToStep(2)" disabled>Next <svg viewBox="0 0 24 24" style="width:18px;"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+            <button class="btn btn-primary" id="btnNext1" style="margin-top: 30px;" onclick="goToStep(2)" disabled>Continue <svg viewBox="0 0 24 24" style="width:18px;"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
         </div>
 
         <div id="wizard-2" class="wizard-step">
             <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Price, Stock & Options</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Manage pricing and build option groups (colors, sizes, bundles).</p>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Manage global pricing and build option groups (colors, sizes, packs).</p>
             
-            <div style="display:flex; gap:12px;">
-                <div class="form-group" style="flex:1;">
+            <div style="display:flex; gap:12px; margin-bottom: 20px;">
+                <div class="form-group" style="flex:1; margin-bottom:0;">
                     <label style="color: var(--primary);">Selling Price (DH) *</label>
                     <input type="number" id="pSell" class="form-control" placeholder="15.00" oninput="validateStep2()">
                 </div>
-                <div class="form-group" style="flex:1;">
+                <div class="form-group" style="flex:1; margin-bottom:0;">
                     <label style="color: var(--danger);">Compare Price (DH)</label>
                     <input type="number" id="pCompare" class="form-control" placeholder="20.00">
                 </div>
             </div>
-            <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: -10px; margin-bottom: 20px;">If Compare Price is higher than Selling Price, a -% discount badge will automatically display.</span>
+            <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: -10px; margin-bottom: 20px;">If Compare Price is higher than Selling Price, a -% badge will automatically display.</span>
 
             <div style="display:flex; gap:12px;">
-                <div class="form-group" style="flex:1;">
-                    <label>Cost Price (DH)</label>
-                    <input type="number" id="pCost" class="form-control" placeholder="8.00">
-                </div>
                 <div class="form-group" style="flex:1;">
                     <label>Global Stock *</label>
                     <input type="number" id="pStock" class="form-control" placeholder="50" oninput="validateStep2()">
                 </div>
-            </div>
-            
-            <div class="form-group">
-                <label>Low Stock Threshold *</label>
-                <input type="number" id="pLowStock" class="form-control" placeholder="5" value="5" oninput="validateStep2()">
+                <div class="form-group" style="flex:1;">
+                    <label>Low Stock Threshold *</label>
+                    <input type="number" id="pLowStock" class="form-control" placeholder="5" value="5" oninput="validateStep2()">
+                </div>
             </div>
 
             <div style="margin-top: 30px; margin-bottom: 24px;">
@@ -464,7 +462,7 @@
 
             <div class="wizard-footer">
                 <button class="btn btn-outline" style="flex:0.5;" onclick="goToStep(1)"><svg viewBox="0 0 24 24" style="width:18px;"><polyline points="15 18 9 12 15 6"></polyline></svg> Back</button>
-                <button class="btn btn-primary" id="btnNext2" onclick="goToStep(3)" disabled>Next <svg viewBox="0 0 24 24" style="width:18px;"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
+                <button class="btn btn-primary" id="btnNext2" onclick="goToStep(3)" disabled>Continue <svg viewBox="0 0 24 24" style="width:18px;"><polyline points="9 18 15 12 9 6"></polyline></svg></button>
             </div>
         </div>
 
@@ -476,7 +474,7 @@
                 <div style="display:flex; align-items:center; gap:12px;">
                     <svg viewBox="0 0 24 24" style="color:var(--warning); fill:var(--warning);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <div>
-                        <span class="toggle-label" style="display:block; font-size:14px; font-weight:700;">Featured product</span>
+                        <span class="toggle-label" style="display:block; font-size:14px; font-weight:700;">Featured Product</span>
                         <span style="font-size:11px; color:var(--text-muted); font-weight: 500;">Displayed at the top of the store</span>
                     </div>
                 </div>
@@ -489,10 +487,10 @@
                     <span style="font-weight:800; font-size:14px; color:var(--text-main);">Marketing Badges</span>
                 </div>
                 <div class="chip-container" id="marketingBadgesContainer">
-                    <div class="smart-tag" onclick="window.toggleSmartTag('Nouveau', this)">Nouveau</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Nouveau', this)">New</div>
                     <div class="smart-tag" onclick="window.toggleSmartTag('Best Seller', this)">Best Seller</div>
-                    <div class="smart-tag" onclick="window.toggleSmartTag('Rentrée Scolaire', this)">Rentrée Scolaire</div>
-                    <div class="smart-tag" onclick="window.toggleSmartTag('Recommandé', this)">Recommandé</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Rentrée Scolaire', this)">Back to School</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Recommandé', this)">Recommended</div>
                 </div>
             </div>
 
@@ -500,28 +498,28 @@
                 <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
                     <div style="display:flex; align-items:center; gap:8px; color:var(--primary);">
                         <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 20V2H20v20H6.5A2.5 2.5 0 0 1 4 19.5z"></path></svg>
-                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Textbook logic</span>
+                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Textbook</span>
                     </div>
                     <label class="switch"><input type="checkbox" id="textbookToggle" onchange="document.getElementById('textbookConfig').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
                 </div>
                 <div id="textbookConfig" style="display:none;">
                     <div style="display:flex; gap:12px;">
                         <div class="form-group" style="flex:1;">
-                            <label>Level (ex: CE1)</label>
+                            <label>Level (e.g., Grade 1)</label>
                             <input type="text" id="tbLevel" class="form-control" placeholder="Level...">
                         </div>
                         <div class="form-group" style="flex:1;">
-                            <label>Subject (ex: Math)</label>
+                            <label>Subject (e.g., Math)</label>
                             <input type="text" id="tbSubject" class="form-control" placeholder="Subject...">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Associated School (ex: Victor Hugo)</label>
-                        <input type="text" id="tbSchool" class="form-control" placeholder="Ex: Victor Hugo">
+                        <label>Associated School</label>
+                        <input type="text" id="tbSchool" class="form-control" placeholder="e.g.: Victor Hugo">
                     </div>
                     <div class="form-group" style="margin-bottom: 0;">
-                        <label>Language</label>
-                        <input type="text" id="tbLanguage" class="form-control" placeholder="Ex: Français, Arabe...">
+                        <label>Study Language</label>
+                        <input type="text" id="tbLanguage" class="form-control" placeholder="e.g.: French, Arabic...">
                     </div>
                 </div>
             </div>
@@ -533,15 +531,15 @@
                 </div>
                 <div class="form-group" style="margin:0;">
                     <label>SKUs of related products (comma separated)</label>
-                    <input type="text" id="pRelated" class="form-control" placeholder="Ex: SKU-01, SKU-02...">
-                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block;">These products will appear in the "Frequently bought together" section.</span>
+                    <input type="text" id="pRelated" class="form-control" placeholder="e.g.: SKU-01, SKU-02...">
+                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block;">These products will show in the "Frequently bought together" section.</span>
                 </div>
             </div>
 
             <div class="card" style="margin-bottom:12px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--primary);">
                     <svg viewBox="0 0 24 24"><line x1="21" y1="10" x2="3" y2="10"></line><line x1="21" y1="6" x2="3" y2="6"></line><line x1="21" y1="14" x2="3" y2="14"></line><line x1="21" y1="18" x2="3" y2="18"></line></svg>
-                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Detailed description</span>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Detailed Description</span>
                 </div>
                 <textarea id="pDesc" class="form-control" placeholder="Detailed product description..." style="height: 100px; resize: none;"></textarea>
             </div>
@@ -552,7 +550,7 @@
                     <span style="font-weight:800; font-size:14px; color:var(--text-main);">Technical Tags</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-bottom: 12px;">
-                    <input type="text" id="pTagInput" class="form-control" placeholder="Add a tag (ex: 96 pages, A5)..." style="padding: 12px;">
+                    <input type="text" id="pTagInput" class="form-control" placeholder="Add a tag (e.g., 96 pages, A5)..." style="padding: 12px;">
                     <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="addTagOption()">+ Add</button>
                 </div>
                 <div class="chip-container" id="tagChips"></div>
@@ -561,7 +559,7 @@
             <div class="card" style="margin-bottom:12px;">
                 <div class="form-group" style="margin:0;">
                     <label>SKU / Product Code</label>
-                    <input type="text" id="pSku" class="form-control" placeholder="Ex: AGENDA-001">
+                    <input type="text" id="pSku" class="form-control" placeholder="e.g.: AGENDA-001">
                 </div>
             </div>
 
@@ -575,40 +573,45 @@
     <div id="view-packs" class="app-view container">
         <div class="header-top">
             <div>
-                <h1>Packs Management</h1>
-                <p>Configure the 3-step School Back-to-School offers</p>
+                <h1>School Packs Management</h1>
+                <p>Configure 3-step Back to School offers</p>
             </div>
         </div>
         
         <div class="card">
-            <h3 style="font-size: 15px; margin-bottom:14px; font-weight:800;" id="packBuilderTitle">Create a School Pack</h3>
+            <h3 style="font-size: 15px; margin-bottom:14px; font-weight:800;" id="packBuilderTitle">Create School Pack</h3>
             <input type="hidden" id="editPackId" value="">
             
             <div class="form-group">
                 <label>Pack Name</label>
-                <input type="text" id="packName" class="form-control" placeholder="Ex: Pack Complet CE1 - Victor Hugo">
+                <input type="text" id="packName" class="form-control" placeholder="e.g.: Complete Pack CE1 - Victor Hugo">
             </div>
             
             <div class="form-group">
-                <label>Target School</label>
-                <input type="text" id="packSchool" class="form-control" placeholder="Ex: Victor Hugo">
+                <label>Associated School</label>
+                <input type="text" id="packSchool" class="form-control" placeholder="e.g.: Victor Hugo">
             </div>
 
             <div class="form-group">
                 <label>School Logo URL</label>
-                <input type="text" id="packSchoolLogo" class="form-control" placeholder="Ex: https://image-link.com/logo.png">
+                <input type="text" id="packSchoolLogo" class="form-control" placeholder="e.g.: https://image-link.com/logo.png">
             </div>
             
             <div class="form-group">
                 <label>Target Level</label>
-                <input type="text" id="packLevel" class="form-control" placeholder="Ex: CE1">
+                <input type="text" id="packLevel" class="form-control" placeholder="e.g.: CE1">
             </div>
             
+            <div class="info-banner" style="margin-bottom: 24px;">
+                <svg viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                <span style="font-size: 11px;">Note : Customers will choose "Girl" or "Boy" at checkout on the site. This choice will appear in order details.</span>
+            </div>
+
             <div class="card" style="border: 1px solid var(--border); padding: 12px; margin-bottom: 16px; background: var(--bg-main);">
-                <label style="color: var(--primary); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">1. Mandatory items in the pack</label>
+                <label style="color: var(--primary); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">1. Mandatory items in pack</label>
                 
                 <div style="position: relative; margin-bottom: 12px;">
-                    <input type="text" id="packItemSearch" class="form-control" placeholder="Search a product..." oninput="window.filterPackSearch(this.value, 'core')" onfocus="window.filterPackSearch(this.value, 'core')" autocomplete="off" style="padding: 10px 14px;">
+                    <input type="text" id="packItemSearch" class="form-control" placeholder="Search for a product..." oninput="window.filterPackSearch(this.value, 'core')" onfocus="window.filterPackSearch(this.value, 'core')" autocomplete="off" style="padding: 10px 14px;">
                     <div id="packItemResults" class="search-dropdown-list"></div>
                 </div>
 
@@ -616,10 +619,10 @@
             </div>
 
             <div class="card" style="border: 1px solid var(--border); padding: 12px; margin-bottom: 16px; background: var(--bg-main);">
-                <label style="color: var(--orange); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">2. Optional items (Upsells)</label>
+                <label style="color: var(--orange); font-weight: 800; font-size: 13px; margin-bottom: 8px; display: block;">2. Optional items (Upsell)</label>
                 
                 <div style="position: relative; margin-bottom: 12px;">
-                    <input type="text" id="packUpsellSearch" class="form-control" placeholder="Search a product..." oninput="window.filterPackSearch(this.value, 'upsell')" onfocus="window.filterPackSearch(this.value, 'upsell')" autocomplete="off" style="padding: 10px 14px;">
+                    <input type="text" id="packUpsellSearch" class="form-control" placeholder="Search for a product..." oninput="window.filterPackSearch(this.value, 'upsell')" onfocus="window.filterPackSearch(this.value, 'upsell')" autocomplete="off" style="padding: 10px 14px;">
                     <div id="packUpsellResults" class="search-dropdown-list"></div>
                 </div>
 
@@ -627,27 +630,27 @@
             </div>
             
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px;">
-                <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Real value (Mandatory items):</span>
+                <span style="font-size: 13px; font-weight: 600; color: var(--text-muted);">Real value (Mandatory items) :</span>
                 <span id="packRealValue" style="font-size: 14px; font-weight: 800; text-decoration: line-through; color: var(--text-muted);">0.00 DH</span>
             </div>
 
             <div class="form-group">
-                <label>Special Bundle Price (DH)</label>
-                <input type="number" id="packBundlePrice" class="form-control" placeholder="Ex: 270.00">
+                <label>Bundle Special Price (DH)</label>
+                <input type="number" id="packBundlePrice" class="form-control" placeholder="e.g.: 270.00">
             </div>
             
             <button class="btn btn-primary" onclick="window.savePackConfig()" id="btnSavePack">Save School Pack</button>
-            <button class="btn btn-outline" style="margin-top: 8px; display: none;" onclick="window.resetPackBuilder()" id="btnCancelPackEdit">Cancel modification</button>
+            <button class="btn btn-outline" style="margin-top: 8px; display: none;" onclick="window.resetPackBuilder()" id="btnCancelPackEdit">Cancel Edit</button>
         </div>
 
-        <div class="section-title" style="margin-top: 32px;">Active Online Packs</div>
+        <div class="section-title" style="margin-top: 32px;">Active Packs Online</div>
         <div id="adminPacksListContainer"></div>
     </div>
     
     <div id="view-analytics" class="app-view container">
         <div class="analytics-header">
             <div class="back-btn" onclick="switchTab('dashboard')"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"></polyline></svg></div>
-            <h1 style="font-size: 20px; font-weight:800; flex:1; text-align:center; margin-right:40px;">Statistics</h1>
+            <h1 style="font-size: 20px; font-weight:800; flex:1; text-align:center; margin-right:40px;">Analytics</h1>
         </div>
         <h3 style="font-size: 14px; margin-bottom: 12px;">Summary</h3>
         <div class="analytics-grid">
@@ -659,9 +662,9 @@
         <h3 style="font-size: 14px; margin-bottom: 12px;">Activity</h3>
         <div class="analytics-grid">
             <div class="metric-card" style="display:flex; align-items:center; justify-content:space-between; grid-column:span 1;"><div class="mc-icon" style="background:var(--primary-light); color:var(--primary); margin:0;"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><div style="text-align:right;"><div class="mc-val" style="margin-bottom:0;" id="statOrders">0</div><div class="mc-title">Orders</div><div class="mc-trend trend-flat" id="statOrdersTrend" style="justify-content:flex-end;">-</div></div></div>
-            <div class="metric-card" style="display:flex; align-items:center; justify-content:space-between; grid-column:span 1;"><div class="mc-icon" style="background:var(--accent-light); color:var(--warning); margin:0;"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div><div style="text-align:right;"><div class="mc-val" style="margin-bottom:0;" id="statItems">0</div><div class="mc-title">Items sold</div><div class="mc-trend trend-flat" id="statItemsTrend" style="justify-content:flex-end;">-</div></div></div>
+            <div class="metric-card" style="display:flex; align-items:center; justify-content:space-between; grid-column:span 1;"><div class="mc-icon" style="background:var(--accent-light); color:var(--warning); margin:0;"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div><div style="text-align:right;"><div class="mc-val" style="margin-bottom:0;" id="statItems">0</div><div class="mc-title">Items Sold</div><div class="mc-trend trend-flat" id="statItemsTrend" style="justify-content:flex-end;">-</div></div></div>
         </div>
-        <div class="info-banner"><svg viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Statistics are calculated based on delivered orders.</div>
+        <div class="info-banner"><svg viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Stats are calculated based on delivered orders.</div>
     </div>
 
     <nav class="bottom-nav">
@@ -669,7 +672,7 @@
         <div class="nav-item" id="nav-ajouter" onclick="prepareAddProduct()"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg> Add</div>
         <div class="nav-item" id="nav-produits" onclick="switchTab('produits')"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg> Products</div>
         <div class="nav-item" id="nav-commandes" onclick="switchTab('commandes')"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg> Orders</div>
-        <div class="nav-item" id="nav-packs" onclick="switchTab('packs')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> School Packs</div>
+        <div class="nav-item" id="nav-packs" onclick="switchTab('packs')"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg> Packs S.</div>
     </nav>
 
     <div class="overlay" id="confirmOverlay">
@@ -707,7 +710,7 @@
         const db = getFirestore(app);
 
         let allOrders = [], allProducts = [], globalCategoriesData = [], allPacks = [];
-        let currentOrderFilter = 'Toutes', currentProductFilter = 'all', currentEditProductId = null; 
+        let currentOrderFilter = 'All', currentProductFilter = 'all', currentEditProductId = null; 
         
         window.productImages = [];
         window.productTags = []; 
@@ -798,7 +801,7 @@
                     options.push({
                         name: oEl.querySelector('.oo-name').value,
                         priceMod: parseFloat(oEl.querySelector('.oo-price').value) || 0,
-                        costMod: parseFloat(oEl.querySelector('.oo-cost').value) || 0,
+                        costPrice: parseFloat(oEl.querySelector('.oo-cost').value) || 0,
                         stock: parseInt(oEl.querySelector('.oo-stock').value) || 0,
                         img: oEl.querySelector('.oo-img').value
                     });
@@ -810,7 +813,7 @@
 
         window.addOptionGroup = () => {
             window.syncOptionGroups();
-            window.optionGroups.push({ name: "", selectionType: "radio", displayStyle: "pills", options: [{name: "", priceMod: 0, costMod: 0, stock: 999, img: ""}] });
+            window.optionGroups.push({ name: "", selectionType: "radio", displayStyle: "pills", options: [{name: "", priceMod: 0, costPrice: 0, stock: 999, img: ""}] });
             window.renderOptionGroupsUI();
         };
 
@@ -820,7 +823,7 @@
 
         window.addOption = (gIndex) => {
             window.syncOptionGroups();
-            window.optionGroups[gIndex].options.push({ name: "", priceMod: 0, costMod: 0, stock: 999, img: "" });
+            window.optionGroups[gIndex].options.push({ name: "", priceMod: 0, costPrice: 0, stock: 999, img: "" });
             window.renderOptionGroupsUI();
         };
 
@@ -836,10 +839,10 @@
                 const optsHTML = g.options.map((o, oIndex) => `
                     <div class="og-opt-card">
                         <div class="og-opt-row1">
-                            <input type="text" class="oo-name" placeholder="Option name..." value="${o.name}" style="flex:2;">
-                            <input type="number" class="oo-price" placeholder="Sell (+DH)" value="${o.priceMod === 0 ? '' : o.priceMod}" style="flex:1; text-align:center;">
-                            <input type="number" class="oo-cost" placeholder="Cost (+DH)" value="${o.costMod === 0 ? '' : o.costMod}" style="flex:1; text-align:center;">
-                            <input type="number" class="oo-stock" placeholder="Stock" value="${o.stock}" style="flex:1; text-align:center;">
+                            <input type="text" class="oo-name" placeholder="Option name..." value="${o.name}">
+                            <input type="number" class="oo-price" placeholder="Sell (+DH)" value="${o.priceMod === 0 ? '' : o.priceMod}">
+                            <input type="number" class="oo-cost" placeholder="Cost" value="${o.costPrice === 0 || !o.costPrice ? '' : o.costPrice}">
+                            <input type="number" class="oo-stock" placeholder="Stock" value="${o.stock}">
                             <button class="oo-del-btn" onclick="window.removeOption(${gIndex}, ${oIndex})">✕</button>
                         </div>
                         <input type="text" class="oo-img" placeholder="Image URL (Optional)" value="${o.img}">
@@ -849,7 +852,7 @@
                 return `
                 <div class="og-card">
                     <div class="og-header">
-                        <input type="text" class="og-name" placeholder="Group name (ex: Color, Size)..." value="${g.name}">
+                        <input type="text" class="og-name" placeholder="Group Name (e.g., Color, Pack size)..." value="${g.name}">
                         <button class="og-del-btn" onclick="window.removeOptionGroup(${gIndex})"><svg viewBox="0 0 24 24" style="width:20px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
                     </div>
                     
@@ -876,7 +879,7 @@
 
         // --- WIZARD NAVIGATION ---
         window.goToStep = (step) => {
-            if(step === 2 || step === 3) window.syncOptionGroups(); 
+            if(step === 2) window.syncOptionGroups();
             document.querySelectorAll('.wizard-step').forEach(el => el.classList.remove('active'));
             document.getElementById(`wizard-${step}`).classList.add('active');
             document.querySelectorAll('.step-dot').forEach((el, index) => {
@@ -895,9 +898,27 @@
         function renderSmartTagsUI() {
             document.querySelectorAll('.smart-tag').forEach(el => {
                 const tag = el.innerText.trim();
-                if(window.marketingTags.includes(tag)) el.classList.add('active'); else el.classList.remove('active');
+                // Map UI display text to underlying values
+                let tagVal = tag;
+                if(tag === 'New') tagVal = 'Nouveau';
+                if(tag === 'Back to School') tagVal = 'Rentrée Scolaire';
+                if(tag === 'Recommended') tagVal = 'Recommandé';
+
+                if(window.marketingTags.includes(tagVal)) el.classList.add('active'); else el.classList.remove('active');
             });
         }
+
+        // Keep raw values French in JS logic to not break frontend display mappings
+        window.toggleSmartTag = (displayTag, el) => {
+            let val = displayTag;
+            if(displayTag === 'New') val = 'Nouveau';
+            if(displayTag === 'Back to School') val = 'Rentrée Scolaire';
+            if(displayTag === 'Recommended') val = 'Recommandé';
+
+            const index = window.marketingTags.indexOf(val);
+            if(index > -1) { window.marketingTags.splice(index, 1); el.classList.remove('active'); } 
+            else { window.marketingTags.push(val); el.classList.add('active'); }
+        };
 
         window.addTagOption = () => {
             const input = document.getElementById('pTagInput'); const val = input.value.trim();
@@ -910,11 +931,12 @@
             `).join('');
         }
 
+        // --- CATEGORY MODAL LOGIC ---
         window.openAddCategoryModal = (type) => {
             currentCatAddingType = type;
             if(type === 'main') { document.getElementById('catModalTitle').innerText = "New Main Category"; } 
             else {
-                const mainCat = document.getElementById('pCat').value; if(!mainCat) return alert("Select a main category first.");
+                const mainCat = document.getElementById('pCat').value; if(!mainCat) return alert("Please select a main category first.");
                 document.getElementById('catModalTitle').innerText = `Subcategory for '${mainCat}'`;
             }
             document.getElementById('newCatInput').value = '';
@@ -942,7 +964,7 @@
                     }
                 }
                 closeModals();
-            } catch (e) { showToast("Error. Check connection."); } finally { btn.innerText = 'Add'; btn.disabled = false; }
+            } catch (e) { console.error(e); showToast("Error. Check connection."); } finally { btn.innerText = 'Add'; btn.disabled = false; }
         });
 
         window.loadSubCats = () => {
@@ -952,6 +974,7 @@
             else { subEl.innerHTML = '<option value="">No subcategories</option>'; }
         };
 
+        // --- DASHBOARD / DATA PULL LOGIC ---
         onSnapshot(collection(db, "categories"), snap => {
             globalCategoriesData = snap.docs.map(d => ({id: d.id, ...d.data()})); globalCategoriesData.sort((a,b) => a.name.localeCompare(b.name));
             const currentSelected = document.getElementById('pCat').value;
@@ -974,11 +997,11 @@
             allProducts.forEach(p => { const stock = parseInt(p.stock) || 0; const limit = parseInt(p.lowStockThreshold) || 5; if (stock <= 0) outCount++; else if (stock <= limit) lowCount++; });
             const lowAlertCard = document.getElementById('alertLowStock');
             if(lowAlertCard) {
-                if (lowCount > 0) { lowAlertCard.classList.add('active'); document.getElementById('lowStockText').innerText = `${lowCount} product${lowCount>1?'s':''} in low stock`; } else lowAlertCard.classList.remove('active');
+                if (lowCount > 0) { lowAlertCard.classList.add('active'); document.getElementById('lowStockText').innerText = `${lowCount} product(s) low in stock`; } else lowAlertCard.classList.remove('active');
             }
             const outAlertCard = document.getElementById('alertOutOfStock');
             if(outAlertCard) {
-                if (outCount > 0) { outAlertCard.classList.add('active'); document.getElementById('outOfStockText').innerText = `${outCount} product${outCount>1?'s':''} out of stock`; } else outAlertCard.classList.remove('active');
+                if (outCount > 0) { outAlertCard.classList.add('active'); document.getElementById('outOfStockText').innerText = `${outCount} product(s) out of stock`; } else outAlertCard.classList.remove('active');
             }
             if(currentProductFilter === 'all') renderProductsAdminList(allProducts); else filterProduits(currentProductFilter);
         });
@@ -996,13 +1019,14 @@
 
                     if (isToday) ordersToday++; if (isYesterday) ordersYesterday++;
 
-                    if (order.status !== 'Annulée') {
+                    const st = (order.status || '').toLowerCase();
+                    if (!st.includes('annul') && !st.includes('cancel')) {
                         if(order.cart && Array.isArray(order.cart)) {
                             order.cart.forEach(item => { const p = item.product || {}; const qty = parseInt(item.qty) || 0; const key = p.id || p.name || 'unknown'; if (!productSalesCounter[key]) productSalesCounter[key] = { product: p, totalSold: 0 }; productSalesCounter[key].totalSold += qty; });
                         }
                     }
 
-                    if (order.status === 'Livrées' || order.status === 'Livrée') {
+                    if (st.includes('livr') || st.includes('deliver')) {
                         let orderCost = 0, orderRev = 0, orderItems = 0;
                         let orderShipping = safeNum(order.deliveryFee);
 
@@ -1034,7 +1058,7 @@
                 const recentOrders = [...allOrders].sort((a,b) => getTime(b.timestamp) - getTime(a.timestamp)).slice(0, 2);
                 const recentContainer = document.getElementById('dashRecentOrdersContainer');
                 if(recentContainer) recentContainer.innerHTML = generateOrdersHTML(recentOrders);
-            } catch (error) {}
+            } catch (error) { console.error("Dashboard Error:", error); }
         }
 
         function renderTrendArrow(elementId, todayVal, yesterdayVal, invertColors = false) {
@@ -1047,24 +1071,42 @@
         }
 
         function renderPopularProducts(salesCounter) {
-            const sortedProducts = Object.values(salesCounter).sort((a, b) => b.totalSold - a.totalSold).slice(0, 3); const container = document.getElementById('dashPopularProductsContainer');
-            if(!container) return;
-            if (sortedProducts.length === 0) { container.innerHTML = '<div class="empty-state">No sales recorded.</div>'; return; }
-            container.innerHTML = sortedProducts.map(item => {
-                const p = item.product || {}; const name = p.name || 'Unknown'; const price = safeNum(p.sellPrice).toFixed(2);
-                let imgSrc = ''; if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
-                const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:bold; color:var(--primary);">${name.charAt(0)}</span>`;
-                return `<div class="top-product"><div class="tp-img">${img}</div><div class="tp-info"><h4>${name}</h4><p>${price} DH</p></div><div class="tp-sales">${item.totalSold} sold</div></div>`;
-            }).join('');
+            try {
+                const sortedProducts = Object.values(salesCounter).sort((a, b) => b.totalSold - a.totalSold).slice(0, 3); const container = document.getElementById('dashPopularProductsContainer');
+                if(!container) return;
+                if (sortedProducts.length === 0) { container.innerHTML = '<div class="empty-state">No sales recorded yet.</div>'; return; }
+                container.innerHTML = sortedProducts.map(item => {
+                    const p = item.product || {}; const name = p.name || 'Unknown product'; const price = safeNum(p.sellPrice).toFixed(2);
+                    let imgSrc = ''; if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
+                    const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:bold; color:var(--primary);">${name.charAt(0)}</span>`;
+                    return `<div class="top-product"><div class="tp-img">${img}</div><div class="tp-info"><h4>${name}</h4><p>${price} DH</p></div><div class="tp-sales">${item.totalSold} sold</div></div>`;
+                }).join('');
+            } catch (error) {}
         }
 
         window.filterProduits = (type) => { currentProductFilter = type; switchTab('produits'); renderProductsAdminList(allProducts); };
-        window.filterOrdersList = (status, tabElement) => { document.querySelectorAll('.tab-pill').forEach(t => t.classList.remove('active')); tabElement.classList.add('active'); currentOrderFilter = status; renderFullOrdersList(); };
+        window.filterOrdersList = (status, tabElement) => { 
+            document.querySelectorAll('.tab-pill').forEach(t => t.classList.remove('active')); tabElement.classList.add('active'); 
+            
+            // Map English filter clicks back to DB strings if necessary or filter by loose matching
+            currentOrderFilter = status; 
+            renderFullOrdersList(); 
+        };
 
         function renderFullOrdersList() {
             const getTime = (ts) => { if (!ts) return 0; const t = new Date(ts).getTime(); return isNaN(t) ? 0 : t; };
             let filtered = [...allOrders].sort((a,b) => getTime(b.timestamp) - getTime(a.timestamp));
-            if (currentOrderFilter !== 'Toutes') { filtered = filtered.filter(o => o.status === currentOrderFilter || o.status + 's' === currentOrderFilter); }
+            
+            if (currentOrderFilter !== 'All') { 
+                filtered = filtered.filter(o => {
+                    const st = (o.status || '').toLowerCase();
+                    if(currentOrderFilter === 'Pending' && (st.includes('attente') || st.includes('pending'))) return true;
+                    if(currentOrderFilter === 'Processing' && (st.includes('cours') || st.includes('processing'))) return true;
+                    if(currentOrderFilter === 'Delivered' && (st.includes('livr') || st.includes('delivered'))) return true;
+                    if(currentOrderFilter === 'Cancelled' && (st.includes('annul') || st.includes('cancelled'))) return true;
+                    return false;
+                });
+            }
             const container = document.getElementById('adminOrderListContainer');
             if(container) container.innerHTML = generateOrdersHTML(filtered);
         }
@@ -1073,16 +1115,15 @@
             if(!ordersArray || ordersArray.length === 0) return `<div class="empty-state">No orders found.</div>`;
             return ordersArray.map(o => {
                 let orderDate = new Date(); if (o.timestamp) { const parsed = new Date(o.timestamp); if (!isNaN(parsed.getTime())) orderDate = parsed; }
-                const date = orderDate.toLocaleDateString('en-US', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+                const date = orderDate.toLocaleDateString('en-GB', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
                 
-                // Keeping internal French statuses for DB integrity
-                let displayStatus = o.status; let statusClass = 'b-pending'; 
-                if(o.status === 'En attente') { statusClass = 'b-pending'; displayStatus = 'Pending'; }
-                if(o.status === 'En cours') { statusClass = 'b-processing'; displayStatus = 'Processing'; }
-                if(o.status === 'Livrée' || o.status === 'Livrées') { statusClass = 'b-delivered'; displayStatus = 'Delivered'; }
-                if(o.status === 'Annulée') { statusClass = 'b-cancelled'; displayStatus = 'Canceled'; }
+                let statusClass = 'b-pending'; let displayStatus = 'Pending';
+                const st = (o.status || '').toLowerCase();
+                if(st.includes('cours') || st.includes('processing')) { statusClass = 'b-processing'; displayStatus = 'Processing'; }
+                if(st.includes('livr') || st.includes('delivered')) { statusClass = 'b-delivered'; displayStatus = 'Delivered'; }
+                if(st.includes('annul') || st.includes('cancelled')) { statusClass = 'b-cancelled'; displayStatus = 'Cancelled'; }
                 
-                const price = safeNum(o.totalPrice).toFixed(2); const items = parseInt(o.totalItems) || 0; const cName = o.customerName || 'Client';
+                const price = safeNum(o.totalPrice).toFixed(2); const items = parseInt(o.totalItems) || 0; const cName = o.customerName || 'Customer';
                 return `<div class="card order-card" onclick="window.viewOrder('${o.id}')"><div class="order-header"><div><div class="o-id">#${o.id.substring(0,6).toUpperCase()}</div><div class="o-date">${date}</div></div><div class="badge ${statusClass}">${displayStatus.toUpperCase()}</div></div><div style="display: flex; justify-content: space-between; align-items: flex-end;"><div><div class="o-client"><svg viewBox="0 0 24 24" style="width:14px; color:var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> ${cName}</div><div class="o-items">${items} items</div></div><div class="o-price">${price} DH</div></div></div>`;
             }).join('');
         }
@@ -1091,16 +1132,16 @@
             const order = allOrders.find(o => o.id === orderId); if(!order) return;
             document.getElementById('det-id').innerText = "#" + order.id.substring(0,6).toUpperCase();
             let orderDate = new Date(); if (order.timestamp) { const parsed = new Date(order.timestamp); if (!isNaN(parsed.getTime())) orderDate = parsed; }
-            document.getElementById('det-date').innerText = orderDate.toLocaleDateString('en-US', {day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
+            document.getElementById('det-date').innerText = orderDate.toLocaleDateString('en-GB', {day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
             document.getElementById('det-client').innerText = order.customerName || 'Unknown';
             document.getElementById('det-neighborhood').innerText = order.neighborhood || 'Not specified';
 
-            let displayStatus = order.status; let statusClass = 'b-pending'; 
-            if(order.status === 'En attente') { statusClass = 'b-pending'; displayStatus = 'Pending'; }
-            if(order.status === 'En cours') { statusClass = 'b-processing'; displayStatus = 'Processing'; }
-            if(order.status === 'Livrée' || order.status === 'Livrées') { statusClass = 'b-delivered'; displayStatus = 'Delivered'; }
-            if(order.status === 'Annulée') { statusClass = 'b-cancelled'; displayStatus = 'Canceled'; }
-            
+            let statusClass = 'b-pending'; let displayStatus = 'Pending';
+            const st = (order.status || '').toLowerCase();
+            if(st.includes('cours') || st.includes('processing')) { statusClass = 'b-processing'; displayStatus = 'Processing'; }
+            if(st.includes('livr') || st.includes('delivered')) { statusClass = 'b-delivered'; displayStatus = 'Delivered'; }
+            if(st.includes('annul') || st.includes('cancelled')) { statusClass = 'b-cancelled'; displayStatus = 'Cancelled'; }
+
             const badge = document.getElementById('det-badge'); badge.className = `badge ${statusClass}`; badge.innerText = displayStatus.toUpperCase();
 
             document.getElementById('det-items-count').innerText = `Items (${order.totalItems || 0})`;
@@ -1112,8 +1153,8 @@
                 
                 let packGenderTag = '';
                 if(item.packGender) {
-                    const genderColor = item.packGender === 'Fille' ? '#DB2777' : '#2563EB';
-                    const genderBg = item.packGender === 'Fille' ? '#FCE7F3' : '#DBEAFE';
+                    const genderColor = item.packGender === 'Fille' || item.packGender === 'Girl' ? '#DB2777' : '#2563EB';
+                    const genderBg = item.packGender === 'Fille' || item.packGender === 'Girl' ? '#FCE7F3' : '#DBEAFE';
                     packGenderTag = `<span style="background:${genderBg}; color:${genderColor}; font-size:10px; padding:2px 6px; border-radius:4px; font-weight:700;">${item.packGender}</span>`;
                 }
 
@@ -1128,11 +1169,11 @@
             document.getElementById('det-total').innerText = `${total.toFixed(2)} DH`;
 
             let actionsHTML = '';
-            if(order.status !== 'Annulée' && order.status !== 'Livrée' && order.status !== 'Livrées') {
-                if(order.status === 'En attente') actionsHTML += `<button class="btn btn-primary" onclick="promptOrderStatus('${order.id}', 'En cours')">Mark Processing</button>`;
-                actionsHTML += `<button class="btn btn-success" onclick="promptOrderStatus('${order.id}', 'Livrées')">Mark Delivered</button>`;
-                actionsHTML += `<button class="btn btn-danger-outline" onclick="promptOrderStatus('${order.id}', 'Annulée')">Cancel Order</button>`;
-            } else if (order.status === 'Annulée') { actionsHTML = `<div style="text-align:center; color:var(--danger); font-weight:700;">Order Canceled</div>`; } 
+            if(!st.includes('annul') && !st.includes('cancel') && !st.includes('livr') && !st.includes('deliver')) {
+                if(st.includes('attente') || st.includes('pending')) actionsHTML += `<button class="btn btn-primary" onclick="promptOrderStatus('${order.id}', 'Processing')">Mark as Processing</button>`;
+                actionsHTML += `<button class="btn btn-success" onclick="promptOrderStatus('${order.id}', 'Delivered')">Mark as Delivered</button>`;
+                actionsHTML += `<button class="btn btn-danger-outline" onclick="promptOrderStatus('${order.id}', 'Cancelled')">Cancel Order</button>`;
+            } else if (st.includes('annul') || st.includes('cancel')) { actionsHTML = `<div style="text-align:center; color:var(--danger); font-weight:700;">Order Cancelled</div>`; } 
             else { actionsHTML = `<div style="text-align:center; color:var(--success); font-weight:700;">Order Completed</div>`; }
             actionsHTML += `<button class="btn btn-outline" style="color:var(--danger); border-color:var(--danger-light); margin-top: 24px;" onclick="promptDeleteOrder('${order.id}')">Delete Order</button>`;
             
@@ -1140,13 +1181,13 @@
         };
 
         window.promptOrderStatus = (orderId, newStatus) => {
-            document.getElementById('modalTitle').innerText = "Update Status"; document.getElementById('modalMsg').innerText = `Do you want to update this order status to ${newStatus}?`;
-            const btn = document.getElementById('modalConfirmBtn'); btn.className = 'btn btn-primary'; btn.style.background = newStatus === 'Annulée' ? 'var(--danger)' : 'var(--primary)';
-            window.confirmActionCallback = async () => { closeModals(); try { await updateDoc(doc(db, "orders", orderId), { status: newStatus }); showToast(`Status updated`); } catch(e) { alert("Network error"); } }; document.getElementById('confirmOverlay').classList.add('active');
+            document.getElementById('modalTitle').innerText = "Update Status"; document.getElementById('modalMsg').innerText = `Do you want to mark this order as ${newStatus.toLowerCase()}?`;
+            const btn = document.getElementById('modalConfirmBtn'); btn.className = 'btn btn-primary'; btn.style.background = newStatus === 'Cancelled' ? 'var(--danger)' : 'var(--primary)';
+            window.confirmActionCallback = async () => { closeModals(); try { await updateDoc(doc(db, "orders", orderId), { status: newStatus }); showToast(`Status updated`); } catch(e) { alert("Network Error"); } }; document.getElementById('confirmOverlay').classList.add('active');
         };
 
         window.promptDeleteOrder = (orderId) => {
-            document.getElementById('modalTitle').innerText = "Delete Order"; document.getElementById('modalMsg').innerText = "This action will delete the order and restore base inventory. Confirm?";
+            document.getElementById('modalTitle').innerText = "Delete Order"; document.getElementById('modalMsg').innerText = "This action will delete the order and automatically restore the stock of the items. Confirm?";
             const btn = document.getElementById('modalConfirmBtn'); btn.className = 'btn btn-primary'; btn.style.background = 'var(--danger)';
             window.confirmActionCallback = async () => {
                 closeModals();
@@ -1157,13 +1198,13 @@
                             if(item.product && item.product.id) {
                                 const currentProd = allProducts.find(p => p.id === item.product.id);
                                 if(currentProd) {
-                                    let newStock = (parseInt(currentProd.stock) || 0) + item.qty; 
-                                    await updateDoc(doc(db, "products", item.product.id), { stock: newStock });
+                                    let newStock = (parseInt(currentProd.stock) || 0) + item.qty; let updateData = { stock: newStock };
+                                    await updateDoc(doc(db, "products", item.product.id), updateData);
                                 }
                             }
                         }
                     }
-                    await deleteDoc(doc(db, "orders", orderId)); showToast("Order deleted & stock restored"); switchTab('commandes');
+                    await deleteDoc(doc(db, "orders", orderId)); showToast("Order deleted and stock restored"); switchTab('commandes');
                 } catch(e) { alert("Error deleting order."); }
             }; document.getElementById('confirmOverlay').classList.add('active');
         };
@@ -1265,15 +1306,16 @@
                 document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
             }
 
-            // AUTO UPGRADE OLD VARIANTS TO NEW OPTION GROUPS
+            // LOAD OPTION GROUPS (with Backward compatibility for old "Variants" array)
             if(p.optionGroups && p.optionGroups.length > 0) {
                 window.optionGroups = JSON.parse(JSON.stringify(p.optionGroups));
             } else if (p.variants && p.variants.length > 0) {
+                // Auto-upgrade legacy variants to the new Option Groups system
                 window.optionGroups = [{
                     name: "Options",
                     selectionType: "radio",
                     displayStyle: "pills",
-                    options: p.variants.map(v => ({ name: v.name, priceMod: 0, costMod: 0, stock: v.stock || 0, img: "" }))
+                    options: p.variants.map(v => ({ name: v.name, priceMod: 0, costPrice: 0, stock: v.stock || 0, img: "" }))
                 }];
             } else {
                 window.optionGroups = [];
@@ -1315,29 +1357,19 @@
                 document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
             }
 
-            if(p.optionGroups && p.optionGroups.length > 0) { 
-                window.optionGroups = JSON.parse(JSON.stringify(p.optionGroups)); 
-            } else if (p.variants && p.variants.length > 0) {
-                window.optionGroups = [{ name: "Options", selectionType: "radio", displayStyle: "pills", options: p.variants.map(v => ({ name: v.name, priceMod: 0, costMod: 0, stock: v.stock || 0, img: "" })) }];
+            if(p.optionGroups && p.optionGroups.length > 0) { window.optionGroups = JSON.parse(JSON.stringify(p.optionGroups)); } 
+            else if (p.variants && p.variants.length > 0) {
+                window.optionGroups = [{ name: "Options", selectionType: "radio", displayStyle: "pills", options: p.variants.map(v => ({ name: v.name, priceMod: 0, costPrice: 0, stock: v.stock || 0, img: "" })) }];
             } else { window.optionGroups = []; }
             window.renderOptionGroupsUI();
 
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
-            showToast("Product duplicated! Modify SKU/Name and save.");
+            showToast("Product duplicated! Change name/SKU and save.");
         };
 
         window.saveProductData = async () => {
             window.syncOptionGroups(); 
             let calculatedStock = parseInt(document.getElementById('pStock').value) || 0;
-
-            // Backward compatibility for Client UI
-            let legacyVariants = [];
-            if(window.optionGroups.length > 0) {
-                legacyVariants = window.optionGroups[0].options.map(o => ({
-                    name: o.name,
-                    stock: o.stock
-                }));
-            }
 
             const data = {
                 name: document.getElementById('pName').value.trim(), 
@@ -1350,8 +1382,7 @@
                 stock: calculatedStock,
                 lowStockThreshold: parseInt(document.getElementById('pLowStock').value) || 5, 
                 
-                optionGroups: window.optionGroups, // NEW Massive Feature
-                variants: legacyVariants, // Safely kept so client app doesn't break
+                optionGroups: window.optionGroups, 
                 
                 images: window.productImages,
                 imageUrl: window.productImages.length > 0 ? window.productImages[0] : "", 
@@ -1371,17 +1402,20 @@
                 textbookLanguage: document.getElementById('textbookToggle').checked ? document.getElementById('tbLanguage').value.trim() : "",
             };
 
-            if(!data.name || !data.category || data.images.length === 0) return alert("Please fill the name, category and add at least one image.");
+            if(!data.name || !data.category || data.images.length === 0) return alert("Please fill in the name, category, and add at least one image.");
             
-            const btn = document.getElementById('btnSaveProduct');
-            btn.disabled = true; btn.innerText = "Saving...";
-
             try {
+                const btn = document.getElementById('btnSaveProduct');
+                if(btn) { btn.innerText = 'Saving...'; btn.disabled = true; }
+                
                 if(currentEditProductId) { await updateDoc(doc(db, "products", currentEditProductId), data); showToast("Product updated!"); } 
                 else { data.timestamp = new Date().toISOString(); await addDoc(collection(db, "products"), data); showToast("New product added!"); }
+                
                 switchTab('produits');
-            } catch (e) { alert("Error saving product."); }
-            finally { btn.disabled = false; btn.innerHTML = 'Save Product <svg viewBox="0 0 24 24" style="width:18px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>'; }
+            } catch (e) { alert("Error saving product."); } finally {
+                const btn = document.getElementById('btnSaveProduct');
+                if(btn) { btn.innerText = 'Save Product'; btn.disabled = false; }
+            }
         };
 
         // --- PACKS ENGINE ---
@@ -1444,7 +1478,7 @@
             const level = document.getElementById('packLevel').value.trim();
             const bundlePrice = parseFloat(document.getElementById('packBundlePrice').value) || 0;
 
-            if(!name || !schoolName || !level || bundlePrice === 0 || window.currentPackItems.length === 0) return alert("Please fill basic info and add at least one mandatory item.");
+            if(!name || !schoolName || !level || bundlePrice === 0 || window.currentPackItems.length === 0) return alert("Please fill in basic info and include at least one mandatory item.");
             try {
                 const packData = { name: name.charAt(0).toUpperCase() + name.slice(1), schoolName, schoolLogo, level, bundlePrice, coreItems: window.currentPackItems, upsellItems: window.currentPackUpsells, isPackActive: true };
                 if (editId) { await updateDoc(doc(db, "packs", editId), packData); showToast("Pack updated successfully!"); } 
@@ -1454,7 +1488,7 @@
         };
 
         window.resetPackBuilder = () => {
-            document.getElementById('editPackId').value = ''; document.getElementById('packBuilderTitle').innerText = 'Create a School Pack';
+            document.getElementById('editPackId').value = ''; document.getElementById('packBuilderTitle').innerText = 'Create School Pack';
             document.getElementById('btnSavePack').innerText = 'Save School Pack'; document.getElementById('btnCancelPackEdit').style.display = 'none';
             document.getElementById('packName').value = ''; document.getElementById('packSchool').value = ''; document.getElementById('packSchoolLogo').value = '';
             document.getElementById('packLevel').value = ''; document.getElementById('packBundlePrice').value = '';
@@ -1485,7 +1519,7 @@
         };
 
         window.promptDeletePack = (id) => {
-            document.getElementById('modalTitle').innerText = "Delete Pack"; document.getElementById('modalMsg').innerText = "This action will remove the pack from the store. Confirm?";
+            document.getElementById('modalTitle').innerText = "Delete Pack"; document.getElementById('modalMsg').innerText = "This action will remove the pack from the client site. Confirm?";
             const btn = document.getElementById('modalConfirmBtn'); btn.className = 'btn btn-primary'; btn.style.background = 'var(--danger)';
             window.confirmActionCallback = async () => { closeModals(); try { await deleteDoc(doc(db, "packs", id)); showToast("Pack deleted"); } catch(e) { alert("Error."); } }; 
             document.getElementById('confirmOverlay').classList.add('active');
@@ -1504,8 +1538,8 @@
                         <div style="text-align: right;"><div style="color:var(--text-muted); font-size:11px; text-decoration: line-through;">${realValue.toFixed(2)} DH</div><strong style="color:var(--accent); font-size:14px;">${safeNum(pk.bundlePrice).toFixed(2)} DH</strong></div>
                     </div>
                     <div style="display:flex; gap:8px; margin-top:4px;">
-                        <span class="badge b-processing" style="font-size:9px; background:var(--primary-light); color:var(--primary);">${itemsCount} Mandatory Items</span>
-                        <span class="badge b-pending" style="font-size:9px; background: var(--orange-light); color: var(--orange);">${upsellCount} Upsell Options</span>
+                        <span class="badge b-processing" style="font-size:9px; background:var(--primary-light); color:var(--primary);">${itemsCount} Mandatory items</span>
+                        <span class="badge b-pending" style="font-size:9px; background: var(--orange-light); color: var(--orange);">${upsellCount} Add-ons</span>
                     </div>
                     <div style="display:flex; gap:8px; margin-top:12px; width: 100%;">
                         <button class="btn-outline" style="flex:1; padding: 6px; font-size: 11px; border-radius: 8px;" onclick="window.editPack('${pk.id}')">✏️ Edit</button>
