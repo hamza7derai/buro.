@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>buro. Admin Mobile</title>
+    <title>Lascoburo Admin Mobile</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
     <style>
@@ -12,13 +12,13 @@
         ========================================= */
         :root {
             --bg-main: #F8F9FB; --surface: #FFFFFF;
-            --primary: #1E3A8A; --primary-light: #EFF6FF;
-            --accent: #FBBF24; --accent-light: #FEF3C7;
+            --primary: #2D4B9B; --primary-light: #EEF2FF;
+            --accent: #22C55E; --accent-light: #DCFCE7;
             --warning: #F59E0B; --warning-light: #FEF3C7;
             --danger: #EF4444; --danger-light: #FEE2E2;
             --purple: #8B5CF6; --purple-light: #EDE9FE;
             --orange: #F97316; --orange-light: #FFEDD5;
-            --text-main: #0F172A; --text-muted: #64748B;
+            --text-main: #1E293B; --text-muted: #64748B;
             --border: #E2E8F0; --radius-card: 20px; --radius-btn: 12px;
             --shadow-sm: 0 4px 12px rgba(0,0,0,0.03); --shadow-nav: 0 -4px 20px rgba(0,0,0,0.05); --shadow-modal: 0 10px 40px rgba(0,0,0,0.1);
         }
@@ -44,7 +44,7 @@
         .section-link { font-size: 13px; color: var(--primary); font-weight: 600; text-decoration: none; cursor: pointer; }
 
         /* DASHBOARD ELEMENTS */
-        .main-stat-card { background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%); border-radius: var(--radius-card); padding: 20px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px rgba(30, 58, 138, 0.3); margin-bottom: 20px; cursor: pointer; transition: 0.2s; }
+        .main-stat-card { background: linear-gradient(135deg, #3A5BC7 0%, #1E3A8A 100%); border-radius: var(--radius-card); padding: 20px; color: white; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 10px 25px rgba(45, 75, 155, 0.3); margin-bottom: 20px; cursor: pointer; transition: 0.2s; }
         .main-stat-card:active { transform: scale(0.98); }
         .msc-icon { width: 50px; height: 50px; background: rgba(255,255,255,0.15); border-radius: 14px; display: flex; align-items:center; justify-content: center; margin-right: 16px; flex-shrink: 0;}
         .msc-icon svg { stroke: currentColor; }
@@ -68,12 +68,12 @@
         .o-date { font-size: 12px; color: var(--text-muted); margin-top: 4px; }
         .o-client { font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
         .o-items { font-size: 12px; color: var(--text-muted); }
-        .o-price { font-size: 16px; font-weight: 800; text-align: right; color: var(--primary);}
+        .o-price { font-size: 16px; font-weight: 800; text-align: right; }
         
         .badge { padding: 6px 10px; border-radius: 8px; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; }
         .b-pending { background: var(--warning-light); color: #D97706; }
         .b-processing { background: var(--primary-light); color: var(--primary); }
-        .b-delivered { background: #D1FAE5; color: #065F46; }
+        .b-delivered { background: var(--accent-light); color: #15803D; }
         .b-cancelled { background: var(--danger-light); color: #DC2626; }
 
         .top-product { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid var(--bg-main); }
@@ -93,7 +93,7 @@
         .prod-info h4 { font-size: 14px; font-weight: 800; color: var(--text-main); margin-bottom: 2px;}
         .prod-meta { font-size: 12px; color: var(--text-muted); margin-bottom: 4px;}
         .prod-stock { font-size: 11px; font-weight: 700; }
-        .stock-good { color: var(--success); } .stock-low { color: var(--warning); } .stock-out { color: var(--danger); }
+        .stock-good { color: var(--accent); } .stock-low { color: var(--warning); } .stock-out { color: var(--danger); }
         .prod-actions { display: flex; gap: 6px; align-items: center; }
         .btn-icon-small { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; border: none; cursor: pointer; transition: 0.2s;}
         .btn-icon-small:active { transform: scale(0.9); }
@@ -109,7 +109,8 @@
         .mc-title { font-size: 12px; color: var(--text-muted); font-weight: 600; margin-bottom: 4px; }
         .mc-val { font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;}
         .mc-trend { font-size: 11px; font-weight: 700; display: flex; align-items:center; gap:4px; }
-        .trend-up { color: var(--success); } .trend-down { color: var(--danger); } .trend-flat { color: var(--text-muted); }
+        .trend-up { color: var(--accent); } .trend-down { color: var(--danger); } .trend-flat { color: var(--text-muted); }
+        .info-banner { background: var(--primary-light); color: var(--primary); padding: 16px; border-radius: 16px; display: flex; align-items:flex-start; gap: 12px; font-size: 12px; font-weight: 600; line-height: 1.4; border: 1px solid #C7D2FE; margin-bottom:20px;}
 
         /* FORMS & INPUTS */
         .search-box { position: relative; margin-bottom: 20px; display: flex; gap: 10px; }
@@ -129,16 +130,17 @@
         .btn:active { transform: scale(0.98); }
         .btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .btn-primary { background: var(--primary); color: white; }
-        .btn-success { background: var(--success); color: white; }
+        .btn-success { background: var(--accent); color: white; }
         .btn-danger-outline { background: transparent; color: var(--danger); border: 1px solid var(--danger-light); }
         .btn-outline { background: var(--surface); color: var(--text-main); border: 1px solid var(--border); }
-        .btn-dashed { width: 100%; border: 2px dashed var(--border); border-radius: 16px; padding: 16px; background: transparent; color: var(--text-muted); font-weight: 800; cursor: pointer; transition: 0.2s; display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .btn-dashed:active { background: var(--bg-main); }
         
         .tabs-scroll { display: flex; gap: 8px; overflow-x: auto; scrollbar-width: none; margin: 0 -20px 20px; padding: 0 20px; }
         .tabs-scroll::-webkit-scrollbar { display: none; }
         .tab-pill { padding: 8px 16px; border-radius: 50px; font-size: 13px; font-weight: 600; color: var(--text-muted); background: var(--surface); border: 1px solid var(--border); white-space: nowrap; cursor: pointer; transition: 0.2s;}
         .tab-pill.active { background: var(--primary); color: white; border-color: var(--primary); }
+        .filter-banner { background: var(--primary-light); border: 1px solid #C7D2FE; border-radius: 12px; padding: 10px 16px; justify-content: space-between; align-items: center; margin-bottom: 16px; font-size: 13px; font-weight: 700; color: var(--primary); display: none;}
+        .filter-banner.active { display: flex; }
+        .filter-close { background: white; border: none; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--primary);}
 
         /* WIZARD */
         .stepper { display: flex; justify-content: space-between; position: relative; margin-bottom: 32px; padding: 0 20px; }
@@ -175,27 +177,6 @@
         .gallery-thumb.main-img { grid-column: span 2; aspect-ratio: 16/9; border: 2px solid var(--primary); }
         .gallery-delete { position: absolute; top: 6px; right: 6px; background: rgba(0,0,0,0.6); color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 12px; backdrop-filter: blur(4px); border:none;}
         
-        /* NEW: OPTION GROUPS BUILDER (TASCO STYLE) */
-        .og-card { background: var(--bg-main); border: 1px solid var(--border); border-radius: 16px; padding: 16px; margin-bottom: 16px; }
-        .og-header { display: flex; gap: 12px; margin-bottom: 16px; align-items: center;}
-        .og-name { flex: 1; padding: 12px; border-radius: 10px; border: 1px solid var(--border); font-weight: 800; font-size: 14px; outline:none;}
-        .og-name:focus { border-color: var(--primary); }
-        .og-del-btn { background: var(--danger-light); color: var(--danger); border: none; border-radius: 10px; width: 44px; height: 44px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;}
-        
-        .og-logic-row { display: flex; gap: 12px; align-items: center; background: white; padding: 12px; border-radius: 12px; border: 1px solid var(--border); margin-bottom: 16px; }
-        .og-radios { display: flex; flex-direction: column; gap: 8px; flex: 1; }
-        .og-radio-lbl { font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; color: var(--text-main); cursor: pointer;}
-        .og-radio-lbl input[type="radio"] { width: 16px; height: 16px; accent-color: var(--orange); }
-        .og-style { padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; font-weight: 700; background: var(--bg-main); outline: none; color: var(--text-main);}
-
-        .og-opt-card { background: white; border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 8px;}
-        .og-opt-row1 { display: flex; gap: 8px; }
-        .oo-name { flex: 2; padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; font-weight: 600; outline:none;}
-        .oo-price { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; text-align: center; font-weight: 600; outline:none;}
-        .oo-stock { flex: 1; padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 13px; text-align: center; font-weight: 600; outline:none;}
-        .oo-del-btn { background: var(--bg-main); color: var(--text-muted); border: 1px solid var(--border); border-radius: 8px; width: 36px; display: flex; align-items: center; justify-content: center; cursor: pointer; flex-shrink: 0;}
-        .oo-img { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid var(--border); font-size: 12px; outline:none;}
-
         /* ORDER DETAILS */
         .detail-header { display: flex; align-items: center; gap: 16px; margin-bottom: 24px; }
         .back-btn { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; background: var(--surface); border-radius: 50%; box-shadow: var(--shadow-sm); cursor: pointer; flex-shrink: 0;}
@@ -211,17 +192,24 @@
         .item-img img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply;}
         .item-details { flex: 1; }
         .item-name { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+        .item-meta { font-size: 12px; color: var(--text-muted); display:flex; gap: 6px; align-items: center;}
         .item-price { font-size: 13px; font-weight: 700; text-align: right; }
         
         .summary-box { background: var(--surface); border-radius: var(--radius-btn); padding: 16px; margin-top: 24px; border: 1px solid var(--border); }
         .summary-row { display: flex; justify-content: space-between; font-size: 13px; margin-bottom: 12px; color: var(--text-muted); font-weight: 500; }
         .summary-row.total { font-size: 16px; font-weight: 800; color: var(--primary); margin-bottom: 0; padding-top: 12px; border-top: 1px dashed var(--border); }
+        .action-stack { display: flex; flex-direction: column; gap: 12px; margin-top: 32px; }
 
         /* SEARCH DROPDOWN FOR PACKS */
         .search-dropdown-list { position: absolute; top: 100%; left: 0; right: 0; background: white; border: 1px solid var(--border); border-radius: 8px; max-height: 200px; overflow-y: auto; z-index: 10; display: none; box-shadow: var(--shadow-modal); margin-top: 4px; }
         .search-dropdown-item { padding: 12px; border-bottom: 1px solid var(--bg-main); font-size: 13px; cursor: pointer; display: flex; justify-content: space-between; }
+        .search-dropdown-item:last-child { border-bottom: none; }
+        .search-dropdown-item:hover { background: var(--primary-light); }
 
-        /* BOTTOM NAV */
+        /* FAB & BOTTOM NAV */
+        .fab { position: fixed; bottom: 100px; right: 20px; width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(45, 75, 155, 0.4); border: none; cursor: pointer; z-index: 80; transition: 0.2s;}
+        .fab:active { transform: scale(0.9); }
+        
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: var(--surface); border-top: 1px solid var(--border); display: flex; justify-content: space-around; padding: 12px 10px 24px; z-index: 100; box-shadow: var(--shadow-nav); max-width: 600px; margin: 0 auto; }
         .nav-item { display: flex; flex-direction: column; align-items: center; gap: 4px; color: #94A3B8; text-decoration: none; font-size: 10px; font-weight: 700; cursor: pointer; transition: 0.2s; width: 20%; }
         .nav-item.active { color: var(--primary); }
@@ -254,7 +242,7 @@
     <div id="view-dashboard" class="app-view active container">
         <div class="header-top">
             <div>
-                <h1>Bonjour, buro. 👋</h1>
+                <h1>Bonjour, Lascoburo 👋</h1>
                 <p>Aperçu de votre activité</p>
             </div>
         </div>
@@ -360,7 +348,7 @@
             <button class="filter-close" onclick="filterProduits('all')"><svg viewBox="0 0 24 24" style="width:14px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
         <div id="adminProductListContainer"></div>
-        <button class="fab" style="position: fixed; bottom: 100px; right: 20px; width: 60px; height: 60px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 25px rgba(30,58,138, 0.4); border: none; cursor: pointer; z-index: 80;" onclick="prepareAddProduct()">
+        <button class="fab" onclick="prepareAddProduct()">
             <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
         </button>
     </div>
@@ -423,45 +411,55 @@
         </div>
 
         <div id="wizard-2" class="wizard-step">
-            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Prix, Stock & Options</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Gérez la tarification globale et construisez les groupes d'options (couleurs, tailles, lots).</p>
+            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Prix & Stock</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Définissez le prix, la valeur barrée et l'inventaire.</p>
             
             <div class="form-group">
                 <label>Prix d'achat (DH)</label>
-                <input type="number" id="pCost" class="form-control" placeholder="0.00">
+                <input type="number" id="pCost" class="form-control" placeholder="8.00">
             </div>
             
             <div style="display:flex; gap:12px;">
                 <div class="form-group" style="flex:1;">
-                    <label style="color: var(--primary);">Prix de vente (DH) *</label>
+                    <label>Prix de vente (DH) *</label>
                     <input type="number" id="pSell" class="form-control" placeholder="15.00" oninput="validateStep2()">
                 </div>
                 <div class="form-group" style="flex:1;">
-                    <label style="color: var(--danger);">Prix barré (DH)</label>
+                    <label>Prix barré (DH)</label>
                     <input type="number" id="pCompare" class="form-control" placeholder="20.00">
                 </div>
             </div>
-            <span style="font-size: 11px; color: var(--text-muted); display: block; margin-top: -10px; margin-bottom: 20px;">Si le Prix Barré est supérieur au Prix de Vente, une étiquette de réduction -% s'affichera automatiquement sur le produit.</span>
 
-            <div style="display:flex; gap:12px;">
-                <div class="form-group" style="flex:1;">
-                    <label>Stock global *</label>
-                    <input type="number" id="pStock" class="form-control" placeholder="50" oninput="validateStep2()">
-                </div>
-                <div class="form-group" style="flex:1;">
-                    <label>Seuil stock faible *</label>
-                    <input type="number" id="pLowStock" class="form-control" placeholder="5" value="5" oninput="validateStep2()">
-                </div>
+            <div class="form-group">
+                <label>Stock global *</label>
+                <input type="number" id="pStock" class="form-control" placeholder="50" oninput="validateStep2()">
+                <span style="font-size: 11px; color: var(--text-muted); margin-top: 6px; display: block;">Quantité totale disponible pour ce produit.</span>
+            </div>
+            <div class="form-group">
+                <label>Seuil de stock faible *</label>
+                <input type="number" id="pLowStock" class="form-control" placeholder="5" value="5" oninput="validateStep2()">
             </div>
 
-            <div style="margin-top: 30px; margin-bottom: 24px;">
-                <h4 style="font-size: 14px; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 16px;">CHOICE GROUPS & ADD-ONS</h4>
-                
-                <div id="optionGroupsContainer"></div>
-                
-                <button class="btn-dashed" onclick="window.addOptionGroup()">
-                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg> ADD OPTION GROUP
-                </button>
+            <div class="card" style="margin-bottom:12px; margin-top: 24px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--orange);">
+                    <svg viewBox="0 0 24 24" style="width:18px;"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Prix Dégressifs (Packs)</span>
+                </div>
+                <div style="display:flex; gap:8px;">
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label>Pack de 5</label>
+                        <input type="number" id="pPack5" class="form-control" placeholder="DH">
+                    </div>
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label>Pack de 10</label>
+                        <input type="number" id="pPack10" class="form-control" placeholder="DH">
+                    </div>
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label>Pack de 20</label>
+                        <input type="number" id="pPack20" class="form-control" placeholder="DH">
+                    </div>
+                </div>
+                <span style="font-size: 11px; color: var(--text-muted); margin-top: 8px; display: block;">Optionnel. Remplissez ces champs pour appliquer automatiquement une remise sur les achats en quantité.</span>
             </div>
 
             <div class="wizard-footer">
@@ -471,14 +469,14 @@
         </div>
 
         <div id="wizard-3" class="wizard-step">
-            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Marketing & Découverte</h3>
-            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Configurez la visibilité, les manuels et les ventes croisées.</p>
+            <h3 style="font-size: 16px; margin-bottom: 4px; font-weight:800;">Configuration avancée</h3>
+            <p style="font-size: 13px; color: var(--text-muted); margin-bottom: 24px;">Configurez les options supplémentaires de votre produit.</p>
             
             <div class="card toggle-wrapper" style="margin-bottom:12px;">
                 <div style="display:flex; align-items:center; gap:12px;">
                     <svg viewBox="0 0 24 24" style="color:var(--warning); fill:var(--warning);"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
                     <div>
-                        <span class="toggle-label" style="display:block; font-size:14px; font-weight:700;">Produit en vedette</span>
+                        <span class="toggle-label" style="display:block; font-size:14px;">Produit en vedette</span>
                         <span style="font-size:11px; color:var(--text-muted); font-weight: 500;">Affiché en haut de la boutique</span>
                     </div>
                 </div>
@@ -486,7 +484,28 @@
             </div>
 
             <div class="card" style="margin-bottom:12px;">
-                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--success);">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:16px; color:var(--accent);">
+                    <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Prix & Promotion</span>
+                </div>
+                <div style="display:flex; gap:12px;">
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label>Prix normal (DH)</label>
+                        <input type="number" id="pNormalPrice" class="form-control" disabled>
+                    </div>
+                    <div class="form-group" style="flex:1; margin-bottom:0;">
+                        <label>Prix promo (optionnel)</label>
+                        <input type="number" id="pPromoPrice" class="form-control" placeholder="0.00" oninput="calculatePromo()">
+                    </div>
+                </div>
+                <div id="promoBadge" style="display:none; margin-top:12px; background:var(--accent-light); color:var(--accent); padding:8px 12px; border-radius:8px; font-size:12px; font-weight:700; align-items:center; gap:6px;">
+                    <svg viewBox="0 0 24 24" style="width:14px;"><line x1="19" y1="5" x2="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg> 
+                    <span id="promoText"></span>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom:12px;">
+                <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--accent);">
                     <svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg>
                     <span style="font-weight:800; font-size:14px; color:var(--text-main);">Badges Marketing</span>
                 </div>
@@ -494,6 +513,7 @@
                     <div class="smart-tag" onclick="window.toggleSmartTag('Nouveau', this)">Nouveau</div>
                     <div class="smart-tag" onclick="window.toggleSmartTag('Best Seller', this)">Best Seller</div>
                     <div class="smart-tag" onclick="window.toggleSmartTag('Rentrée Scolaire', this)">Rentrée Scolaire</div>
+                    <div class="smart-tag" onclick="window.toggleSmartTag('Promo', this)">Promo</div>
                     <div class="smart-tag" onclick="window.toggleSmartTag('Recommandé', this)">Recommandé</div>
                 </div>
             </div>
@@ -529,14 +549,42 @@
             </div>
 
             <div class="card" style="margin-bottom:12px;">
+                <div class="toggle-wrapper" style="padding:0; border:none; margin-bottom:16px;">
+                    <div style="display:flex; align-items:center; gap:8px; color:var(--purple);">
+                        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"></path></svg>
+                        <span style="font-weight:800; font-size:14px; color:var(--text-main);">Variantes (Optionnel)</span>
+                    </div>
+                    <label class="switch"><input type="checkbox" id="varToggle" onchange="document.getElementById('variantConfig').style.display = this.checked ? 'block' : 'none'"><span class="slider"></span></label>
+                </div>
+                <div id="variantConfig" style="display:none;">
+                    <div class="form-group">
+                        <label>Type de variante</label>
+                        <select class="form-control" id="varType" style="padding: 12px;"><option>Couleur</option><option>Taille</option><option>Autre</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Options (ex: Bleu, Rouge)</label>
+                        <div style="display:flex; gap:8px; margin-bottom: 12px;">
+                            <input type="text" id="vNameInput" class="form-control" placeholder="Ajouter une option..." style="padding: 12px;">
+                            <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="addVariantOption()">+ Ajouter</button>
+                        </div>
+                        <div class="chip-container" id="vChips"></div>
+                    </div>
+                    <div style="margin-top: 24px;" id="vStockSection">
+                        <label style="font-size: 13px; font-weight: 700; display:block; margin-bottom: 12px;">Stock par variante</label>
+                        <div id="vRowsContainer"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom:12px;">
                 <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; color:var(--purple);">
                     <svg viewBox="0 0 24 24" style="width:18px;"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Produits Liés (Upsell)</span>
+                    <span style="font-weight:800; font-size:14px; color:var(--text-main);">Produits Liés</span>
                 </div>
                 <div class="form-group" style="margin:0;">
                     <label>SKU des produits liés (séparés par des virgules)</label>
                     <input type="text" id="pRelated" class="form-control" placeholder="Ex: SKU-01, SKU-02...">
-                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block;">Ces produits s'afficheront dans la section "Souvent acheté avec" au bas de la fiche produit.</span>
+                    <span style="font-size:11px; color:var(--text-muted); margin-top:4px; display:block;">Ces produits s'afficheront dans la section "Vous aimerez aussi".</span>
                 </div>
             </div>
 
@@ -554,7 +602,7 @@
                     <span style="font-weight:800; font-size:14px; color:var(--text-main);">Tags Techniques</span>
                 </div>
                 <div style="display:flex; gap:8px; margin-bottom: 12px;">
-                    <input type="text" id="pTagInput" class="form-control" placeholder="Ajouter un tag (ex: 96 pages, A5)..." style="padding: 12px;">
+                    <input type="text" id="pTagInput" class="form-control" placeholder="Ajouter un tag..." style="padding: 12px;">
                     <button class="btn-outline" style="width:auto; padding:0 16px; font-size:13px;" onclick="addTagOption()">+ Ajouter</button>
                 </div>
                 <div class="chip-container" id="tagChips"></div>
@@ -569,7 +617,7 @@
 
             <div class="wizard-footer">
                 <button class="btn btn-outline" style="flex:0.5;" onclick="goToStep(2)"><svg viewBox="0 0 24 24" style="width:18px;"><polyline points="15 18 9 12 15 6"></polyline></svg> Précédent</button>
-                <button class="btn btn-success" onclick="saveProductData()">Enregistrer <svg viewBox="0 0 24 24" style="width:18px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></button>
+                <button class="btn btn-success" onclick="saveProductData()">Enregistrer le produit <svg viewBox="0 0 24 24" style="width:18px;"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg></button>
             </div>
         </div>
     </div>
@@ -659,14 +707,14 @@
         <h3 style="font-size: 14px; margin-bottom: 12px;">Résumé</h3>
         <div class="analytics-grid">
             <div class="metric-card"><div class="mc-icon" style="background:var(--primary-light); color:var(--primary);"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div><div class="mc-title">Profit</div><div class="mc-val" style="color:var(--primary);" id="statProfit">0.00 DH</div><div class="mc-trend trend-flat" id="statProfitTrend">-</div></div>
-            <div class="metric-card"><div class="mc-icon" style="background:var(--accent-light); color:var(--warning);"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div><div class="mc-title">Ventes (CA)</div><div class="mc-val" id="statRevenue">0.00 DH</div><div class="mc-trend trend-flat" id="statRevenueTrend">-</div></div>
+            <div class="metric-card"><div class="mc-icon" style="background:var(--accent-light); color:var(--accent);"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg></div><div class="mc-title">Ventes (CA)</div><div class="mc-val" id="statRevenue">0.00 DH</div><div class="mc-trend trend-flat" id="statRevenueTrend">-</div></div>
             <div class="metric-card"><div class="mc-icon" style="background:var(--purple-light); color:var(--purple);"><svg viewBox="0 0 24 24"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path><line x1="7" y1="7" x2="7.01" y2="7"></line></svg></div><div class="mc-title">Coût des produits</div><div class="mc-val" id="statCost">0.00 DH</div><div class="mc-trend trend-flat" id="statCostTrend">-</div></div>
             <div class="metric-card"><div class="mc-icon" style="background:var(--orange-light); color:var(--orange);"><svg viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"></rect><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"></polygon><circle cx="5.5" cy="18.5" r="2.5"></circle><circle cx="18.5" cy="18.5" r="2.5"></circle></svg></div><div class="mc-title">Frais de livraison</div><div class="mc-val" id="statShipping">0.00 DH</div><div class="mc-trend trend-flat" id="statShippingTrend">-</div></div>
         </div>
         <h3 style="font-size: 14px; margin-bottom: 12px;">Activité</h3>
         <div class="analytics-grid">
             <div class="metric-card" style="display:flex; align-items:center; justify-content:space-between; grid-column:span 1;"><div class="mc-icon" style="background:var(--primary-light); color:var(--primary); margin:0;"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></div><div style="text-align:right;"><div class="mc-val" style="margin-bottom:0;" id="statOrders">0</div><div class="mc-title">Commandes</div><div class="mc-trend trend-flat" id="statOrdersTrend" style="justify-content:flex-end;">-</div></div></div>
-            <div class="metric-card" style="display:flex; align-items:center; justify-content:space-between; grid-column:span 1;"><div class="mc-icon" style="background:var(--accent-light); color:var(--warning); margin:0;"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div><div style="text-align:right;"><div class="mc-val" style="margin-bottom:0;" id="statItems">0</div><div class="mc-title">Articles vendus</div><div class="mc-trend trend-flat" id="statItemsTrend" style="justify-content:flex-end;">-</div></div></div>
+            <div class="metric-card" style="display:flex; align-items:center; justify-content:space-between; grid-column:span 1;"><div class="mc-icon" style="background:var(--accent-light); color:var(--accent); margin:0;"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg></div><div style="text-align:right;"><div class="mc-val" style="margin-bottom:0;" id="statItems">0</div><div class="mc-title">Articles vendus</div><div class="mc-trend trend-flat" id="statItemsTrend" style="justify-content:flex-end;">-</div></div></div>
         </div>
         <div class="info-banner"><svg viewBox="0 0 24 24" style="flex-shrink:0;"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> Les statistiques sont calculées en fonction des commandes livrées.</div>
     </div>
@@ -701,7 +749,6 @@
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
         import { getFirestore, collection, onSnapshot, addDoc, updateDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
-        // ⚠️ FIREBASE CONFIG (Lascoburo project, UI rebranded to buro.)
         const firebaseConfig = {
             apiKey: "AIzaSyCKY59mqLqD4GqQpkDEFqNybKIkwLvgId0",
             authDomain: "lascoburo.firebaseapp.com",
@@ -715,23 +762,19 @@
 
         let allOrders = [], allProducts = [], globalCategoriesData = [], allPacks = [];
         let currentOrderFilter = 'Toutes', currentProductFilter = 'all', currentEditProductId = null; 
-        
-        // NEW STATE FOR STEP 2 & 3
-        window.productImages = [];
-        window.productTags = []; 
-        window.marketingTags = []; 
-        window.optionGroups = []; // Replaces productVariants
-
+        window.productVariants = []; window.productTags = []; window.marketingTags = []; window.productImages = [];
         let currentCatAddingType = ''; 
         const safeNum = (val) => isNaN(parseFloat(val)) ? 0 : parseFloat(val);
 
         // Click outside to close search dropdowns
         document.addEventListener('click', (e) => {
             if (!e.target.closest('#packItemSearch') && !e.target.closest('#packItemResults')) {
-                const res = document.getElementById('packItemResults'); if(res) res.style.display = 'none';
+                const results1 = document.getElementById('packItemResults');
+                if(results1) results1.style.display = 'none';
             }
             if (!e.target.closest('#packUpsellSearch') && !e.target.closest('#packUpsellResults')) {
-                const res = document.getElementById('packUpsellResults'); if(res) res.style.display = 'none';
+                const results2 = document.getElementById('packUpsellResults');
+                if(results2) results2.style.display = 'none';
             }
         });
 
@@ -754,7 +797,7 @@
             const savedTab = localStorage.getItem('lascoAdminTab') || 'dashboard'; switchTab(savedTab);
         });
 
-        // --- STEP 1 LOGIC ---
+        // --- NEW: MULTI-IMAGE GALLERY LOGIC ---
         window.addImageToGallery = () => {
             const input = document.getElementById('galleryInput');
             const url = input.value.trim();
@@ -768,11 +811,18 @@
             }
         };
 
-        window.removeImageFromGallery = (index) => { window.productImages.splice(index, 1); renderGalleryUI(); validateStep1(); };
+        window.removeImageFromGallery = (index) => {
+            window.productImages.splice(index, 1);
+            renderGalleryUI();
+            validateStep1();
+        };
 
         function renderGalleryUI() {
             const container = document.getElementById('galleryContainer');
-            if(window.productImages.length === 0) { container.innerHTML = ''; return; }
+            if(window.productImages.length === 0) {
+                container.innerHTML = '';
+                return;
+            }
             container.innerHTML = window.productImages.map((url, i) => {
                 const isMain = i === 0;
                 const cssClass = isMain ? 'gallery-thumb main-img' : 'gallery-thumb';
@@ -786,127 +836,60 @@
         }
 
         window.validateStep1 = () => {
-            const name = document.getElementById('pName').value.trim(); const cat = document.getElementById('pCat').value; const hasImg = window.productImages.length > 0;
-            const btn = document.getElementById('btnNext1'); if(name && cat && hasImg) { btn.disabled = false; } else { btn.disabled = true; }
+            const name = document.getElementById('pName').value.trim(); 
+            const cat = document.getElementById('pCat').value;
+            const hasImg = window.productImages.length > 0;
+            const btn = document.getElementById('btnNext1'); 
+            if(name && cat && hasImg) { btn.disabled = false; } else { btn.disabled = true; }
         };
 
-        // --- NEW STEP 2 LOGIC (OPTION GROUPS) ---
         window.validateStep2 = () => {
             const sell = document.getElementById('pSell').value; const stock = document.getElementById('pStock').value; const lowStock = document.getElementById('pLowStock').value;
             const btn = document.getElementById('btnNext2'); if(sell !== "" && stock !== "" && lowStock !== "") { btn.disabled = false; } else { btn.disabled = true; }
         };
 
-        // Sync reads DOM state so you don't lose typed text when adding new rows
-        window.syncOptionGroups = () => {
-            const groups = [];
-            document.querySelectorAll('.og-card').forEach((gEl) => {
-                const name = gEl.querySelector('.og-name').value;
-                const selectionType = gEl.querySelector('.og-type:checked') ? gEl.querySelector('.og-type:checked').value : 'radio';
-                const displayStyle = gEl.querySelector('.og-style').value;
-                const options = [];
-                gEl.querySelectorAll('.og-opt-card').forEach((oEl) => {
-                    options.push({
-                        name: oEl.querySelector('.oo-name').value,
-                        priceMod: parseFloat(oEl.querySelector('.oo-price').value) || 0,
-                        stock: parseInt(oEl.querySelector('.oo-stock').value) || 0, // Fallback to 0 if NaN, though user can type 999
-                        img: oEl.querySelector('.oo-img').value
-                    });
-                });
-                groups.push({name, selectionType, displayStyle, options});
-            });
-            window.optionGroups = groups;
-        };
-
-        window.addOptionGroup = () => {
-            window.syncOptionGroups();
-            window.optionGroups.push({ name: "", selectionType: "radio", displayStyle: "pills", options: [{name: "", priceMod: 0, stock: 999, img: ""}] });
-            window.renderOptionGroupsUI();
-        };
-
-        window.removeOptionGroup = (index) => {
-            window.syncOptionGroups(); window.optionGroups.splice(index, 1); window.renderOptionGroupsUI();
-        };
-
-        window.addOption = (gIndex) => {
-            window.syncOptionGroups();
-            window.optionGroups[gIndex].options.push({ name: "", priceMod: 0, stock: 999, img: "" });
-            window.renderOptionGroupsUI();
-        };
-
-        window.removeOption = (gIndex, oIndex) => {
-            window.syncOptionGroups(); window.optionGroups[gIndex].options.splice(oIndex, 1); window.renderOptionGroupsUI();
-        };
-
-        window.renderOptionGroupsUI = () => {
-            const container = document.getElementById('optionGroupsContainer');
-            if(window.optionGroups.length === 0) { container.innerHTML = ''; return; }
-
-            container.innerHTML = window.optionGroups.map((g, gIndex) => {
-                const optsHTML = g.options.map((o, oIndex) => `
-                    <div class="og-opt-card">
-                        <div class="og-opt-row1">
-                            <input type="text" class="oo-name" placeholder="Nom option..." value="${o.name}">
-                            <input type="number" class="oo-price" placeholder="+DH" value="${o.priceMod === 0 ? '' : o.priceMod}">
-                            <input type="number" class="oo-stock" placeholder="Stock" value="${o.stock}">
-                            <button class="oo-del-btn" onclick="window.removeOption(${gIndex}, ${oIndex})">✕</button>
-                        </div>
-                        <input type="text" class="oo-img" placeholder="URL Image (Optionnel)" value="${o.img}">
-                    </div>
-                `).join('');
-
-                return `
-                <div class="og-card">
-                    <div class="og-header">
-                        <input type="text" class="og-name" placeholder="Nom du groupe (ex: Couleur, Lots)..." value="${g.name}">
-                        <button class="og-del-btn" onclick="window.removeOptionGroup(${gIndex})"><svg viewBox="0 0 24 24" style="width:20px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
-                    </div>
-                    
-                    <div class="og-logic-row">
-                        <div class="og-radios">
-                            <label class="og-radio-lbl"><input type="radio" class="og-type" name="type_${gIndex}" value="radio" ${g.selectionType==='radio'?'checked':''}> Pick Only 1 (Obligatoire)</label>
-                            <label class="og-radio-lbl"><input type="radio" class="og-type" name="type_${gIndex}" value="checkbox" ${g.selectionType==='checkbox'?'checked':''}> Pick Multiple (Optionnel)</label>
-                        </div>
-                        <select class="og-style">
-                            <option value="pills" ${g.displayStyle==='pills'?'selected':''}>Pills (Text)</option>
-                            <option value="grid" ${g.displayStyle==='grid'?'selected':''}>Grid (Images)</option>
-                            <option value="list" ${g.displayStyle==='list'?'selected':''}>List (Images)</option>
-                        </select>
-                    </div>
-
-                    <div class="og-options-list">${optsHTML}</div>
-                    
-                    <button class="btn-outline" style="border-style:dashed; color:var(--text-muted); font-size:13px; padding:12px; margin-top:8px;" onclick="window.addOption(${gIndex})">+ ADD OPTION</button>
-                </div>
-                `;
-            }).join('');
-        };
-
-
-        // --- WIZARD NAVIGATION ---
         window.goToStep = (step) => {
-            if(step === 2) window.syncOptionGroups(); // Ensure any typed data is saved if moving back/forth
             document.querySelectorAll('.wizard-step').forEach(el => el.classList.remove('active'));
             document.getElementById(`wizard-${step}`).classList.add('active');
             document.querySelectorAll('.step-dot').forEach((el, index) => {
                 el.classList.remove('active', 'done'); if(index + 1 === step) el.classList.add('active'); if(index + 1 < step) el.classList.add('done');
             });
+            if(step === 3) { document.getElementById('pNormalPrice').value = document.getElementById('pSell').value; calculatePromo(); }
             window.scrollTo(0,0);
         };
 
-        // --- STEP 3 LOGIC ---
+        window.calculatePromo = () => {
+            const normal = parseFloat(document.getElementById('pNormalPrice').value) || 0;
+            const promo = parseFloat(document.getElementById('pPromoPrice').value) || 0;
+            const badge = document.getElementById('promoBadge'); const text = document.getElementById('promoText');
+            if (promo > 0 && promo < normal) { const discount = Math.round(((normal - promo) / normal) * 100); text.innerText = `Promotion active : ${discount}% de réduction`; badge.style.display = 'flex'; } 
+            else { badge.style.display = 'none'; }
+        };
+
+        // --- NEW: SMART MARKETING TAGS LOGIC ---
         window.toggleSmartTag = (tagName, el) => {
             const index = window.marketingTags.indexOf(tagName);
-            if(index > -1) { window.marketingTags.splice(index, 1); el.classList.remove('active'); } 
-            else { window.marketingTags.push(tagName); el.classList.add('active'); }
+            if(index > -1) {
+                window.marketingTags.splice(index, 1);
+                el.classList.remove('active');
+            } else {
+                window.marketingTags.push(tagName);
+                el.classList.add('active');
+            }
         };
 
         function renderSmartTagsUI() {
             document.querySelectorAll('.smart-tag').forEach(el => {
                 const tag = el.innerText.trim();
-                if(window.marketingTags.includes(tag)) el.classList.add('active'); else el.classList.remove('active');
+                if(window.marketingTags.includes(tag)) {
+                    el.classList.add('active');
+                } else {
+                    el.classList.remove('active');
+                }
             });
         }
 
+        // Custom tags backup
         window.addTagOption = () => {
             const input = document.getElementById('pTagInput'); const val = input.value.trim();
             if(val && !window.productTags.includes(val.toLowerCase())) { window.productTags.push(val.toLowerCase()); input.value = ''; renderTagsUI(); }
@@ -918,7 +901,38 @@
             `).join('');
         }
 
-        // --- CATEGORY MODAL LOGIC ---
+        function getColorHex(name) {
+            const n = name.toLowerCase(); if(n.includes('bleu')) return '#2563EB'; if(n.includes('rouge')) return '#EF4444';
+            if(n.includes('noir')) return '#0F172A'; if(n.includes('vert')) return '#10B981';
+            if(n.includes('jaune')) return '#F59E0B'; if(n.includes('rose')) return '#EC4899'; if(n.includes('blanc')) return '#FFFFFF'; return null;
+        }
+
+        window.addVariantOption = () => {
+            const input = document.getElementById('vNameInput'); const name = input.value.trim();
+            if(name && !window.productVariants.find(v => v.name.toLowerCase() === name.toLowerCase())) { window.productVariants.push({ name: name, stock: 0 }); input.value = ''; renderVariantUI(); }
+        };
+        window.removeVar = (index) => { window.productVariants.splice(index, 1); renderVariantUI(); };
+        window.updateVarStock = (index, val) => { window.productVariants[index].stock = parseInt(val) || 0; };
+
+        function renderVariantUI() {
+            const isColor = document.getElementById('varType').value === 'Couleur';
+            document.getElementById('vChips').innerHTML = window.productVariants.map((v, i) => `
+                <div class="v-chip">${v.name} <span onclick="removeVar(${i})"><svg viewBox="0 0 24 24" style="width:12px; height:12px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></span></div>
+            `).join('');
+            if(window.productVariants.length > 0) {
+                document.getElementById('vStockSection').style.display = 'block';
+                document.getElementById('vRowsContainer').innerHTML = window.productVariants.map((v, i) => {
+                    let dotColor = '#CBD5E1'; if(isColor) { const hex = getColorHex(v.name); if(hex) dotColor = hex; }
+                    return `
+                    <div class="v-row"><div class="v-row-left"><div class="v-dot" style="background:${dotColor};"></div>${v.name}</div>
+                        <div class="v-row-right"><input type="number" class="form-control" value="${v.stock}" onchange="updateVarStock(${i}, this.value)" style="padding:10px; width:70px; text-align:center;"><span style="font-size:12px; color:var(--text-muted);">pièces</span></div>
+                        <button class="btn-icon-small" style="background:#FEE2E2; color:var(--danger); flex-shrink:0;" onclick="removeVar(${i})"><svg viewBox="0 0 24 24" style="width:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+                    </div>`;
+                }).join('');
+            } else { document.getElementById('vStockSection').style.display = 'none'; }
+        }
+        document.getElementById('varType').addEventListener('change', renderVariantUI);
+
         window.openAddCategoryModal = (type) => {
             currentCatAddingType = type;
             if(type === 'main') { document.getElementById('catModalTitle').innerText = "Nouvelle catégorie principale"; } 
@@ -954,46 +968,6 @@
             } catch (e) { console.error(e); showToast("Erreur. Vérifiez la connexion."); } finally { btn.innerText = 'Ajouter'; btn.disabled = false; }
         });
 
-        window.loadSubCats = () => {
-            const main = document.getElementById('pCat').value; const subEl = document.getElementById('pSubCat');
-            const catDoc = globalCategoriesData.find(c => c.name === main);
-            if(catDoc && catDoc.subcategories && catDoc.subcategories.length > 0) { subEl.innerHTML = '<option value="">(Optionnel) Choisir...</option>' + catDoc.subcategories.map(s => `<option value="${s}">${s}</option>`).join(''); } 
-            else { subEl.innerHTML = '<option value="">Aucune sous-catégorie</option>'; }
-        };
-
-        // --- DASHBOARD / DATA PULL LOGIC ---
-        onSnapshot(collection(db, "categories"), snap => {
-            globalCategoriesData = snap.docs.map(d => ({id: d.id, ...d.data()})); globalCategoriesData.sort((a,b) => a.name.localeCompare(b.name));
-            const currentSelected = document.getElementById('pCat').value;
-            document.getElementById('pCat').innerHTML = '<option value="">Sélectionner...</option>' + globalCategoriesData.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
-            if(currentSelected && globalCategoriesData.find(c => c.name === currentSelected)) document.getElementById('pCat').value = currentSelected;
-        });
-
-        onSnapshot(collection(db, "orders"), snap => {
-            allOrders = snap.docs.map(d => ({id: d.id, ...d.data()})); calculateDashboard(); renderFullOrdersList(); 
-            if (document.getElementById('view-order-detail').classList.contains('active')) {
-                const currentId = document.getElementById('det-id').innerText.replace('#', '').toLowerCase();
-                const stillExists = allOrders.find(o => o.id.toLowerCase() === currentId || o.id.substring(0,6).toLowerCase() === currentId);
-                if(stillExists) window.viewOrder(stillExists.id); else switchTab('commandes');
-            }
-        });
-
-        onSnapshot(collection(db, "products"), snap => {
-            allProducts = snap.docs.map(d => ({id: d.id, ...d.data()}));
-            let lowCount = 0, outCount = 0;
-            allProducts.forEach(p => { const stock = parseInt(p.stock) || 0; const limit = parseInt(p.lowStockThreshold) || 5; if (stock <= 0) outCount++; else if (stock <= limit) lowCount++; });
-            const lowAlertCard = document.getElementById('alertLowStock');
-            if(lowAlertCard) {
-                if (lowCount > 0) { lowAlertCard.classList.add('active'); document.getElementById('lowStockText').innerText = `${lowCount} produit${lowCount>1?'s':''} en stock faible`; } else lowAlertCard.classList.remove('active');
-            }
-            const outAlertCard = document.getElementById('alertOutOfStock');
-            if(outAlertCard) {
-                if (outCount > 0) { outAlertCard.classList.add('active'); document.getElementById('outOfStockText').innerText = `${outCount} produit${outCount>1?'s':''} en rupture de stock`; } else outAlertCard.classList.remove('active');
-            }
-            if(currentProductFilter === 'all') renderProductsAdminList(allProducts); else filterProduits(currentProductFilter);
-        });
-
-        // Dashboard Calcs (Abbreviated to keep script core intact)
         function calculateDashboard() {
             try {
                 const now = new Date(); const todayStr = now.toDateString(); const yesterday = new Date(); yesterday.setDate(yesterday.getDate() - 1); const yesterdayStr = yesterday.toDateString(); const thirtyDaysAgo = new Date(); thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -1032,6 +1006,7 @@
                 renderTrendArrow('statRevenueTrend', revenueToday, revenueYesterday, false);
                 const elStatCost = document.getElementById('statCost'); if(elStatCost) elStatCost.innerText = costToday.toFixed(2) + ' DH';
                 renderTrendArrow('statCostTrend', costToday, costYesterday, true);
+                
                 const elStatShipping = document.getElementById('statShipping'); if(elStatShipping) elStatShipping.innerText = shippingToday.toFixed(2) + ' DH';
                 renderTrendArrow('statShippingTrend', shippingToday, shippingYesterday, false);
 
@@ -1064,12 +1039,62 @@
                 if (sortedProducts.length === 0) { container.innerHTML = '<div class="empty-state">Aucune vente enregistrée.</div>'; return; }
                 container.innerHTML = sortedProducts.map(item => {
                     const p = item.product || {}; const name = p.name || 'Produit inconnu'; const price = safeNum(p.sellPrice).toFixed(2);
-                    let imgSrc = ''; if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
+                    
+                    let imgSrc = '';
+                    if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
                     const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:bold; color:var(--primary);">${name.charAt(0)}</span>`;
+                    
                     return `<div class="top-product"><div class="tp-img">${img}</div><div class="tp-info"><h4>${name}</h4><p>${price} DH</p></div><div class="tp-sales">${item.totalSold} vendus</div></div>`;
                 }).join('');
-            } catch (error) {}
+            } catch (error) { console.error("PopProd Error:", error); }
         }
+
+        window.loadSubCats = () => {
+            const main = document.getElementById('pCat').value; const subEl = document.getElementById('pSubCat');
+            const catDoc = globalCategoriesData.find(c => c.name === main);
+            if(catDoc && catDoc.subcategories && catDoc.subcategories.length > 0) { subEl.innerHTML = '<option value="">(Optionnel) Choisir...</option>' + catDoc.subcategories.map(s => `<option value="${s}">${s}</option>`).join(''); } 
+            else { subEl.innerHTML = '<option value="">Aucune sous-catégorie</option>'; }
+        };
+
+        onSnapshot(collection(db, "categories"), snap => {
+            globalCategoriesData = snap.docs.map(d => ({id: d.id, ...d.data()})); globalCategoriesData.sort((a,b) => a.name.localeCompare(b.name));
+            const currentSelected = document.getElementById('pCat').value;
+            document.getElementById('pCat').innerHTML = '<option value="">Sélectionner...</option>' + globalCategoriesData.map(c => `<option value="${c.name}">${c.name}</option>`).join('');
+            if(currentSelected && globalCategoriesData.find(c => c.name === currentSelected)) document.getElementById('pCat').value = currentSelected;
+        });
+
+        onSnapshot(collection(db, "orders"), snap => {
+            allOrders = snap.docs.map(d => ({id: d.id, ...d.data()})); calculateDashboard(); renderFullOrdersList(); 
+            if (document.getElementById('view-order-detail').classList.contains('active')) {
+                const currentId = document.getElementById('det-id').innerText.replace('#', '').toLowerCase();
+                const stillExists = allOrders.find(o => o.id.toLowerCase() === currentId || o.id.substring(0,6).toLowerCase() === currentId);
+                if(stillExists) window.viewOrder(stillExists.id); else switchTab('commandes');
+            }
+        });
+
+        onSnapshot(collection(db, "products"), snap => {
+            allProducts = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            let lowCount = 0, outCount = 0;
+            allProducts.forEach(p => { const stock = parseInt(p.stock) || 0; const limit = parseInt(p.lowStockThreshold) || 5; if (stock <= 0) outCount++; else if (stock <= limit) lowCount++; });
+            const lowAlertCard = document.getElementById('alertLowStock');
+            if(lowAlertCard) {
+                if (lowCount > 0) { lowAlertCard.classList.add('active'); document.getElementById('lowStockText').innerText = `${lowCount} produit${lowCount>1?'s':''} en stock faible`; } else lowAlertCard.classList.remove('active');
+            }
+            const outAlertCard = document.getElementById('alertOutOfStock');
+            if(outAlertCard) {
+                if (outCount > 0) { outAlertCard.classList.add('active'); document.getElementById('outOfStockText').innerText = `${outCount} produit${outCount>1?'s':''} en rupture de stock`; } else outAlertCard.classList.remove('active');
+            }
+            if(currentProductFilter === 'all') renderProductsAdminList(allProducts); else filterProduits(currentProductFilter);
+
+            // Dynamically populate the Pack Builder Selectors with live inventory
+            const itemSel = document.getElementById('packItemSelector');
+            const upsellSel = document.getElementById('packUpsellSelector');
+            if(itemSel && upsellSel) {
+                const optionsHtml = '<option value="">Choisir un produit...</option>' + allProducts.map(p => `<option value="${p.id}">${p.name} (${safeNum(p.sellPrice)} DH)</option>`).join('');
+                itemSel.innerHTML = optionsHtml;
+                upsellSel.innerHTML = optionsHtml;
+            }
+        });
 
         window.filterProduits = (type) => { currentProductFilter = type; switchTab('produits'); renderProductsAdminList(allProducts); };
         window.filterOrdersList = (status, tabElement) => { document.querySelectorAll('.tab-pill').forEach(t => t.classList.remove('active')); tabElement.classList.add('active'); currentOrderFilter = status; renderFullOrdersList(); };
@@ -1083,14 +1108,16 @@
         }
 
         function generateOrdersHTML(ordersArray) {
-            if(!ordersArray || ordersArray.length === 0) return `<div class="empty-state">Aucune commande.</div>`;
-            return ordersArray.map(o => {
-                let orderDate = new Date(); if (o.timestamp) { const parsed = new Date(o.timestamp); if (!isNaN(parsed.getTime())) orderDate = parsed; }
-                const date = orderDate.toLocaleDateString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
-                let statusClass = 'b-pending'; if(o.status === 'En cours') statusClass = 'b-processing'; if(o.status === 'Livrée' || o.status === 'Livrées') statusClass = 'b-delivered'; if(o.status === 'Annulée') statusClass = 'b-cancelled';
-                const price = safeNum(o.totalPrice).toFixed(2); const items = parseInt(o.totalItems) || 0; const cName = o.customerName || 'Client';
-                return `<div class="card order-card" onclick="window.viewOrder('${o.id}')"><div class="order-header"><div><div class="o-id">#${o.id.substring(0,6).toUpperCase()}</div><div class="o-date">${date}</div></div><div class="badge ${statusClass}">${o.status}</div></div><div style="display: flex; justify-content: space-between; align-items: flex-end;"><div><div class="o-client"><svg viewBox="0 0 24 24" style="width:14px; color:var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> ${cName}</div><div class="o-items">${items} articles</div></div><div class="o-price">${price} DH</div></div></div>`;
-            }).join('');
+            try {
+                if(!ordersArray || ordersArray.length === 0) return `<div class="empty-state">Aucune commande.</div>`;
+                return ordersArray.map(o => {
+                    let orderDate = new Date(); if (o.timestamp) { const parsed = new Date(o.timestamp); if (!isNaN(parsed.getTime())) orderDate = parsed; }
+                    const date = orderDate.toLocaleDateString('fr-FR', {day:'numeric', month:'short', hour:'2-digit', minute:'2-digit'});
+                    let statusClass = 'b-pending'; if(o.status === 'En cours') statusClass = 'b-processing'; if(o.status === 'Livrée' || o.status === 'Livrées') statusClass = 'b-delivered'; if(o.status === 'Annulée') statusClass = 'b-cancelled';
+                    const price = safeNum(o.totalPrice).toFixed(2); const items = parseInt(o.totalItems) || 0; const cName = o.customerName || 'Client';
+                    return `<div class="card order-card" onclick="window.viewOrder('${o.id}')"><div class="order-header"><div><div class="o-id">#${o.id.substring(0,6).toUpperCase()}</div><div class="o-date">${date}</div></div><div class="badge ${statusClass}">${o.status}</div></div><div style="display: flex; justify-content: space-between; align-items: flex-end;"><div><div class="o-client"><svg viewBox="0 0 24 24" style="width:14px; color:var(--text-muted);"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> ${cName}</div><div class="o-items">${items} articles</div></div><div class="o-price">${price} DH</div></div></div>`;
+                }).join('');
+            } catch (e) { console.error("Order HTML Error:", e); return `<div class="empty-state">Erreur d'affichage.</div>`; }
         }
 
         window.viewOrder = (orderId) => {
@@ -1099,6 +1126,7 @@
             let orderDate = new Date(); if (order.timestamp) { const parsed = new Date(order.timestamp); if (!isNaN(parsed.getTime())) orderDate = parsed; }
             document.getElementById('det-date').innerText = orderDate.toLocaleDateString('fr-FR', {day:'numeric', month:'short', year:'numeric', hour:'2-digit', minute:'2-digit'});
             document.getElementById('det-client').innerText = order.customerName || 'Inconnu';
+            
             document.getElementById('det-neighborhood').innerText = order.neighborhood || 'Non spécifié';
 
             let statusClass = 'b-pending'; if(order.status === 'En cours') statusClass = 'b-processing'; if(order.status === 'Livrée' || order.status === 'Livrées') statusClass = 'b-delivered'; if(order.status === 'Annulée') statusClass = 'b-cancelled';
@@ -1107,7 +1135,8 @@
             document.getElementById('det-items-count').innerText = `Articles (${order.totalItems || 0})`;
             document.getElementById('det-items-list').innerHTML = (order.cart || []).map(item => {
                 const p = item.product || {}; 
-                let imgSrc = ''; if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
+                let imgSrc = '';
+                if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
                 const img = imgSrc ? `<img src="${imgSrc}">` : ''; 
                 const vText = item.variantName ? `<span style="color:var(--primary);">${item.variantName}</span>` : ''; 
                 
@@ -1122,7 +1151,9 @@
                 return `<div class="item-row"><div class="item-img">${img}</div><div class="item-details"><div class="item-name">${p.name || 'Produit'} ${vText}</div><div class="item-meta">x${item.qty} ${packGenderTag}</div></div><div class="item-price">${(price * item.qty).toFixed(2)} DH</div></div>`;
             }).join('');
 
-            const deliveryFee = safeNum(order.deliveryFee); const total = safeNum(order.totalPrice); const subTotal = total - deliveryFee;
+            const deliveryFee = safeNum(order.deliveryFee);
+            const total = safeNum(order.totalPrice);
+            const subTotal = total - deliveryFee;
 
             document.getElementById('det-subtotal').innerText = `${subTotal.toFixed(2)} DH`; 
             document.getElementById('det-shipping').innerText = `${deliveryFee.toFixed(2)} DH`;
@@ -1159,46 +1190,50 @@
                                 const currentProd = allProducts.find(p => p.id === item.product.id);
                                 if(currentProd) {
                                     let newStock = (parseInt(currentProd.stock) || 0) + item.qty; let updateData = { stock: newStock };
-                                    
-                                    // Complex variants restore not fully supported on new Group model automatically yet. 
-                                    // Just restoring base stock for now to keep reliable.
+                                    if(item.variantName && currentProd.variants) {
+                                        let updatedVariants = [...currentProd.variants]; let vIndex = updatedVariants.findIndex(v => v.name === item.variantName);
+                                        if(vIndex > -1) { updatedVariants[vIndex].stock = (parseInt(updatedVariants[vIndex].stock) || 0) + item.qty; updateData.variants = updatedVariants; }
+                                    }
                                     await updateDoc(doc(db, "products", item.product.id), updateData);
                                 }
                             }
                         }
                     }
                     await deleteDoc(doc(db, "orders", orderId)); showToast("Commande supprimée et stock restauré"); switchTab('commandes');
-                } catch(e) { alert("Erreur lors de la suppression."); }
+                } catch(e) { console.error(e); alert("Erreur lors de la suppression."); }
             }; document.getElementById('confirmOverlay').classList.add('active');
         };
 
         function renderProductsAdminList(productsArray) {
-            let filtered = productsArray; const filterBanner = document.getElementById('prodFilterBanner');
-            if(!filterBanner) return;
-            if (currentProductFilter === 'rupture') { filtered = filtered.filter(p => (parseInt(p.stock)||0) <= 0); filterBanner.classList.add('active'); document.getElementById('prodFilterText').innerText = "Filtre: Rupture de stock"; } 
-            else if (currentProductFilter === 'faible') { filtered = filtered.filter(p => { const s = parseInt(p.stock)||0; return s > 0 && s <= (parseInt(p.lowStockThreshold)||5); }); filterBanner.classList.add('active'); document.getElementById('prodFilterText').innerText = "Filtre: Stock faible"; } 
-            else { filterBanner.classList.remove('active'); }
-            
-            document.getElementById('prodCountText').innerText = `${filtered.length} produits`; const container = document.getElementById('adminProductListContainer');
-            if(filtered.length === 0) { container.innerHTML = `<div class="empty-state">Aucun produit trouvé.</div>`; return; }
-
-            container.innerHTML = filtered.map(p => {
-                const name = p.name || 'Inconnu'; 
-                let imgSrc = ''; if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
-                const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:800;color:var(--text-muted);">${name.charAt(0)}</span>`;
+            try {
+                let filtered = productsArray; const filterBanner = document.getElementById('prodFilterBanner');
+                if(!filterBanner) return;
+                if (currentProductFilter === 'rupture') { filtered = filtered.filter(p => (parseInt(p.stock)||0) <= 0); filterBanner.classList.add('active'); document.getElementById('prodFilterText').innerText = "Filtre: Rupture de stock"; } 
+                else if (currentProductFilter === 'faible') { filtered = filtered.filter(p => { const s = parseInt(p.stock)||0; return s > 0 && s <= (parseInt(p.lowStockThreshold)||5); }); filterBanner.classList.add('active'); document.getElementById('prodFilterText').innerText = "Filtre: Stock faible"; } 
+                else { filterBanner.classList.remove('active'); }
                 
-                const stock = parseInt(p.stock)||0; const limit = parseInt(p.lowStockThreshold)||5;
-                let stockClass = 'stock-good', stockText = `${stock} en stock`;
-                if (stock <= 0) { stockClass = 'stock-out'; stockText = 'Rupture'; } else if (stock <= limit) { stockClass = 'stock-low'; stockText = `Stock: ${stock} (Faible)`; }
-                
-                const brandHTML = p.brand ? ` • <span style="font-weight:700;">${p.brand}</span>` : '';
+                document.getElementById('prodCountText').innerText = `${filtered.length} produits`; const container = document.getElementById('adminProductListContainer');
+                if(filtered.length === 0) { container.innerHTML = `<div class="empty-state">Aucun produit trouvé.</div>`; return; }
 
-                return `<div class="prod-card"><div class="prod-img-box">${img}</div><div class="prod-info"><h4>${name}</h4><div class="prod-meta">${p.category||'Sans cat'}${brandHTML} • <strong style="color:var(--primary);">${safeNum(p.sellPrice)} DH</strong></div><div class="prod-stock ${stockClass}">${stockText}</div></div><div class="prod-actions">
-                    <button class="btn-icon-small btn-edit-prod" onclick="editProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button>
-                    <button class="btn-icon-small btn-dup-prod" onclick="window.duplicateProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
-                    <button class="btn-icon-small btn-del-prod" onclick="promptDeleteProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
-                </div></div>`;
-            }).join('');
+                container.innerHTML = filtered.map(p => {
+                    const name = p.name || 'Inconnu'; 
+                    let imgSrc = '';
+                    if(p.images && p.images.length > 0) { imgSrc = p.images[0]; } else if (p.imageUrl) { imgSrc = p.imageUrl; }
+                    const img = imgSrc ? `<img src="${imgSrc}">` : `<span style="font-weight:800;color:var(--text-muted);">${name.charAt(0)}</span>`;
+                    
+                    const stock = parseInt(p.stock)||0; const limit = parseInt(p.lowStockThreshold)||5;
+                    let stockClass = 'stock-good', stockText = `${stock} en stock`;
+                    if (stock <= 0) { stockClass = 'stock-out'; stockText = 'Rupture'; } else if (stock <= limit) { stockClass = 'stock-low'; stockText = `Stock: ${stock} (Faible)`; }
+                    
+                    const brandHTML = p.brand ? ` • <span style="font-weight:700;">${p.brand}</span>` : '';
+
+                    return `<div class="prod-card"><div class="prod-img-box">${img}</div><div class="prod-info"><h4>${name}</h4><div class="prod-meta">${p.category||'Sans cat'}${brandHTML} • <strong style="color:var(--primary);">${safeNum(p.sellPrice)} DH</strong></div><div class="prod-stock ${stockClass}">${stockText}</div></div><div class="prod-actions">
+                        <button class="btn-icon-small btn-edit-prod" onclick="editProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg></button>
+                        <button class="btn-icon-small btn-dup-prod" onclick="window.duplicateProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:16px;"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg></button>
+                        <button class="btn-icon-small btn-del-prod" onclick="promptDeleteProduct('${p.id}')"><svg viewBox="0 0 24 24" style="width:18px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
+                    </div></div>`;
+                }).join('');
+            } catch(e) { console.error("Prod List Error:", e); }
         }
 
         document.getElementById('searchProdInput').addEventListener('input', e => {
@@ -1214,24 +1249,26 @@
         }
 
         window.prepareAddProduct = () => {
-            currentEditProductId = null; document.getElementById('wizardTitle').innerText = "Ajouter un produit"; 
-            document.querySelectorAll('#view-ajouter input').forEach(i => { if(i.type !== 'checkbox' && i.type !== 'radio') i.value = '' });
+            currentEditProductId = null; document.getElementById('wizardTitle').innerText = "Ajouter un produit"; document.querySelectorAll('#view-ajouter input').forEach(i => { if(i.type !== 'checkbox') i.value = '' });
             document.getElementById('pDesc').value = '';
             
+            // RESET MULTI IMAGE
             window.productImages = []; document.getElementById('galleryInput').value = ''; renderGalleryUI();
-            
+
             document.getElementById('pBrand').value = '';
             document.getElementById('pLowStock').value = 5;
             document.getElementById('pFeatured').checked = false; 
             
+            // RESET SMART TAGS
             window.marketingTags = []; renderSmartTagsUI();
             window.productTags = []; renderTagsUI();
             
             document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
             document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = ''; document.getElementById('tbLanguage').value = '';
-            
-            window.optionGroups = []; window.renderOptionGroupsUI();
 
+            document.getElementById('pPack5').value = ''; document.getElementById('pPack10').value = ''; document.getElementById('pPack20').value = '';
+
+            document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; window.productVariants = []; renderVariantUI();
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
         };
 
@@ -1243,69 +1280,82 @@
             document.getElementById('pCat').value = p.category || '';
             loadSubCats(); setTimeout(() => document.getElementById('pSubCat').value = p.subCategory || '', 100);
             
-            if(p.images && p.images.length > 0) { window.productImages = [...p.images]; } 
-            else if (p.imageUrl) { window.productImages = [p.imageUrl]; } 
-            else { window.productImages = []; }
+            // LOAD MULTI IMAGE
+            if(p.images && p.images.length > 0) {
+                window.productImages = [...p.images];
+            } else if (p.imageUrl) {
+                window.productImages = [p.imageUrl];
+            } else {
+                window.productImages = [];
+            }
             renderGalleryUI();
 
             document.getElementById('pCost').value = p.costPrice || ''; 
             document.getElementById('pSell').value = p.sellPrice || '';
             document.getElementById('pCompare').value = p.comparePrice || '';
+            
             document.getElementById('pStock').value = p.stock || ''; 
             document.getElementById('pLowStock').value = p.lowStockThreshold || 5;
             
+            // TIERED PRICING (Packs)
+            document.getElementById('pPack5').value = p.pack5Price || '';
+            document.getElementById('pPack10').value = p.pack10Price || '';
+            document.getElementById('pPack20').value = p.pack20Price || '';
+            
             document.getElementById('pFeatured').checked = p.featured || false; 
+            document.getElementById('pPromoPrice').value = p.promoPrice || '';
             document.getElementById('pDesc').value = p.description || '';
             document.getElementById('pRelated').value = p.relatedProducts || '';
             
+            // LOAD SMART TAGS
             window.marketingTags = p.marketingTags ? [...p.marketingTags] : []; renderSmartTagsUI();
             window.productTags = p.tags ? [...p.tags] : []; renderTagsUI(); 
 
             if(p.isTextbook) {
                 document.getElementById('textbookToggle').checked = true; document.getElementById('textbookConfig').style.display = 'block';
-                document.getElementById('tbLevel').value = p.textbookLevel || ''; document.getElementById('tbSubject').value = p.textbookSubject || '';
-                document.getElementById('tbSchool').value = p.textbookSchool || ''; document.getElementById('tbLanguage').value = p.textbookLanguage || '';
+                document.getElementById('tbLevel').value = p.textbookLevel || '';
+                document.getElementById('tbSubject').value = p.textbookSubject || '';
+                document.getElementById('tbSchool').value = p.textbookSchool || '';
+                document.getElementById('tbLanguage').value = p.textbookLanguage || '';
             } else {
                 document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
+                document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = ''; document.getElementById('tbLanguage').value = '';
             }
 
-            // LOAD OPTION GROUPS (with Backward compatibility for old "Variants" array)
-            if(p.optionGroups && p.optionGroups.length > 0) {
-                window.optionGroups = JSON.parse(JSON.stringify(p.optionGroups));
-            } else if (p.variants && p.variants.length > 0) {
-                // Auto-upgrade legacy variants to the new Option Groups system
-                window.optionGroups = [{
-                    name: "Variantes",
-                    selectionType: "radio",
-                    displayStyle: "pills",
-                    options: p.variants.map(v => ({ name: v.name, priceMod: 0, stock: v.stock || 0, img: "" }))
-                }];
-            } else {
-                window.optionGroups = [];
-            }
-            window.renderOptionGroupsUI();
-
+            if(p.variants && p.variants.length > 0) { document.getElementById('varToggle').checked = true; document.getElementById('variantConfig').style.display = 'block'; window.productVariants = [...p.variants]; renderVariantUI(); } 
+            else { document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; window.productVariants = []; renderVariantUI(); }
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
         };
 
+        // --- NEW: DUPLICATE PRODUCT LOGIC ---
         window.duplicateProduct = (id) => {
-            const p = allProducts.find(x => x.id === id); if(!p) return;
-            currentEditProductId = null; document.getElementById('wizardTitle').innerText = "Dupliquer le produit";
+            const p = allProducts.find(x => x.id === id); 
+            if(!p) return;
+            
+            currentEditProductId = null; 
+            document.getElementById('wizardTitle').innerText = "Dupliquer le produit";
             
             document.getElementById('pName').value = (p.name || '') + " (Copie)"; 
             document.getElementById('pBrand').value = p.brand || ''; 
             document.getElementById('pCat').value = p.category || '';
             loadSubCats(); setTimeout(() => document.getElementById('pSubCat').value = p.subCategory || '', 100);
             
-            window.productImages = p.images ? [...p.images] : (p.imageUrl ? [p.imageUrl] : []); renderGalleryUI();
+            window.productImages = p.images ? [...p.images] : (p.imageUrl ? [p.imageUrl] : []);
+            renderGalleryUI();
             
             document.getElementById('pCost').value = p.costPrice || ''; 
             document.getElementById('pSell').value = p.sellPrice || '';
             document.getElementById('pCompare').value = p.comparePrice || '';
+            
             document.getElementById('pStock').value = p.stock || ''; 
             document.getElementById('pLowStock').value = p.lowStockThreshold || 5;
             
+            document.getElementById('pPack5').value = p.pack5Price || '';
+            document.getElementById('pPack10').value = p.pack10Price || '';
+            document.getElementById('pPack20').value = p.pack20Price || '';
+            
             document.getElementById('pFeatured').checked = p.featured || false; 
+            document.getElementById('pPromoPrice').value = p.promoPrice || '';
             document.getElementById('pDesc').value = p.description || '';
             document.getElementById('pRelated').value = p.relatedProducts || '';
             
@@ -1314,25 +1364,31 @@
 
             if(p.isTextbook) {
                 document.getElementById('textbookToggle').checked = true; document.getElementById('textbookConfig').style.display = 'block';
-                document.getElementById('tbLevel').value = p.textbookLevel || ''; document.getElementById('tbSubject').value = p.textbookSubject || '';
-                document.getElementById('tbSchool').value = p.textbookSchool || ''; document.getElementById('tbLanguage').value = p.textbookLanguage || '';
+                document.getElementById('tbLevel').value = p.textbookLevel || '';
+                document.getElementById('tbSubject').value = p.textbookSubject || '';
+                document.getElementById('tbSchool').value = p.textbookSchool || '';
+                document.getElementById('tbLanguage').value = p.textbookLanguage || '';
             } else {
                 document.getElementById('textbookToggle').checked = false; document.getElementById('textbookConfig').style.display = 'none';
+                document.getElementById('tbLevel').value = ''; document.getElementById('tbSubject').value = ''; document.getElementById('tbSchool').value = ''; document.getElementById('tbLanguage').value = '';
             }
 
-            if(p.optionGroups && p.optionGroups.length > 0) { window.optionGroups = JSON.parse(JSON.stringify(p.optionGroups)); } 
-            else if (p.variants && p.variants.length > 0) {
-                window.optionGroups = [{ name: "Variantes", selectionType: "radio", displayStyle: "pills", options: p.variants.map(v => ({ name: v.name, priceMod: 0, stock: v.stock || 0, img: "" })) }];
-            } else { window.optionGroups = []; }
-            window.renderOptionGroupsUI();
+            if(p.variants && p.variants.length > 0) { 
+                document.getElementById('varToggle').checked = true; document.getElementById('variantConfig').style.display = 'block'; 
+                window.productVariants = [...p.variants]; renderVariantUI(); 
+            } else {
+                document.getElementById('varToggle').checked = false; document.getElementById('variantConfig').style.display = 'none'; 
+                window.productVariants = []; renderVariantUI();
+            }
 
             switchTab('ajouter'); goToStep(1); validateStep1(); validateStep2();
             showToast("Produit dupliqué ! Modifiez le nom/SKU et enregistrez.");
         };
 
         window.saveProductData = async () => {
-            window.syncOptionGroups(); // Ensure builder data is captured
+            const hasVars = document.getElementById('varToggle').checked;
             let calculatedStock = parseInt(document.getElementById('pStock').value) || 0;
+            if(hasVars && window.productVariants.length > 0) { calculatedStock = window.productVariants.reduce((sum, v) => sum + (parseInt(v.stock) || 0), 0); }
 
             const data = {
                 name: document.getElementById('pName').value.trim(), 
@@ -1345,12 +1401,15 @@
                 stock: calculatedStock,
                 lowStockThreshold: parseInt(document.getElementById('pLowStock').value) || 5, 
                 
-                optionGroups: window.optionGroups, // NEW Massive Feature
+                pack5Price: parseFloat(document.getElementById('pPack5').value) || null,
+                pack10Price: parseFloat(document.getElementById('pPack10').value) || null,
+                pack20Price: parseFloat(document.getElementById('pPack20').value) || null,
                 
                 images: window.productImages,
                 imageUrl: window.productImages.length > 0 ? window.productImages[0] : "", 
 
                 featured: document.getElementById('pFeatured').checked,
+                promoPrice: parseFloat(document.getElementById('pPromoPrice').value) || null, 
                 description: document.getElementById('pDesc').value.trim(),
                 relatedProducts: document.getElementById('pRelated').value.trim(),
                 
@@ -1363,6 +1422,8 @@
                 textbookSubject: document.getElementById('textbookToggle').checked ? document.getElementById('tbSubject').value.trim() : "",
                 textbookSchool: document.getElementById('textbookToggle').checked ? document.getElementById('tbSchool').value.trim() : "",
                 textbookLanguage: document.getElementById('textbookToggle').checked ? document.getElementById('tbLanguage').value.trim() : "",
+                
+                variants: hasVars ? window.productVariants : []
             };
 
             if(!data.name || !data.category || data.images.length === 0) return alert("Veuillez remplir le nom, la catégorie et ajouter au moins une image.");
@@ -1371,39 +1432,64 @@
                 if(currentEditProductId) { await updateDoc(doc(db, "products", currentEditProductId), data); showToast("Produit modifié !"); } 
                 else { data.timestamp = new Date().toISOString(); await addDoc(collection(db, "products"), data); showToast("Nouveau produit ajouté !"); }
                 switchTab('produits');
-            } catch (e) { alert("Erreur lors de l'enregistrement."); }
+            } catch (e) { console.error(e); alert("Erreur lors de l'enregistrement."); }
         };
 
-        // --- PACKS ENGINE ---
-        window.currentPackItems = []; window.currentPackUpsells = [];
+        // --- DYNAMIC PACK BUILDER FUNCTIONS ---
+        window.currentPackItems = [];
+        window.currentPackUpsells = [];
         
         window.filterPackSearch = (query, type) => {
             const resultsDiv = type === 'core' ? document.getElementById('packItemResults') : document.getElementById('packUpsellResults');
             if(!query.trim()) { resultsDiv.style.display = 'none'; return; }
+            
             const q = query.toLowerCase();
             const matches = allProducts.filter(p => (p.name || '').toLowerCase().includes(q) || (p.sku || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q)).slice(0, 8);
-            if(matches.length === 0) { resultsDiv.innerHTML = '<div class="search-dropdown-item" style="color:var(--text-muted); cursor:default;">Aucun produit trouvé</div>'; } 
-            else { resultsDiv.innerHTML = matches.map(p => `<div class="search-dropdown-item" onclick="window.addFromSearch('${p.id}', '${type}')"><span>${p.name}</span><span style="font-weight:700; color:var(--primary);">${safeNum(p.sellPrice).toFixed(2)} DH</span></div>`).join(''); }
+            
+            if(matches.length === 0) {
+                resultsDiv.innerHTML = '<div class="search-dropdown-item" style="color:var(--text-muted); cursor:default;">Aucun produit trouvé</div>';
+            } else {
+                resultsDiv.innerHTML = matches.map(p => `
+                    <div class="search-dropdown-item" onclick="window.addFromSearch('${p.id}', '${type}')">
+                        <span>${p.name}</span>
+                        <span style="font-weight:700; color:var(--primary);">${safeNum(p.sellPrice).toFixed(2)} DH</span>
+                    </div>
+                `).join('');
+            }
             resultsDiv.style.display = 'block';
         };
 
         window.addFromSearch = (pId, type) => {
             const prod = allProducts.find(p => p.id === pId); if(!prod) return;
+            
             if(type === 'core') {
-                if(!window.currentPackItems.find(item => item.productId === pId)) { window.currentPackItems.push({ productId: pId, name: prod.name, qty: 1, unitPrice: safeNum(prod.sellPrice) }); renderPackRecipeUI(); }
-                document.getElementById('packItemSearch').value = ''; document.getElementById('packItemResults').style.display = 'none';
+                if(!window.currentPackItems.find(item => item.productId === pId)) {
+                    window.currentPackItems.push({ productId: pId, name: prod.name, qty: 1, unitPrice: safeNum(prod.sellPrice) });
+                    renderPackRecipeUI();
+                }
+                document.getElementById('packItemSearch').value = '';
+                document.getElementById('packItemResults').style.display = 'none';
             } else {
-                if(!window.currentPackUpsells.find(id => id === pId)) { window.currentPackUpsells.push(pId); renderPackUpsellUI(); }
-                document.getElementById('packUpsellSearch').value = ''; document.getElementById('packUpsellResults').style.display = 'none';
+                if(!window.currentPackUpsells.find(id => id === pId)) {
+                    window.currentPackUpsells.push(pId);
+                    renderPackUpsellUI();
+                }
+                document.getElementById('packUpsellSearch').value = '';
+                document.getElementById('packUpsellResults').style.display = 'none';
             }
         };
 
-        window.updatePackItemQty = (index, qty) => { window.currentPackItems[index].qty = parseInt(qty) || 1; calculateRealValue(); };
+        window.updatePackItemQty = (index, qty) => {
+            window.currentPackItems[index].qty = parseInt(qty) || 1;
+            calculateRealValue();
+        };
+
         window.removeRecipeItem = (index) => { window.currentPackItems.splice(index, 1); renderPackRecipeUI(); };
         window.removeUpsellItem = (index) => { window.currentPackUpsells.splice(index, 1); renderPackUpsellUI(); };
 
         function calculateRealValue() {
-            let total = 0; window.currentPackItems.forEach(item => { total += (item.qty * item.unitPrice); });
+            let total = 0;
+            window.currentPackItems.forEach(item => { total += (item.qty * item.unitPrice); });
             document.getElementById('packRealValue').innerText = total.toFixed(2) + ' DH';
         }
 
@@ -1416,7 +1502,8 @@
                         <button class="btn-icon-small" style="background:#FEE2E2; color:var(--danger); width:28px; height:28px;" onclick="window.removeRecipeItem(${i})">✕</button>
                     </div>
                 </div>
-            `).join(''); calculateRealValue();
+            `).join('');
+            calculateRealValue();
         }
 
         function renderPackUpsellUI() {
@@ -1434,64 +1521,129 @@
             const level = document.getElementById('packLevel').value.trim();
             const bundlePrice = parseFloat(document.getElementById('packBundlePrice').value) || 0;
 
-            if(!name || !schoolName || !level || bundlePrice === 0 || window.currentPackItems.length === 0) return alert("Veuillez remplir les informations de base et inclure au moins un produit obligatoire.");
+            if(!name || !schoolName || !level || bundlePrice === 0 || window.currentPackItems.length === 0) {
+                return alert("Veuillez remplir les informations de base et inclure au moins un produit obligatoire.");
+            }
+
             try {
-                const packData = { name: name.charAt(0).toUpperCase() + name.slice(1), schoolName, schoolLogo, level, bundlePrice, coreItems: window.currentPackItems, upsellItems: window.currentPackUpsells, isPackActive: true };
-                if (editId) { await updateDoc(doc(db, "packs", editId), packData); showToast("Pack modifié avec succès !"); } 
-                else { packData.timestamp = new Date().toISOString(); await addDoc(collection(db, "packs"), packData); showToast("Nouveau Pack créé !"); }
+                const packData = {
+                    name: name.charAt(0).toUpperCase() + name.slice(1), 
+                    schoolName, schoolLogo, level, bundlePrice,
+                    coreItems: window.currentPackItems, 
+                    upsellItems: window.currentPackUpsells, 
+                    isPackActive: true
+                };
+
+                if (editId) {
+                    await updateDoc(doc(db, "packs", editId), packData);
+                    showToast("Pack modifié avec succès !");
+                } else {
+                    packData.timestamp = new Date().toISOString();
+                    await addDoc(collection(db, "packs"), packData);
+                    showToast("Nouveau Pack créé !");
+                }
+                
                 window.resetPackBuilder();
-            } catch(e) { alert("Erreur lors de la sauvegarde du pack."); }
+            } catch(e) {
+                console.error("Pack Save Exception:", e);
+                alert("Erreur lors de la sauvegarde du pack.");
+            }
         };
 
         window.resetPackBuilder = () => {
-            document.getElementById('editPackId').value = ''; document.getElementById('packBuilderTitle').innerText = 'Créer un Pack Scolaire';
-            document.getElementById('btnSavePack').innerText = 'Enregistrer le Pack Scolaire'; document.getElementById('btnCancelPackEdit').style.display = 'none';
-            document.getElementById('packName').value = ''; document.getElementById('packSchool').value = ''; document.getElementById('packSchoolLogo').value = '';
-            document.getElementById('packLevel').value = ''; document.getElementById('packBundlePrice').value = '';
+            document.getElementById('editPackId').value = '';
+            document.getElementById('packBuilderTitle').innerText = 'Créer un Pack Scolaire';
+            document.getElementById('btnSavePack').innerText = 'Enregistrer le Pack Scolaire';
+            document.getElementById('btnCancelPackEdit').style.display = 'none';
+            
+            document.getElementById('packName').value = '';
+            document.getElementById('packSchool').value = '';
+            document.getElementById('packSchoolLogo').value = '';
+            document.getElementById('packLevel').value = '';
+            document.getElementById('packBundlePrice').value = '';
             window.currentPackItems = []; window.currentPackUpsells = [];
-            renderPackRecipeUI(); renderPackUpsellUI(); window.scrollTo(0,0);
+            renderPackRecipeUI(); renderPackUpsellUI();
+            window.scrollTo(0,0);
         };
 
         window.editPack = (id) => {
             const pk = allPacks.find(p => p.id === id); if(!pk) return;
-            document.getElementById('editPackId').value = pk.id; document.getElementById('packBuilderTitle').innerText = 'Modifier le Pack';
-            document.getElementById('btnSavePack').innerText = 'Mettre à jour le Pack'; document.getElementById('btnCancelPackEdit').style.display = 'block';
-            document.getElementById('packName').value = pk.name || ''; document.getElementById('packSchool').value = pk.schoolName || '';
-            document.getElementById('packSchoolLogo').value = pk.schoolLogo || ''; document.getElementById('packLevel').value = pk.level || '';
+            document.getElementById('editPackId').value = pk.id;
+            document.getElementById('packBuilderTitle').innerText = 'Modifier le Pack';
+            document.getElementById('btnSavePack').innerText = 'Mettre à jour le Pack';
+            document.getElementById('btnCancelPackEdit').style.display = 'block';
+
+            document.getElementById('packName').value = pk.name || '';
+            document.getElementById('packSchool').value = pk.schoolName || '';
+            document.getElementById('packSchoolLogo').value = pk.schoolLogo || '';
+            document.getElementById('packLevel').value = pk.level || '';
             document.getElementById('packBundlePrice').value = pk.bundlePrice || '';
-            window.currentPackItems = pk.coreItems ? [...pk.coreItems] : []; window.currentPackUpsells = pk.upsellItems ? [...pk.upsellItems] : [];
-            renderPackRecipeUI(); renderPackUpsellUI(); window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            window.currentPackItems = pk.coreItems ? [...pk.coreItems] : [];
+            window.currentPackUpsells = pk.upsellItems ? [...pk.upsellItems] : [];
+            
+            renderPackRecipeUI(); renderPackUpsellUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         };
 
         window.duplicatePack = (id) => {
             const pk = allPacks.find(p => p.id === id); if(!pk) return;
             window.resetPackBuilder(); 
-            document.getElementById('packName').value = pk.name + ' (Copie)'; document.getElementById('packSchool').value = pk.schoolName || '';
-            document.getElementById('packSchoolLogo').value = pk.schoolLogo || ''; document.getElementById('packLevel').value = pk.level || '';
+            
+            document.getElementById('packName').value = pk.name + ' (Copie)';
+            document.getElementById('packSchool').value = pk.schoolName || '';
+            document.getElementById('packSchoolLogo').value = pk.schoolLogo || '';
+            document.getElementById('packLevel').value = pk.level || '';
             document.getElementById('packBundlePrice').value = pk.bundlePrice || '';
-            window.currentPackItems = pk.coreItems ? JSON.parse(JSON.stringify(pk.coreItems)) : []; window.currentPackUpsells = pk.upsellItems ? [...pk.upsellItems] : [];
-            renderPackRecipeUI(); renderPackUpsellUI(); window.scrollTo({ top: 0, behavior: 'smooth' });
+            
+            window.currentPackItems = pk.coreItems ? JSON.parse(JSON.stringify(pk.coreItems)) : [];
+            window.currentPackUpsells = pk.upsellItems ? [...pk.upsellItems] : [];
+            
+            renderPackRecipeUI(); renderPackUpsellUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             showToast("Pack dupliqué. Modifiez et enregistrez.");
         };
 
         window.promptDeletePack = (id) => {
-            document.getElementById('modalTitle').innerText = "Supprimer le Pack"; document.getElementById('modalMsg').innerText = "Cette action retirera ce pack du site client. Confirmer ?";
+            document.getElementById('modalTitle').innerText = "Supprimer le Pack"; 
+            document.getElementById('modalMsg').innerText = "Cette action retirera ce pack du site client. Confirmer ?";
             const btn = document.getElementById('modalConfirmBtn'); btn.className = 'btn btn-primary'; btn.style.background = 'var(--danger)';
-            window.confirmActionCallback = async () => { closeModals(); try { await deleteDoc(doc(db, "packs", id)); showToast("Pack supprimé"); } catch(e) { alert("Erreur."); } }; 
+            window.confirmActionCallback = async () => { 
+                closeModals(); 
+                try { 
+                    await deleteDoc(doc(db, "packs", id)); 
+                    showToast("Pack supprimé"); 
+                } catch(e) { alert("Erreur."); } 
+            }; 
             document.getElementById('confirmOverlay').classList.add('active');
         };
 
         onSnapshot(collection(db, "packs"), snap => {
-            allPacks = snap.docs.map(d => ({id: d.id, ...d.data()})); const container = document.getElementById('adminPacksListContainer'); if(!container) return;
-            if(allPacks.length === 0) { container.innerHTML = `<div class="empty-state">Aucun pack configuré pour le moment.</div>`; return; }
+            allPacks = snap.docs.map(d => ({id: d.id, ...d.data()}));
+            const container = document.getElementById('adminPacksListContainer');
+            if(!container) return;
+            if(allPacks.length === 0) {
+                container.innerHTML = `<div class="empty-state">Aucun pack configuré pour le moment.</div>`;
+                return;
+            }
             container.innerHTML = allPacks.map(pk => {
-                const itemsCount = pk.coreItems ? pk.coreItems.length : 0; const upsellCount = pk.upsellItems ? pk.upsellItems.length : 0; let realValue = 0;
+                const itemsCount = pk.coreItems ? pk.coreItems.length : 0;
+                const upsellCount = pk.upsellItems ? pk.upsellItems.length : 0;
+                
+                let realValue = 0;
                 if(pk.coreItems) { pk.coreItems.forEach(i => realValue += (i.qty * i.unitPrice)); }
+
                 return `
                 <div class="prod-card" style="align-items: flex-start; flex-direction: column; gap: 4px;">
                     <div style="display:flex; justify-content:space-between; width:100%; align-items:flex-start;">
-                        <div><h4 style="margin:0;">${pk.name}</h4><div class="prod-meta" style="margin-top:2px;">École: <strong>${pk.schoolName}</strong> • Niveau: <strong>${pk.level}</strong></div></div>
-                        <div style="text-align: right;"><div style="color:var(--text-muted); font-size:11px; text-decoration: line-through;">${realValue.toFixed(2)} DH</div><strong style="color:var(--accent); font-size:14px;">${safeNum(pk.bundlePrice).toFixed(2)} DH</strong></div>
+                        <div>
+                            <h4 style="margin:0;">${pk.name}</h4>
+                            <div class="prod-meta" style="margin-top:2px;">École: <strong>${pk.schoolName}</strong> • Niveau: <strong>${pk.level}</strong></div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div style="color:var(--text-muted); font-size:11px; text-decoration: line-through;">${realValue.toFixed(2)} DH</div>
+                            <strong style="color:var(--accent); font-size:14px;">${safeNum(pk.bundlePrice).toFixed(2)} DH</strong>
+                        </div>
                     </div>
                     <div style="display:flex; gap:8px; margin-top:4px;">
                         <span class="badge b-processing" style="font-size:9px; background:var(--primary-light); color:var(--primary);">${itemsCount} Articles obligatoires</span>
