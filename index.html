@@ -65,10 +65,6 @@
         .h-scroll::-webkit-scrollbar { display: none; }
         .h-item { scroll-snap-align: start; flex-shrink: 0; }
 
-        /* BRANDS ROW */
-        .brand-pill { background: white; border: 1px solid var(--border); padding: 8px 20px; border-radius: 50px; font-size: 13px; font-weight: 800; color: var(--text-main); display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: var(--shadow-sm); transition: 0.2s; white-space: nowrap;}
-        .brand-pill:active { transform: scale(0.95); background: var(--primary-light); border-color: var(--primary); color: var(--primary);}
-
         /* BANNER */
         .promo-banner { background: linear-gradient(135deg, #EFF6FF 0%, #DBEAFE 100%); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 15px; margin-bottom: 30px; position: relative; border: 1px solid #BFDBFE; cursor: pointer; transition: 0.2s;}
         .promo-banner:active { transform: scale(0.98); }
@@ -119,14 +115,12 @@
         .hero-cat-badge { display: inline-block; padding: 4px 10px; border-radius: 50px; font-size: 10px; font-weight: 700; background: rgba(255,255,255,0.6); }
         .hero-cat-img { font-size: 70px; z-index: 2; filter: drop-shadow(0 10px 10px rgba(0,0,0,0.1)); margin-left: 10px;}
 
-        /* Hero Themes */
         .theme-blue { background: #EEF2FF; border-color: #C7D2FE; } .theme-blue h3 { color: #1E3A8A; } .theme-blue p { color: #3B82F6; } .theme-blue .hero-cat-badge { color: #1E3A8A; }
         .theme-gray { background: #F8FAFC; border-color: #E2E8F0; } .theme-gray h3 { color: #1E293B; } .theme-gray p { color: #64748B; } .theme-gray .hero-cat-badge { color: #334155; }
         .theme-green { background: #F0FDF4; border-color: #BBF7D0; } .theme-green h3 { color: #166534; } .theme-green p { color: #22C55E; } .theme-green .hero-cat-badge { color: #166534; }
         .theme-pink { background: #FDF2F8; border-color: #FBCFE8; } .theme-pink h3 { color: #9D174D; } .theme-pink p { color: #EC4899; } .theme-pink .hero-cat-badge { color: #9D174D; }
         .theme-purple { background: #F5F3FF; border-color: #DDD6FE; } .theme-purple h3 { color: #5B21B6; } .theme-purple p { color: #8B5CF6; } .theme-purple .hero-cat-badge { color: #5B21B6; }
 
-        /* HORIZONTAL PILLS (SUBCAT) */
         .sub-cats-scroll { display: flex; gap: 10px; overflow-x: auto; scrollbar-width: none; margin: 0 -20px 20px -20px; padding: 0 20px; }
         .sub-cats-scroll::-webkit-scrollbar { display: none; }
         .sub-cat-pill { padding: 8px 16px; background: white; border: 1px solid var(--border); border-radius: 50px; font-size: 13px; font-weight: 700; color: var(--text-muted); cursor: pointer; white-space: nowrap; transition: 0.2s; box-shadow: var(--shadow-sm); }
@@ -179,11 +173,20 @@
         /* MODALS (PRODUCT & CART) */
         .overlay { position: fixed; inset: 0; background: rgba(15, 23, 42, 0.5); backdrop-filter: blur(4px); z-index: 1000; opacity: 0; pointer-events: none; transition: 0.3s; }
         .overlay.active { opacity: 1; pointer-events: auto; }
-        .bottom-sheet { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-radius: 30px 30px 0 0; z-index: 1001; transform: translateY(100%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1); max-width: 600px; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.15);}
-        .bottom-sheet.active { transform: translateY(0); }
-        .sheet-handle { width: 40px; height: 5px; background: #CBD5E1; border-radius: 10px; margin: 0 auto 20px; }
+        
         .close-modal-btn { position: absolute; top: 20px; right: 20px; background: var(--bg); border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; color: var(--text-main); z-index: 10;}
         
+        /* SPECIFIC PRODUCT MODAL (Max 85vh height, inner scroll) */
+        .modal-product-sheet { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-radius: 30px 30px 0 0; z-index: 1001; transform: translateY(100%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1); max-width: 600px; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; max-height: 85vh; }
+        .modal-product-sheet.active { transform: translateY(0); }
+        .modal-product-content { flex: 1; overflow-y: auto; padding: 0 20px 30px; scrollbar-width: none; }
+        .modal-product-content::-webkit-scrollbar { display: none; }
+        .sheet-handle { width: 40px; height: 5px; background: #CBD5E1; border-radius: 10px; margin: 15px auto 10px; flex-shrink: 0; }
+
+        /* SPECIFIC CART MODAL (Max 85vh, sticky footer) */
+        .modal-cart-sheet { position: fixed; bottom: 0; left: 0; right: 0; background: white; border-radius: 30px 30px 0 0; z-index: 1001; transform: translateY(100%); transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1); max-width: 600px; margin: 0 auto; box-shadow: 0 -10px 40px rgba(0,0,0,0.15); display: flex; flex-direction: column; max-height: 85vh; }
+        .modal-cart-sheet.active { transform: translateY(0); }
+
         /* SWIPE GALLERY */
         .gallery-swipe-container { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; border-radius: 20px; border: 1px solid var(--border); margin-bottom: 20px; background: var(--bg);}
         .gallery-swipe-container::-webkit-scrollbar { display: none; }
@@ -206,7 +209,7 @@
         .product-desc-box { background: var(--bg); border-radius: 12px; padding: 16px; font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px; border: 1px solid var(--border);}
         
         .section-label { font-size: 15px; font-weight: 800; margin-bottom: 12px; display: block; color: var(--text-main);}
-        .variant-grid { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 25px; }
+        .variant-grid { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; margin-bottom: 25px; }
         .variant-box { position: relative; border: 2px solid var(--border); border-radius: 12px; padding: 12px 16px; cursor: pointer; transition: 0.2s; font-weight: 700; font-size: 13px; color: var(--text-muted); text-align: center; flex: 1; min-width: 70px; display: flex; flex-direction: column; align-items: center; gap: 5px; }
         .variant-box.active { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
         .variant-box.out-of-stock { opacity: 0.5; pointer-events: none; background: var(--bg); text-decoration: line-through;}
@@ -225,6 +228,16 @@
         .qty-number { width: 40px; text-align: center; font-weight: 800; font-size: 16px; color: var(--text-main);}
         .btn-large-primary { width: 100%; background: var(--primary); color: white; border: none; padding: 18px; border-radius: 16px; font-size: 16px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; transition: 0.2s; box-shadow: 0 4px 15px rgba(30,58,138,0.2);}
         .btn-large-primary:active { transform: scale(0.98); }
+        
+        /* WHATSAPP BUTTON (YELLOW) */
+        .btn-whatsapp { background: var(--accent); color: var(--primary); border: none; padding: 18px; border-radius: 16px; font-size: 16px; font-weight: 800; cursor: pointer; display: flex; justify-content: center; align-items: center; gap: 10px; width: 100%; transition: 0.2s; box-shadow: 0 4px 15px rgba(251, 191, 36, 0.3);}
+        .btn-whatsapp:active { transform: scale(0.98); }
+
+        /* EMPTY STATE UI */
+        .empty-state { text-align: center; padding: 40px 20px; }
+        .empty-state svg { width: 48px; height: 48px; color: var(--text-muted); margin-bottom: 16px; opacity: 0.4; }
+        .empty-state h3 { font-size: 15px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; }
+        .empty-state p { font-size: 12px; color: var(--text-muted); }
 
         /* PACKS S. FLOW UI */
         .school-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px; }
@@ -274,8 +287,6 @@
             <div class="promo-text"><h3>Packs Rentrée 2026</h3><p>Trouvez la liste de votre école en 3 clics.</p></div>
             <div class="promo-image">🎒</div>
         </div>
-
-        <div class="h-scroll" id="homeBrandsRow"></div>
 
         <div id="section-nouveau" style="display:none;">
             <div class="section-header"><h2>✨ Nouveautés</h2></div>
@@ -332,10 +343,10 @@
             <select id="filterMatiere" class="filter-select" onchange="applyManuelFilters()">
                 <option value="">Matière</option>
             </select>
-            <select id="filterEcole" class="filter-select" onchange="applyManuelFilters()">
+            <select id="filterEcole" class="filter-select" onchange="applyManuelFilters()" style="margin-right: 20px;">
                 <option value="">École</option>
             </select>
-            </div>
+        </div>
 
         <div class="help-banner" onclick="requestManuelWhatsApp()">
             <div class="hb-icon">📘</div>
@@ -421,21 +432,21 @@
     </nav>
 
     <div class="overlay" id="productOverlay" onclick="closeProductModal()"></div>
-    <div class="bottom-sheet" id="productModal" style="padding: 25px 20px 30px;">
+    <div class="modal-product-sheet" id="productModal">
         <div class="sheet-handle"></div>
         <button class="close-modal-btn" onclick="closeProductModal()"><svg viewBox="0 0 24 24" style="width:16px;height:16px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
-        <div id="productModalContent"></div>
+        <div class="modal-product-content" id="productModalContent"></div>
     </div>
 
     <div class="overlay" id="cartOverlay" onclick="closeCartModal()"></div>
-    <div class="bottom-sheet" id="cartModal" style="padding: 20px 0 0 0; display: flex; flex-direction: column; max-height: 90vh;">
-        <div class="sheet-handle"></div>
+    <div class="modal-cart-sheet" id="cartModal">
+        <div class="sheet-handle" style="margin-top: 15px;"></div>
         <div class="cart-header-row" style="margin-bottom: 15px; padding: 0 20px; display:flex; justify-content:space-between; align-items:center;">
             <h2 style="font-weight: 800; font-size: 22px;">Votre Panier</h2>
             <button class="close-modal-btn" style="position:static;" onclick="closeCartModal()"><svg viewBox="0 0 24 24" style="width:16px;height:16px;"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg></button>
         </div>
         
-        <div style="flex: 1; overflow-y: auto; padding: 0 20px 20px 20px;">
+        <div style="flex: 1; overflow-y: auto; padding: 0 20px 20px 20px; scrollbar-width: none;">
             <div id="cartItemsContainer"></div>
             
             <div id="cartSummaryArea">
@@ -443,9 +454,9 @@
                     <span id="cartModalSubText">Sous-total</span><span id="cartModalSubTotal" style="color:var(--text-main);">0 DH</span>
                 </div>
                 
-                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600;">
+                <div style="display: flex; justify-content: space-between; align-items: center; font-size: 14px; color: var(--text-muted); font-weight: 600;">
                     <span>Quartier de livraison</span>
-                    <select id="cartNeighborhood" style="border: 1px solid var(--primary-light); padding: 6px 12px; font-size: 12px; border-radius: 8px; color:var(--primary); background:var(--primary-light); font-weight:600; outline:none;" onchange="updateCartTotal()">
+                    <select id="cartNeighborhood" style="border: 1px solid var(--border); padding: 8px 12px; font-size: 12px; border-radius: 8px; color:var(--primary); background:var(--primary-light); font-weight:600; outline:none;" onchange="updateCartTotal()">
                         <option value="0" data-name="Retrait en magasin">Retrait en magasin (0 DH)</option>
                         <option value="15" data-name="Guéliz" selected>Guéliz (15 DH)</option>
                         <option value="15" data-name="Daoudiate">Daoudiate (15 DH)</option>
@@ -454,15 +465,15 @@
                         <option value="30" data-name="Targa">Targa (30 DH)</option>
                     </select>
                 </div>
-
-                <div style="display: flex; justify-content: space-between; font-size: 20px; font-weight: 800; color: var(--text-main); margin-top: 15px; padding-top: 15px; border-top: 1px dashed var(--border); margin-bottom: 10px;">
-                    <span>Total</span><span style="color:var(--primary);" id="cartModalTotal">0 DH</span>
-                </div>
             </div>
         </div>
 
         <div id="cartStickyFooter" style="padding: 15px 20px 30px 20px; background: white; border-top: 1px solid var(--border); box-shadow: 0 -4px 15px rgba(0,0,0,0.03);">
-            <button class="btn-large-primary" onclick="triggerWhatsApp()"><svg viewBox="0 0 24 24" style="fill:white; stroke:none; width:22px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg> Commander via WhatsApp</button>
+            <div style="display: flex; justify-content: space-between; font-size: 20px; font-weight: 800; color: var(--text-main); margin-bottom: 15px;">
+                <span>Total</span><span style="color:var(--primary);" id="cartModalTotal">0 DH</span>
+            </div>
+            <button class="btn-whatsapp" onclick="triggerWhatsApp()"><svg viewBox="0 0 24 24" style="fill:currentColor; stroke:none; width:22px;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg> Commander via WhatsApp
+            </button>
         </div>
     </div>
 
@@ -490,7 +501,6 @@
         let currentModalQty = 1;
         let currentVariantObj = null;
 
-        // Packs Flow State
         let packSelectedSchool = null;
         let packSelectedLevel = null;
         let packSelectedGender = 'Fille';
@@ -520,10 +530,9 @@
             } else { switchTab(savedTab); }
         });
 
-        // Fail-safe Tab Switcher
         window.switchTab = (tabId) => {
             const targetView = document.getElementById(`view-${tabId}`);
-            if(!targetView) tabId = 'home'; // Fail-safe to avoid crash
+            if(!targetView) tabId = 'home';
             
             document.querySelectorAll('.app-view').forEach(v => v.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -541,7 +550,6 @@
             localStorage.setItem('buro_activeCategory', catName);
             localStorage.setItem('buro_activeTab', 'subcategory');
             
-            // Clean up the line break <br> for the title
             document.getElementById('subCatTitle').innerText = catName.replace('<br>', ' ');
             
             const catData = globalCategoriesData.find(c => c.name === catName.replace('<br>', ' '));
@@ -591,9 +599,8 @@
             }
         });
 
-        // --- NEW: EDITORIAL HOME RENDER ENGINE ---
         function renderHome() {
-            // Render Quick Cats (Image 1 Style)
+            // Restore Quick Cats from Image 1
             document.getElementById('homeQuickCats').innerHTML = HERO_CATEGORIES.map(cat => `
                 <div class="q-cat-item" onclick="window.openCategory('${cat.id}')">
                     <div class="q-cat-circle">${cat.emoji}</div>
@@ -601,30 +608,22 @@
                 </div>
             `).join('');
 
-            // Render Unique Brands
-            const brands = [...new Set(allProducts.map(p => p.brand).filter(b => b && b.trim() !== ''))].sort();
-            if(brands.length > 0) {
-                document.getElementById('homeBrandsRow').innerHTML = brands.map(b => `<div class="h-item brand-pill" onclick="searchByTerm('${b}')">${b}</div>`).join('');
-                document.getElementById('homeBrandsRow').style.display = 'flex';
-            } else {
-                document.getElementById('homeBrandsRow').style.display = 'none';
-            }
+            // Hide Manuels from Home Page
+            const generalProducts = allProducts.filter(p => !p.isTextbook);
 
-            // Render Smart Carousels
-            const newProducts = allProducts.filter(p => p.marketingTags && p.marketingTags.includes('Nouveau'));
+            const newProducts = generalProducts.filter(p => p.marketingTags && p.marketingTags.includes('Nouveau'));
             if(newProducts.length > 0) {
                 document.getElementById('section-nouveau').style.display = 'block';
                 renderProductGrid(newProducts, 'homeNewGrid', true);
             } else { document.getElementById('section-nouveau').style.display = 'none'; }
 
-            const promoProducts = allProducts.filter(p => p.promoPrice && p.promoPrice > 0);
+            const promoProducts = generalProducts.filter(p => p.promoPrice && p.promoPrice > 0);
             if(promoProducts.length > 0) {
                 document.getElementById('section-promo').style.display = 'block';
                 renderProductGrid(promoProducts, 'homePromoGrid', true);
             } else { document.getElementById('section-promo').style.display = 'none'; }
 
-            // Render Best Sellers / Regular Feed
-            let mainFeed = [...allProducts].sort((a,b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
+            let mainFeed = [...generalProducts].sort((a,b) => new Date(b.timestamp || 0) - new Date(a.timestamp || 0));
             renderProductGrid(mainFeed.slice(0, 10), 'homeProductGrid', false);
         }
 
@@ -641,27 +640,27 @@
             document.getElementById('hubGrid').innerHTML = hubHTML;
         }
 
-        window.searchByTerm = (term) => {
-            document.getElementById('homeSearch').value = term;
-            const event = new Event('input');
-            document.getElementById('homeSearch').dispatchEvent(event);
-        };
-
         document.getElementById('homeSearch').addEventListener('input', e => { 
             const q = e.target.value.toLowerCase(); 
             if(!q) { renderHome(); return; }
-            const filtered = allProducts.filter(p => (p.name||'').toLowerCase().includes(q) || (p.brand||'').toLowerCase().includes(q));
+            const filtered = allProducts.filter(p => !p.isTextbook && ((p.name||'').toLowerCase().includes(q) || (p.brand||'').toLowerCase().includes(q)));
             
             document.getElementById('section-nouveau').style.display = 'none';
             document.getElementById('section-promo').style.display = 'none';
-            document.getElementById('homeBrandsRow').style.display = 'none';
             renderProductGrid(filtered, 'homeProductGrid', false);
         });
 
-        // Updated Grid Renderer to support Badges & Horizontals
         function renderProductGrid(products, containerId, isHorizontal = false) {
             const grid = document.getElementById(containerId);
-            if (products.length === 0) { grid.innerHTML = `<div class="empty-state">Aucun produit trouvé.</div>`; return; }
+            if (products.length === 0) {
+                grid.innerHTML = `
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+                    <h3>Aucun produit</h3>
+                    <p>Nous n'avons rien trouvé pour le moment.</p>
+                </div>`;
+                return; 
+            }
 
             grid.innerHTML = products.map(p => {
                 let imgSrc = (p.images && p.images.length > 0) ? p.images[0] : (p.imageUrl || '');
@@ -680,7 +679,6 @@
                     displayPriceHTML = `<span class="old-price">${compareP.toFixed(2)} DH</span> ${sellP.toFixed(2)} DH`;
                 }
 
-                // Badges Logic
                 let badgesHTML = '';
                 if (promoP > 0 && promoP < sellP) { badgesHTML += `<div class="smart-badge badge-promo">🔥 PROMO</div>`; }
                 else if (p.marketingTags && p.marketingTags.includes('Nouveau')) { badgesHTML += `<div class="smart-badge badge-new">✨ NOUVEAU</div>`; }
@@ -734,7 +732,12 @@
         function renderManuelList(products) {
             const container = document.getElementById('manuelListContainer');
             if(products.length === 0) {
-                container.innerHTML = `<div class="empty-state">Aucun manuel trouvé pour ces critères.</div>`;
+                container.innerHTML = `
+                <div class="empty-state">
+                    <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                    <h3>Aucun manuel</h3>
+                    <p>Modifiez vos filtres ou contactez-nous via WhatsApp.</p>
+                </div>`;
                 return;
             }
 
@@ -777,7 +780,7 @@
         };
 
 
-        // --- NEW: ADVANCED PRODUCT MODAL (SWIPE + WHOLESALE + RELATED) ---
+        // --- PRODUCT MODAL (IMAGE 4 DESIGN FIX) ---
         window.openProductModal = (id) => {
             const product = allProducts.find(p => p.id === id);
             if (!product || product.stock <= 0) return;
@@ -844,9 +847,6 @@
                 }
             }
 
-            let tagsHTML = '';
-            if(product.tags && product.tags.length > 0) { tagsHTML = `<div class="tag-pill-container">${product.tags.map(t => `<span class="store-tag">${t}</span>`).join('')}</div>`; }
-
             let variantsHTML = '';
             if(product.variants && product.variants.length > 0) {
                 currentVariantObj = product.variants.find(v => v.stock > 0) || product.variants[0];
@@ -857,7 +857,7 @@
                 if (isColorType) {
                     variantsHTML = `
                         <span class="section-label">Couleur</span>
-                        <div style="display:flex; margin-bottom:25px; overflow-x:auto; padding-bottom:5px;">
+                        <div style="display:flex; justify-content:center; margin-bottom:25px; overflow-x:auto; padding-bottom:5px;">
                             ${product.variants.map((v, i) => {
                                 const hex = getColorHex(v.name) || '#CBD5E1'; const outOfStockCls = v.stock <= 0 ? 'out-of-stock' : ''; const activeCls = i === activeIndex ? 'active' : '';
                                 return `<div class="color-swatch-wrapper ${activeCls} ${outOfStockCls}" onclick="window.selectVariant(${i})"><div class="color-swatch ${activeCls}"><div class="color-inner" style="background:${hex};"></div></div><span class="color-name">${v.name}</span></div>`;
@@ -885,12 +885,11 @@
                     ${product.brand ? `<span class="brand-meta">${product.brand}</span>` : ''}
                     ${priceAreaHTML}
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-                        <div class="stock-badge-pill">Disponible (<span id="modalStockLimit">${currentVariantObj ? currentVariantObj.stock : product.stock}</span>)</div>
+                        <span style="font-size:13px; font-weight:600; color:var(--text-main);">Disponible (<span id="modalStockLimit">${currentVariantObj ? currentVariantObj.stock : product.stock}</span>)</span>
                         <button style="background:transparent; border:none; color:var(--text-muted); display:flex; align-items:center; gap:6px; font-weight:700; font-size:12px; cursor:pointer;" onclick="shareProduct('${product.name}')">
                             <svg viewBox="0 0 24 24" style="width:16px;"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg> Partager
                         </button>
                     </div>
-                    ${tagsHTML}
                 </div>
                 <div style="height:20px;"></div>
                 ${wholesaleHTML}
@@ -949,7 +948,6 @@
             const sellP = parseFloat(currentModalProduct.sellPrice) || 0; const promoP = parseFloat(currentModalProduct.promoPrice) || 0;
             let activePrice = (promoP > 0 && promoP < sellP) ? promoP : sellP;
             
-            // Check for wholesale trigger inside the modal
             if(currentModalProduct.hasBulkPricing && currentModalQty >= currentModalProduct.bulkQtyTrigger) {
                 activePrice = parseFloat(currentModalProduct.bulkPricePerUnit);
             }
@@ -965,7 +963,6 @@
             const promoP = parseFloat(currentModalProduct.promoPrice) || 0;
             let priceToUse = (promoP > 0 && promoP < sellP) ? promoP : sellP;
             
-            // Wholesale price apply on cart add
             if(currentModalProduct.hasBulkPricing && currentModalQty >= currentModalProduct.bulkQtyTrigger) {
                 priceToUse = parseFloat(currentModalProduct.bulkPricePerUnit);
             }
@@ -977,7 +974,6 @@
                 const newTotalQty = cart[existingIndex].qty + currentModalQty; 
                 cart[existingIndex].qty = newTotalQty > maxStock ? maxStock : newTotalQty; 
                 
-                // Re-evaluate bulk pricing if they crossed threshold via adding more
                 if(currentModalProduct.hasBulkPricing && cart[existingIndex].qty >= currentModalProduct.bulkQtyTrigger) {
                     cart[existingIndex].unitPrice = parseFloat(currentModalProduct.bulkPricePerUnit);
                 }
@@ -987,11 +983,19 @@
         };
 
 
-        // --- NEW: PACKS S. PARENT FLOW ---
+        // --- PACKS S. PARENT FLOW ---
         function renderPacksSchools() {
             const schools = [...new Set(allPacks.map(p => p.schoolName).filter(Boolean))].sort();
             const grid = document.getElementById('schoolGridUI');
-            if(schools.length === 0) { grid.innerHTML = `<div class="empty-state">Aucune école disponible.</div>`; return; }
+            if(schools.length === 0) { 
+                grid.innerHTML = `
+                <div class="empty-state" style="grid-column: span 2;">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+                    <h3>Aucune école</h3>
+                    <p>Les packs scolaires seront bientôt disponibles.</p>
+                </div>`; 
+                return; 
+            }
 
             grid.innerHTML = schools.map(schoolName => {
                 const pack = allPacks.find(p => p.schoolName === schoolName);
@@ -1132,7 +1136,7 @@
         };
 
 
-        // --- MODIFIED CART LOGIC (STICKY FOOTER FIXES) ---
+        // --- CART LOGIC WITH STICKY FOOTER (IMAGE 5 FIX) ---
         window.openCartModal = () => {
             renderCartModalList();
             document.body.classList.add('no-scroll');
@@ -1145,11 +1149,10 @@
             
             if(cart.length === 0) {
                 document.getElementById('cartItemsContainer').innerHTML = `
-                    <div style="text-align:center; padding: 40px 20px;">
-                        <svg viewBox="0 0 24 24" style="width:48px; height:48px; color:var(--text-muted); margin-bottom:16px; opacity:0.5;"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
-                        <h3 style="font-size:16px; font-weight:800; color:var(--text-main); margin-bottom:8px;">Votre panier est vide</h3>
-                        <p style="font-size:13px; color:var(--text-muted); margin-bottom:24px;">Il semble que vous n'ayez pas encore ajouté d'articles.</p>
-                        <button class="btn-outline" style="width:100%; border-color:var(--primary); color:var(--primary);" onclick="closeCartModal()">Retour à la boutique</button>
+                    <div class="empty-state">
+                        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
+                        <h3>Votre panier est vide</h3>
+                        <p>Il semble que vous n'ayez pas encore ajouté d'articles.</p>
                     </div>`;
                 document.getElementById('cartSummaryArea').style.display = 'none';
                 if(footerBtn) footerBtn.style.display = 'none';
@@ -1163,14 +1166,13 @@
                 if(item.unitPrice < 0) {
                     return `
                     <div class="cart-item-card" style="background:var(--warning-light); border-color:#FDE68A;">
-                        <div class="cart-item-center">
-                            <h4 style="color:#D97706; margin:0;">${item.product.name}</h4>
+                        <div class="cart-item-center" style="flex:1;">
+                            <h4 style="color:#D97706; margin:0; font-size:14px; font-weight:800;">${item.product.name}</h4>
                         </div>
-                        <div class="cart-item-price" style="color:#D97706;">${item.unitPrice.toFixed(2)} DH</div>
+                        <div style="font-size:15px; font-weight:800; color:#D97706;">${item.unitPrice.toFixed(2)} DH</div>
                     </div>`;
                 }
 
-                // FIXED: Enforced small image constraint explicitly inline
                 let img = item.product.imageUrl ? `<img src="${item.product.imageUrl}" style="max-width:100%; max-height:100%; object-fit:contain;">` : (item.product.images && item.product.images[0] ? `<img src="${item.product.images[0]}" style="max-width:100%; max-height:100%; object-fit:contain;">` : ''); 
                 
                 let vTag = item.variantName ? `<span style="font-size: 11px; background: var(--primary-light); color: var(--primary); padding: 3px 8px; border-radius: 6px; font-weight: 700; display: inline-block; width: fit-content; margin-bottom: 6px;">${item.variantName}</span>` : '';
@@ -1179,12 +1181,12 @@
                 return `
                     <div class="cart-item-card">
                         <div style="width: 55px; height: 55px; background: var(--bg); border-radius: 10px; display: flex; align-items: center; justify-content: center; padding: 5px; flex-shrink: 0;">${img}</div>
-                        <div class="cart-item-center" style="flex:1; display:flex; flex-direction:column; justify-content:center;">
-                            <h4 style="font-size: 14px; font-weight: 800; margin-bottom: 4px; color: var(--text-main);">${item.product.name}</h4>
+                        <div style="flex:1; display:flex; flex-direction:column; justify-content:center;">
+                            <h4 style="font-size: 14px; font-weight: 800; margin-bottom: 4px; color: var(--text-main); line-height:1.2;">${item.product.name}</h4>
                             ${vTag}${packTag}
                             <div style="font-size: 15px; font-weight: 800; color: var(--primary);">${item.unitPrice.toFixed(2)} DH</div>
                         </div>
-                        <div class="cart-item-right" style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
+                        <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 8px;">
                             <button style="background: #FEE2E2; color: var(--danger); border: none; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; cursor: pointer;" onclick="window.removeFromCart(${index})"><svg viewBox="0 0 24 24" style="width:16px;"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg></button>
                             <div style="display: flex; align-items: center; background: var(--bg); border-radius: 8px; padding: 2px; border: 1px solid var(--border);"><button style="width: 26px; height: 26px; background: transparent; border: none; font-size: 16px; font-weight: bold; cursor: pointer; color: var(--text-muted);" onclick="window.changeCartQty(${index}, -1)">-</button><span style="width: 24px; text-align: center; font-weight: 800; font-size: 13px;">${item.qty}</span><button style="width: 26px; height: 26px; background: transparent; border: none; font-size: 16px; font-weight: bold; cursor: pointer; color: var(--text-muted);" onclick="window.changeCartQty(${index}, 1)">+</button></div>
                         </div>
